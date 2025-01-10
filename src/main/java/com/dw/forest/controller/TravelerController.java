@@ -27,4 +27,9 @@ public class TravelerController {
     public ResponseEntity<List<Traveler>> getAllTraveler() {
         return new ResponseEntity<>(travelerService.getAllTravelers(), HttpStatus.OK);
     }
+
+    @GetMapping("/traveler/{traveler_name}")
+    public ResponseEntity<Traveler> getTraveler(@PathVariable String traveler_name) {
+        return new ResponseEntity<>(travelerService.getTraveler(traveler_name), HttpStatus.OK);
+    }
 }

@@ -26,6 +26,10 @@ public class TravelerService {
         return travelerRepository.findAll();
     }
 
+    public Traveler getTraveler(String name) {
+        return travelerRepository.findById(name).orElseThrow();
+    }
+
 //    public TravelerDTO register(TravelerDTO travelerDTO) {
 //        Optional<Traveler> traveler = travelerRepository.findById(travelerDTO.getTravelerName());
 //        if (traveler.isPresent()) {
