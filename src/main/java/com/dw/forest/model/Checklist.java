@@ -25,4 +25,8 @@ public class Checklist {
 
     @Column(name = "is_checked")
     private boolean isChecked;
+
+    @ManyToOne
+    @JoinColumn(name = "checklists")
+    private Category category;
 }
