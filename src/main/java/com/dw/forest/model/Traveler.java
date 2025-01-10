@@ -54,4 +54,7 @@ public class Traveler {
     @OneToMany(mappedBy = "traveler")
     private List<Cart> CartItems;
 
+    @ManyToOne
+    @JoinColumn(name = "user_authority")
+    private Authority authority;
 }

@@ -33,5 +33,4 @@ public class ForumPost {
 
     @Column(name = "type")
     private String type;
-
 }
