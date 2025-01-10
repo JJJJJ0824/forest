@@ -23,4 +23,8 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @ManyToOne
+    @JoinColumn(name = "cartPoint")
+    private CartPoint cartPoint;
 }

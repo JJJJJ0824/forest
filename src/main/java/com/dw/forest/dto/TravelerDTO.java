@@ -16,5 +16,4 @@ public class TravelerDTO {
     private String email;
     private String password;
     private String realName;
-    private Long point;
 }

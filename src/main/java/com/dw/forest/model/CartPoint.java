@@ -3,26 +3,28 @@ package com.dw.forest.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
 @Entity
-@Table(name="point")
-public class Point {
+@Table(name="cart_point")
+public class CartPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "point_id")
-    private Long pointID;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")
     private Traveler traveler;
 
-    @Column(name = "action_type")
-    private String actionType;
+    @OneToMany(mappedBy = "cartPoint")
+    private List<Cart> cartItems;
 
-    @Column(name = "point_changed")
-    private Long pointChanged;
+    private Double totalAmount;
+    private LocalDateTime paymentDate;
 }

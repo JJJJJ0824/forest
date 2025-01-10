@@ -31,8 +31,6 @@ public class Traveler {
     private String realName;
     @Column(name = "registration_date")
     private LocalDate registrationDate;
-    @Column(name = "total_point", nullable = false)
-    private Long parse;
     @OneToMany(mappedBy = "traveler")
     private List<CourseCompletion> courseCompletions;
     @OneToMany(mappedBy = "traveler")
@@ -45,6 +43,17 @@ public class Traveler {
     private List<Cart> CartItems;
 
     public TravelerDTO toDTO() {
-        return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, null, this.realName, 100L);
+        return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, this.password, this.realName);
+    }
+
+    public static Traveler fromDTO(TravelerDTO dto, Authority authority) {
+        Traveler traveler = new Traveler();
+        traveler.setTravelerName(dto.getTravelerName());
+        traveler.setContact(dto.getContact());
+        traveler.setEmail(dto.getEmail());
+        traveler.setPassword(dto.getPassword());
+        traveler.setRealName(dto.getRealName());
+        traveler.setAuthority(authority);
+        return traveler;
     }
 }
