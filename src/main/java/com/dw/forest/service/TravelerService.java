@@ -56,4 +56,5 @@ public class TravelerService {
     public Traveler getTraveler(String traveler_name) {
         return travelerRepository.findById(traveler_name).orElseThrow();
     }
+
 }

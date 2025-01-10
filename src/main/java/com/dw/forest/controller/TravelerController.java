@@ -32,4 +32,5 @@ public class TravelerController {
     public ResponseEntity<Traveler> getTraveler(@PathVariable String traveler_name) {
         return new ResponseEntity<>(travelerService.getTraveler(traveler_name), HttpStatus.OK);
     }
+
 }

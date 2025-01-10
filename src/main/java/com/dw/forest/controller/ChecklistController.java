@@ -19,4 +19,5 @@ public class ChecklistController {
     public List<Checklist> getAllChecklists() {
         return checklistService.getAllChecklists();
     }
+
 }

@@ -19,4 +19,5 @@ public class CourseCompletionController {
     public List<CourseCompletion> getAllCourseCompletions() {
         return courseCompletionService.getAllCourseCompletions();
     }
+
 }

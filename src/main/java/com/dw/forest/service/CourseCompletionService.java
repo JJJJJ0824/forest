@@ -15,4 +15,5 @@ public class CourseCompletionService {
     public List<CourseCompletion> getAllCourseCompletions() {
         return courseCompletionRepository.findAll();
     }
+
 }

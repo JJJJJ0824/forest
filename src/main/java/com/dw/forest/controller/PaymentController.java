@@ -19,4 +19,5 @@ public class PaymentController {
     public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();
     }
+
 }

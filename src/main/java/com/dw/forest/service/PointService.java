@@ -16,4 +16,5 @@ public class PointService {
         return pointRepository.findAll();
     }
 
+
 }
