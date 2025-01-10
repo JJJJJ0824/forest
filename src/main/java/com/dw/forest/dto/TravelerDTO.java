@@ -11,9 +11,10 @@ import lombok.ToString;
 @ToString
 public class TravelerDTO {
     private String travelerName;
-    private String realName;
-    private String password;
-    private String email;
-    private String contact;
     private String role;
+    private String contact;
+    private String email;
+    private String password;
+    private String realName;
+    private Long point;
 }
