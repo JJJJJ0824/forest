@@ -19,5 +19,4 @@ public class ForumPostController {
     public List<ForumPost> getAllForumPosts() {
         return forumPostService.getAllForumPosts();
     }
-
 }

@@ -25,4 +25,5 @@ public class Point {
 
     @Column(name = "point_changed")
     private Long pointChanged;
+
 }

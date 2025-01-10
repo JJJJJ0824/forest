@@ -16,5 +16,4 @@ public class ForumPostService {
         return forumPostRepository.findAll();
     }
 
-
 }

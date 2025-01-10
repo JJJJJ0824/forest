@@ -43,4 +43,5 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Cart> cartItems;
+
 }

@@ -19,5 +19,4 @@ public class PointController {
     public List<Point> getAllPoints() {
         return pointService.getAllPoints();
     }
-
 }

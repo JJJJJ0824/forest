@@ -25,6 +25,8 @@ public class CartPoint {
     @OneToMany(mappedBy = "cartPoint")
     private List<Cart> cartItems;
 
+    @Column(name = "total_amount")
     private Double totalAmount;
+    @Column(name = "payment_date")
     private LocalDateTime paymentDate;
 }

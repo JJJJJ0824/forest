@@ -27,4 +27,5 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "cartPoint")
     private CartPoint cartPoint;
+
 }

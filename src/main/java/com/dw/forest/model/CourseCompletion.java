@@ -29,5 +29,4 @@ public class CourseCompletion {
 
     @Column(name = "completion_date")
     private LocalDate completionDate;
-
 }

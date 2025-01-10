@@ -15,5 +15,4 @@ public class CourseService {
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
-
 }
