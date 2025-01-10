@@ -1,5 +1,6 @@
 package com.dw.forest.model;
 
+import com.dw.forest.dto.TravelerDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,6 +56,10 @@ public class Traveler {
     private List<Cart> CartItems;
 
     @ManyToOne
-    @JoinColumn(name = "user_authority")
+    @JoinColumn(name = "traveler_authority")
     private Authority authority;
+
+    public TravelerDTO toDTO() {
+        return new TravelerDTO(this.travelerName, this.realName, this.password, this.email, this.contact, authority.getAuthority_name());
+    }
 }
