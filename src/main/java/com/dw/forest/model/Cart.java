@@ -3,6 +3,8 @@ package com.dw.forest.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -24,8 +26,6 @@ public class Cart {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @ManyToOne
-    @JoinColumn(name = "cartPoint")
-    private CartPoint cartPoint;
-
+    @OneToMany(mappedBy = "cart_fk")
+    private List<Point> points;
 }

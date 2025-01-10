@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,29 +11,24 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
-@Table(name="forum_post")
-public class ForumPost {
+@Table(name="forum_post_answer")
+public class ForumPostAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
-    private Long postID;
+    @Column(name = "answer_id")
+    private Long answerId;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private ForumPost forumPost;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")
     private Traveler traveler;
 
-    @Column(name = "title", nullable = false)
-    private String title;
-
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 
     @Column(name = "created_at")
     private LocalDate createdAt;
-
-    @Column(name = "type")
-    private String type;
-
-    @OneToMany(mappedBy = "forumPost")
-    private List<ForumPostAnswer> answers;
 }

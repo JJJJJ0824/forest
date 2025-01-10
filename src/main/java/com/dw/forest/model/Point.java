@@ -3,6 +3,8 @@ package com.dw.forest.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -26,4 +28,7 @@ public class Point {
     @Column(name = "point_changed")
     private Long pointChanged;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart_fk;
 }

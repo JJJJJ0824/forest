@@ -28,28 +28,28 @@ public class TravelerService {
     @Autowired
     PointRepository pointRepository;
 
-    public TravelerDTO registerTraveler(TravelerDTO travelerDTO) {
-        if (travelerRepository.existsById(travelerDTO.getTravelerName())) {
-            throw new InvalidRequestStateException("Traveler name already exists");
-        }
-
-        Authority authority = authorityRepository.findById("USER")
-                .orElseThrow(() -> new ResourceNotFoundException("No role found"));
-
-        Traveler traveler = Traveler.fromDTO(travelerDTO, authority);
-        traveler.setRegistrationDate(LocalDate.now());
-        Traveler savedTraveler = travelerRepository.save(traveler);
-
-        Point welcomePoint = new Point(
-                null,
-                savedTraveler,
-                "Welcome Bonus",
-                100L
-        );
-        pointRepository.save(welcomePoint);
-
-        return savedTraveler.toDTO();
-    }
+//    public TravelerDTO registerTraveler(TravelerDTO travelerDTO) {
+//        if (travelerRepository.existsById(travelerDTO.getTravelerName())) {
+//            throw new InvalidRequestStateException("Traveler name already exists");
+//        }
+//
+//        Authority authority = authorityRepository.findById("USER")
+//                .orElseThrow(() -> new ResourceNotFoundException("No role found"));
+//
+//        Traveler traveler = Traveler.fromDTO(travelerDTO, authority);
+//        traveler.setRegistrationDate(LocalDate.now());
+//        Traveler savedTraveler = travelerRepository.save(traveler);
+//
+//        Point welcomePoint = new Point(
+//                null,
+//                savedTraveler,
+//                "Welcome Bonus",
+//                100L
+//        );
+//        pointRepository.save(welcomePoint);
+//
+//        return savedTraveler.toDTO();
+//    }
 
     public List<Traveler> getAllTravelers() {
         return travelerRepository.findAll();

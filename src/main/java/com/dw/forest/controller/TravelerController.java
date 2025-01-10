@@ -16,12 +16,12 @@ public class TravelerController {
     @Autowired
     TravelerService travelerService;
 
-    @PostMapping("/register")
-    public ResponseEntity<TravelerDTO> registerTraveler(@RequestBody TravelerDTO travelerDTO) {
-        return new ResponseEntity<>(
-                travelerService.registerTraveler(travelerDTO),
-                HttpStatus.CREATED);
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<TravelerDTO> registerTraveler(@RequestBody TravelerDTO travelerDTO) {
+//        return new ResponseEntity<>(
+//                travelerService.registerTraveler(travelerDTO),
+//                HttpStatus.CREATED);
+//    }
 
     @GetMapping("/travelers/all")
     public ResponseEntity<List<Traveler>> getAllTraveler() {

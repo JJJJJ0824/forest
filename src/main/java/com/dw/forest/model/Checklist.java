@@ -27,7 +27,7 @@ public class Checklist {
     private boolean isChecked;
 
     @ManyToOne
-    @JoinColumn(name = "checklists")
+    @JoinColumn(name = "category_name")
     private Category category;
 
 }
