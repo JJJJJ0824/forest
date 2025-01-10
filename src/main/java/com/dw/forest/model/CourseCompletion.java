@@ -15,8 +15,9 @@ import java.time.LocalDateTime;
 @Table(name="course_completion")
 public class CourseCompletion {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "completion_id")
-    private String completionID;
+    private Long completionID;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")

@@ -14,8 +14,9 @@ import java.time.LocalDate;
 @Table(name="forum_post")
 public class ForumPost {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private String postID;
+    private Long postID;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")
