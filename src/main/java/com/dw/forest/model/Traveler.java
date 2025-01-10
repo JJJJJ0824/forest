@@ -32,7 +32,7 @@ public class Traveler {
     @Column(name = "registration_date")
     private LocalDate registrationDate;
     @Column(name = "total_point", nullable = false)
-    private Long totalPoint;
+    private Long parse;
     @OneToMany(mappedBy = "traveler")
     private List<CourseCompletion> courseCompletions;
     @OneToMany(mappedBy = "traveler")
@@ -40,13 +40,11 @@ public class Traveler {
     @OneToMany(mappedBy = "traveler")
     private List<Checklist> checklists;
     @OneToMany(mappedBy = "traveler")
-    private List<Payment> payments;
-    @OneToMany(mappedBy = "traveler")
     private List<Point> points;
     @OneToMany(mappedBy = "traveler")
     private List<Cart> CartItems;
 
     public TravelerDTO toDTO() {
-        return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, null, this.realName, 1000L);
+        return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, null, this.realName, 100L);
     }
 }

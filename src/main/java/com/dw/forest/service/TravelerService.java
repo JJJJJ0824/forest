@@ -42,7 +42,6 @@ public class TravelerService {
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
-                new ArrayList<>(),
                 new ArrayList<>()
         );
         Traveler savedTraveler = travelerRepository.save(newTraveler);
