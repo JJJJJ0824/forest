@@ -23,14 +23,6 @@ public class TravelerService {
     @Autowired
     AuthorityRepository authorityRepository;
 
-    public List<Traveler> getAllTravelers() {
-        return travelerRepository.findAll();
-    }
-
-    public Traveler getTraveler(String traveler_name) {
-        return travelerRepository.findById(traveler_name).orElseThrow();
-    }
-
     public TravelerDTO registerTraveler(TravelerDTO travelerDTO) {
         Optional<Traveler> traveler = travelerRepository.findById(travelerDTO.getTravelerName());
         if (traveler.isPresent()) {
@@ -55,5 +47,13 @@ public class TravelerService {
         );
         Traveler savedTraveler = travelerRepository.save(newTraveler);
         return savedTraveler.toDTO();
+    }
+
+    public List<Traveler> getAllTravelers() {
+        return travelerRepository.findAll();
+    }
+
+    public Traveler getTraveler(String traveler_name) {
+        return travelerRepository.findById(traveler_name).orElseThrow();
     }
 }

@@ -23,7 +23,7 @@ public class TravelerController {
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/traveler/all")
+    @GetMapping("/travelers/all")
     public ResponseEntity<List<Traveler>> getAllTraveler() {
         return new ResponseEntity<>(travelerService.getAllTravelers(), HttpStatus.OK);
     }
