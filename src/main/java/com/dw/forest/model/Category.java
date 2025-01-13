@@ -15,7 +15,7 @@ import java.util.List;
 public class Category {
     @Id
     @Column(nullable = false, unique = true)
-    private String name;
+    private String categoryName;
 
     @OneToMany(mappedBy = "category")
     private List<Checklist> checklists;

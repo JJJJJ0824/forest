@@ -14,7 +14,7 @@ public class Checklist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "checklist_id")
-    private Long checklistID;
+    private Long checklistId;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")

@@ -40,7 +40,7 @@ public class Traveler {
     @OneToMany(mappedBy = "traveler")
     private List<Point> points;
     @OneToMany(mappedBy = "traveler")
-    private List<Cart> CartItems;
+    private List<Cart> cartItems;
 
     public TravelerDTO toDTO() {
         return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, this.password, this.realName);
