@@ -25,8 +25,8 @@ public class Point {
     @Column(name = "action_type")
     private String actionType;
 
-    @Column(name = "point")
-    private Long point;
+    @Column(name = "points")
+    private Long points;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")

@@ -18,19 +18,19 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
-    private Long courseID;
-
-    @Column(name = "description", nullable = false)
-    private String description;
+    private Long courseId;
 
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
