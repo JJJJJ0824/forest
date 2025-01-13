@@ -18,27 +18,38 @@ public class Traveler {
     @Id
     @Column(name = "traveler_name")
     private String travelerName;
+
     @ManyToOne
     @JoinColumn(name = "traveler_authority")
     private Authority authority;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
     @Column(name = "contact")
     private String contact;
+
     @Column(name = "password", nullable = false)
     private String password;
+
     @Column(name = "real_name", nullable = false)
     private String realName;
+
     @Column(name = "created_at")
     private LocalDate createdAt;
+
     @OneToMany(mappedBy = "traveler")
     private List<CourseCompletion> courseCompletions;
+
     @OneToMany(mappedBy = "traveler")
-    private List<QA> QAS;
+    private List<QA> QAs;
+
     @OneToMany(mappedBy = "traveler")
     private List<Checklist> checklists;
+
     @OneToMany(mappedBy = "traveler")
     private List<Point> points;
+
     @OneToMany(mappedBy = "traveler")
     private List<Cart> cartItems;
 
