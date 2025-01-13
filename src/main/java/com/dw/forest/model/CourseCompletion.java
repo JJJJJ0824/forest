@@ -16,7 +16,7 @@ public class CourseCompletion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "completion_id")
-    private Long completionID;
+    private Long completionId;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")

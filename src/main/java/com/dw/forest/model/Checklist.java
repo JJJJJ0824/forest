@@ -29,5 +29,4 @@ public class Checklist {
     @ManyToOne
     @JoinColumn(name = "category_name")
     private Category category;
-
 }

@@ -56,5 +56,4 @@ public class Traveler {
         traveler.setAuthority(authority);
         return traveler;
     }
-
 }

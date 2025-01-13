@@ -32,6 +32,9 @@ public class Course {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "price")
+    private int price;
+
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
 
@@ -43,5 +46,4 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Cart> cartItems;
-
 }
