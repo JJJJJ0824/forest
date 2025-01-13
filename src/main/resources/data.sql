@@ -39,6 +39,17 @@
 --('traveler2', '자유여행 유형 입니다', true, '자유여행'),
 --('traveler3', '패키지여행 유형 입니다', true, '패키지여행');
 
-INSERT INTO point (traveler_name, action_type, points)
-VALUES
-('admin', 'test', 9999999999999);
+--INSERT INTO point (traveler_name, action_type, points)
+--VALUES
+--('admin', 'test', 9999999999999);
+
+--INSERT INTO forum_post (traveler_name, title, content, created_at, type)
+--VALUES
+--('traveler', '점심 뭐 드셨나요', '저는 순대국밥이요', now(), 'FREE');
+
+--INSERT INTO forum_post (traveler_name, title, content, created_at, type)
+--VALUES
+--('admin', '중요 공지', '오늘 오후 8시부터 오후 8시 30분까지 약 30분간 사이트를 점검합니다. 이용에 불편을 드려 죄송합니다.', '2024-11-20', 'NOTICE');
+
+INSERT INTO forum_post_answer (post_id, traveler_name, content, created_at)
+VALUES (1, 'admin', '저는 컵라면 먹었습니다 ㅎㅎ 맛있더라구요', now());

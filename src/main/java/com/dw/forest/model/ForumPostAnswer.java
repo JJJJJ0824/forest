@@ -19,7 +19,7 @@ public class ForumPostAnswer {
     private Long answerId;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", nullable = false)
     private ForumPost forumPost;
 
     @ManyToOne

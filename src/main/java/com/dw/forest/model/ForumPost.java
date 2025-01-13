@@ -17,7 +17,7 @@ public class ForumPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private Long postID;
+    private Long postId;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")
@@ -26,7 +26,7 @@ public class ForumPost {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 
     @Column(name = "created_at")
