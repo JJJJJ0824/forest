@@ -23,7 +23,7 @@ public class Point {
     @Column(name = "action_type")
     private String actionType;
     @Column(name = "points")
-    private Long points;
+    private long points;
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart_fk;

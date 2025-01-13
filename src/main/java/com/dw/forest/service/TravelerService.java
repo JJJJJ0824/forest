@@ -42,7 +42,7 @@ public class TravelerService {
                 null,
                 savedTraveler,
                 "Welcome Bonus",
-                100L,
+                100,
                 null
         );
         pointRepository.save(welcomePoint);
