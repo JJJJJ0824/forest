@@ -29,12 +29,12 @@ public class Traveler {
     private String password;
     @Column(name = "real_name", nullable = false)
     private String realName;
-    @Column(name = "registration_date")
-    private LocalDate registrationDate;
+    @Column(name = "created_at")
+    private LocalDate createdAt;
     @OneToMany(mappedBy = "traveler")
     private List<CourseCompletion> courseCompletions;
     @OneToMany(mappedBy = "traveler")
-    private List<ForumPost> forumPosts;
+    private List<QA> QAS;
     @OneToMany(mappedBy = "traveler")
     private List<Checklist> checklists;
     @OneToMany(mappedBy = "traveler")
@@ -43,17 +43,6 @@ public class Traveler {
     private List<Cart> cartItems;
 
     public TravelerDTO toDTO() {
-        return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, this.password, this.realName);
-    }
-
-    public static Traveler fromDTO(TravelerDTO dto, Authority authority) {
-        Traveler traveler = new Traveler();
-        traveler.setTravelerName(dto.getTravelerName());
-        traveler.setContact(dto.getContact());
-        traveler.setEmail(dto.getEmail());
-        traveler.setPassword(dto.getPassword());
-        traveler.setRealName(dto.getRealName());
-        traveler.setAuthority(authority);
-        return traveler;
+        return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, null, this.realName);
     }
 }

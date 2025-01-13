@@ -11,23 +11,21 @@ import java.time.LocalDate;
 @Getter
 @ToString
 @Entity
-@Table(name="forum_post_answer")
-public class ForumPostAnswer {
+@Table(name = "notice")
+public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "answer_id")
-    private Long answerId;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
-    private ForumPost forumPost;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "content")
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")
     private Traveler traveler;
-
-    @Column(name = "content", nullable = false)
-    private String content;
 
     @Column(name = "created_at")
     private LocalDate createdAt;

@@ -15,8 +15,8 @@ import java.util.List;
 public class Point {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "point_id")
-    private Long pointId;
+    @Column(name = "id")
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "traveler_name")
     private Traveler traveler;

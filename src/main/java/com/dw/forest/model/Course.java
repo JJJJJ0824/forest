@@ -33,7 +33,7 @@ public class Course {
     private String type;
 
     @Column(name = "price")
-    private int price;
+    private long price;
 
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;

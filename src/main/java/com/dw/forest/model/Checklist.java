@@ -13,8 +13,8 @@ import lombok.*;
 public class Checklist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "checklist_id")
-    private Long checklistId;
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")

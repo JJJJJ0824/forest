@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,12 +11,12 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
-@Table(name="forum_post")
-public class ForumPost {
+@Table(name="q_a")
+public class QA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
-    private Long postId;
+    @Column(name = "id")
+    private Long Id;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")
@@ -34,7 +33,4 @@ public class ForumPost {
 
     @Column(name = "type")
     private String type;
-
-    @OneToMany(mappedBy = "forumPost")
-    private List<ForumPostAnswer> answers;
 }

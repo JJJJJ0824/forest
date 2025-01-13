@@ -10,6 +10,7 @@ import com.dw.forest.repository.PointRepository;
 import com.dw.forest.repository.TravelerRepository;
 import com.sun.jdi.request.InvalidRequestStateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +25,9 @@ public class TravelerService {
     AuthorityRepository authorityRepository;
 
     @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
     PointRepository pointRepository;
 
     public TravelerDTO registerTraveler(TravelerDTO travelerDTO) {
@@ -31,23 +35,23 @@ public class TravelerService {
             throw new InvalidRequestStateException("Traveler name already exists");
         }
 
-        Authority authority = authorityRepository.findById("USER")
-                .orElseThrow(() -> new ResourceNotFoundException("No role found"));
+        Traveler newTraveler = new Traveler(travelerDTO.getTravelerName(), authorityRepository.findById("USER")
+                .orElseThrow(()->new ResourceNotFoundException("No Role")), travelerDTO.getEmail(),
+                travelerDTO.getContact(), passwordEncoder.encode(travelerDTO.getPassword()), travelerDTO.getRealName(),
+                LocalDate.now(), null, null, null, null, null);
 
-        Traveler traveler = Traveler.fromDTO(travelerDTO, authority);
-        traveler.setRegistrationDate(LocalDate.now());
-        Traveler savedTraveler = travelerRepository.save(traveler);
+        travelerRepository.save(newTraveler);
 
         Point welcomePoint = new Point(
                 null,
-                savedTraveler,
+                newTraveler,
                 "Welcome Bonus",
                 100,
                 null
         );
         pointRepository.save(welcomePoint);
 
-        return savedTraveler.toDTO();
+        return newTraveler.toDTO();
     }
 
     public List<Traveler> getAllTravelers() {

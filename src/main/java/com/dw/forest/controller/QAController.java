@@ -1,7 +1,7 @@
 package com.dw.forest.controller;
 
-import com.dw.forest.model.ForumPost;
-import com.dw.forest.service.ForumPostService;
+import com.dw.forest.model.QA;
+import com.dw.forest.service.QAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,12 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class ForumPostController {
+public class QAController {
     @Autowired
-    ForumPostService forumPostService;
+    QAService QAService;
 
     @GetMapping("/forum-posts/all")
-    public List<ForumPost> getAllForumPosts() {
-        return forumPostService.getAllForumPosts();
+    public List<QA> getAllForumPosts() {
+        return QAService.getAllForumPosts();
     }
 }

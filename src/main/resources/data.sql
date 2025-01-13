@@ -26,7 +26,7 @@
 --INSERT INTO category (category_name) VALUES ('자유여행');
 --INSERT INTO category (category_name) VALUES ('패키지여행');
 --
---INSERT INTO traveler (traveler_name, real_name, email, contact, password, registration_date, traveler_authority)
+--INSERT INTO traveler (traveler_name, real_name, email, contact, password, created_at, traveler_authority)
 --VALUES
 --('admin', 'administrator', 'admin@gmail.com', '010-0000-0000', '1234', now(), 'ADMIN'),
 --('traveler', '아무튼이름', 'abName@naver.com', '010-1111-1111', '4321', now(), 'USER'),
@@ -38,18 +38,18 @@
 --('traveler', '가족여행 유형 입니다', true, '가족여행'),
 --('traveler2', '자유여행 유형 입니다', true, '자유여행'),
 --('traveler3', '패키지여행 유형 입니다', true, '패키지여행');
-
+--
 --INSERT INTO point (traveler_name, action_type, points)
 --VALUES
 --('admin', 'test', 9999999999999);
 
---INSERT INTO forum_post (traveler_name, title, content, created_at, type)
+--INSERT INTO q_a (traveler_name, title, content, created_at, type)
 --VALUES
---('traveler', '점심 뭐 드셨나요', '저는 순대국밥이요', now(), 'FREE');
+--('traveler', '점심 뭐 드셨나요', '저는 순대국밥이요', now(), "q");
 
---INSERT INTO forum_post (traveler_name, title, content, created_at, type)
+--INSERT INTO q_a (traveler_name, title, content, created_at, type)
+--VALUES ('admin', '제 점심은요' ,'저는 컵라면 먹었습니다 ㅎㅎ 맛있더라구요' , now(), "a");
+--
+--INSERT INTO notice (traveler_name, title, content, created_at)
 --VALUES
---('admin', '중요 공지', '오늘 오후 8시부터 오후 8시 30분까지 약 30분간 사이트를 점검합니다. 이용에 불편을 드려 죄송합니다.', '2024-11-20', 'NOTICE');
-
---INSERT INTO forum_post_answer (post_id, traveler_name, content, created_at)
---VALUES (1, 'admin', '저는 컵라면 먹었습니다 ㅎㅎ 맛있더라구요', now());
+--('admin', '중요 공지', '오늘 오후 8시부터 오후 8시 30분까지 약 30분간 사이트를 점검합니다. 이용에 불편을 드려 죄송합니다.', '2024-11-20');
