@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/course")
 public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @GetMapping("/courses/all")
+    @GetMapping("/all")
     public List<Course> getAllCourses() {
         return courseService.getAllCourses();
     }

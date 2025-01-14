@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/course_completion")
 public class CourseCompletionController {
     @Autowired
     CourseCompletionService courseCompletionService;
 
-    @GetMapping("/course-completions/all")
+    @GetMapping("/all")
     public List<CourseCompletion> getAllCourseCompletions() {
         return courseCompletionService.getAllCourseCompletions();
     }

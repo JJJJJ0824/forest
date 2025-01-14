@@ -28,4 +28,7 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart_fk")
     private List<Point> points;
+
+    @Column(name = "purchase_status")  // 구매 상태를 나타내는 필드
+    private boolean purchaseStatus; //  "true" - 구매완료, true 상태가 되면 삭제하도록 설정 필요, "false" - 구매 진행 안됨
 }

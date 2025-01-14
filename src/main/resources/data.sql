@@ -39,23 +39,20 @@ VALUES
 ('traveler2', '자유여행 유형 입니다', true, '자유여행'),
 ('traveler3', '패키지여행 유형 입니다', true, '패키지여행');
 
-INSERT INTO point (traveler_name, action_type, points)
+INSERT INTO point (traveler_name, action_type, points, event_date)
 VALUES
-('admin', 'test', 9999999999999);
+('admin', 'test', 9999999999999, now());
 
 INSERT INTO q_a (traveler_name, title, content, created_at, type)
 VALUES
-('traveler', '점심 뭐 드셨나요', '저는 순대국밥이요', now(), "q");
-
-INSERT INTO q_a (traveler_name, title, content, created_at, type)
-VALUES ('admin', '제 점심은요' ,'저는 컵라면 먹었습니다 ㅎㅎ 맛있더라구요' , now(), "a");
+('traveler', '점심 뭐 드셨나요', '저는 순대국밥이요', now(), "q"), ('admin', '제 점심은요' ,'저는 컵라면 먹었습니다 ㅎㅎ 맛있더라구요' , now(), "a");
 
 INSERT INTO notice (traveler_name, title, content, created_at)
 VALUES
 ('admin', '중요 공지', '오늘 오후 8시부터 오후 8시 30분까지 약 30분간 사이트를 점검합니다. 이용에 불편을 드려 죄송합니다.', '2024-11-20');
 
-INSERT INTO cart (course_id, traveler_name)
-VALUES (1, 'traveler'), (2, 'traveler');
+INSERT INTO cart (course_id, traveler_name, purchase_status)
+VALUES (1, 'traveler', true), (2, 'traveler', true), (3, 'traveler', false);
 
 INSERT INTO course_completion (traveler_name, course_id, completion_date)
-VALUES ('traveler', 1, '2024-12-11'), ('traveler', 2, '2025-01-02');
+VALUES ('traveler', 1, '2024-12-11'), ('traveler', 2, null);

@@ -32,7 +32,7 @@ public class Course {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "price")
+    @Column(name = "price") // 해당 코스 가격
     private long price;
 
     @Column(name = "created_at", nullable = false)

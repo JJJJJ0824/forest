@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/point")
 public class PointController {
     @Autowired
     PointService pointService;
 
-    @GetMapping("/points/all")
+    @GetMapping("/all")
     public List<Point> getAllPoints() {
         return pointService.getAllPoints();
     }

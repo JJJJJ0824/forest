@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/checklist")
 public class ChecklistController {
     @Autowired
     ChecklistService checklistService;
 
-    @GetMapping("/checklist/all")
+    @GetMapping("/all")
     public List<Checklist> getAllChecklists() {
         return checklistService.getAllChecklists();
     }

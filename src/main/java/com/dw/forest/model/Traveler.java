@@ -17,11 +17,11 @@ import java.util.List;
 public class Traveler {
     @Id
     @Column(name = "traveler_name")
-    private String travelerName;
+    private String travelerName; // 사용자가 페이지에서 사용할 이름
 
     @ManyToOne
     @JoinColumn(name = "traveler_authority")
-    private Authority authority;
+    private Authority authority; // 권한
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -33,10 +33,10 @@ public class Traveler {
     private String password;
 
     @Column(name = "real_name", nullable = false)
-    private String realName;
+    private String realName; // 사용자의 실제 이름, 본명
 
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDate createdAt; // 만들어진 날짜, 계정 생성일
 
     @OneToMany(mappedBy = "traveler")
     private List<CourseCompletion> courseCompletions;

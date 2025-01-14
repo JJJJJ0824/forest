@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/q_a")
 public class QAController {
     @Autowired
     QAService QAService;
 
-    @GetMapping("/forum-posts/all")
+    @GetMapping("/all")
     public List<QA> getAllForumPosts() {
         return QAService.getAllForumPosts();
     }

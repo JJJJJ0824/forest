@@ -20,7 +20,7 @@ public class TravelerController {
     @Autowired
     TravelerService travelerService;
 
-    @PostMapping("/register")
+    @PostMapping("/traveler/register")
     public ResponseEntity<TravelerDTO> registerTraveler(@RequestBody TravelerDTO travelerDTO) {
         return new ResponseEntity<>(
                 travelerService.registerTraveler(travelerDTO),
@@ -46,12 +46,13 @@ public class TravelerController {
         return new ResponseEntity<>("You have been logged out.", HttpStatus.OK);
     }
 
-    @GetMapping("/travelers/all")
+
+    @GetMapping("/traveler/all")
     public ResponseEntity<List<Traveler>> getAllTraveler() {
         return new ResponseEntity<>(travelerService.getAllTravelers(), HttpStatus.OK);
     }
 
-    @GetMapping("/current-traveler")
+    @GetMapping("/traveler/me")
     public ResponseEntity<TravelerDTO> getCurrentTraveler(HttpServletRequest request) {
         Traveler traveler = travelerService.getCurrentTraveler(request);
         return new ResponseEntity<>(traveler.toDTO(), HttpStatus.OK);

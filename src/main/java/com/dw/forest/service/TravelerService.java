@@ -4,7 +4,6 @@ import com.dw.forest.dto.TravelerDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.exception.UnauthorizedTravelerException;
-import com.dw.forest.model.Authority;
 import com.dw.forest.model.Point;
 import com.dw.forest.model.Traveler;
 import com.dw.forest.repository.AuthorityRepository;
@@ -34,6 +33,10 @@ public class TravelerService {
     @Autowired
     PointRepository pointRepository;
 
+    public List<Traveler> getAllTravelers() {
+        return travelerRepository.findAll();
+    }
+
     public TravelerDTO registerTraveler(TravelerDTO travelerDTO) {
         if (travelerRepository.existsById(travelerDTO.getTravelerName())) {
             throw new InvalidRequestStateException("Traveler name already exists");
@@ -46,15 +49,10 @@ public class TravelerService {
 
         travelerRepository.save(newTraveler);
 
-        Point welcomePoint = new Point(
-                null,
-                newTraveler,
-                "Welcome Bonus",
-                100,
-                null
-        );
-        pointRepository.save(welcomePoint);
+        Point welcomePoint = new Point(null, newTraveler, "Welcome Bonus", 100, LocalDate.now(), null);
 
+        pointRepository.save(welcomePoint);
+        
         return newTraveler.toDTO();
     }
 
@@ -70,9 +68,5 @@ public class TravelerService {
         }
         String travelerName = (String) session.getAttribute("travelerName");
         return travelerRepository.findById(travelerName).orElseThrow(()->new InvalidRequestException("No TravelerName"));
-    }
-
-    public List<Traveler> getAllTravelers() {
-        return travelerRepository.findAll();
     }
 }

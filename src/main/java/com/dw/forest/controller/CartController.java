@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cart")
 public class CartController {
     @Autowired
     CartService cartService;
 
-    @GetMapping("/carts/all")
+    @GetMapping("/all")
     public List<Cart> getAllCarts() {
         return cartService.getAllCarts();
     }

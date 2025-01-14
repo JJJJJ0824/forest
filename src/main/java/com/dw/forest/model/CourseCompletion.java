@@ -27,5 +27,9 @@ public class CourseCompletion {
     private Course course;
 
     @Column(name = "completion_date")
-    private LocalDate completionDate;
+    private LocalDate completionDate; // 완료일이지만, 사용일을 대조하여 추가 가능
+
+    @ManyToOne
+    @JoinColumn(name = "point_id") // 포인트 사용과 연결
+    private Point pointUsed;
 }
