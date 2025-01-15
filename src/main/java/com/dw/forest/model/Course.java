@@ -46,4 +46,8 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Cart> cartItems;
+
+    @ManyToOne
+    @JoinColumn(name = "category_name")
+    private Category category;
 }

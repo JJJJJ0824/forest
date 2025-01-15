@@ -1,6 +1,7 @@
 package com.dw.forest.service;
 
 import com.dw.forest.dto.TravelerDTO;
+import com.dw.forest.dto.TravelerResponseDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.exception.UnauthorizedTravelerException;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TravelerService {
@@ -34,7 +36,11 @@ public class TravelerService {
     PointRepository pointRepository;
 
     public List<Traveler> getAllTravelers() {
-        return travelerRepository.findAll();
+        List<Traveler> travelers = travelerRepository.findAll();
+        if (travelers.isEmpty()) {
+            throw new ResourceNotFoundException("Cannot find any traveler");
+        }
+        return travelers;
     }
 
     public TravelerDTO registerTraveler(TravelerDTO travelerDTO) {
@@ -68,5 +74,53 @@ public class TravelerService {
         }
         String travelerName = (String) session.getAttribute("travelerName");
         return travelerRepository.findById(travelerName).orElseThrow(()->new InvalidRequestException("No TravelerName"));
+    }
+
+    public Traveler updateTraveler(TravelerResponseDTO travelerResponseDTO) {
+        Optional<Traveler> travelerOptional = travelerRepository.findById(travelerResponseDTO.getTravelerName());
+
+        if (travelerOptional.isEmpty()) {
+            throw new InvalidRequestException("유저 정보 업데이트에 실패하였습니다.");
+        }
+
+        Traveler traveler = travelerOptional.get();
+
+        // 업데이트할 정보 설정
+        if (travelerResponseDTO.getContact() != null) {
+            traveler.setContact(travelerResponseDTO.getContact());
+        }
+        if (travelerResponseDTO.getEmail() != null) {
+            traveler.setEmail(travelerResponseDTO.getEmail());
+        }
+        if (travelerResponseDTO.getRealName() != null) {
+            traveler.setRealName(travelerResponseDTO.getRealName());
+        }
+
+        return travelerRepository.save(traveler);
+    }
+
+    public String changePassword(String traveler_name, String oldPassword, String newPassword) {
+        Traveler traveler = travelerRepository.findById(traveler_name).orElseThrow();
+
+        if (traveler==null) {
+            throw new ResourceNotFoundException("유저 이름이 맞지 않습니다.");
+        }
+
+        // 기존 비밀번호 검증
+        if (!traveler.getPassword().equals(oldPassword)) {
+            throw new InvalidRequestException("비밀번호가 틀렸습니다.");
+        }
+
+        // 새 비밀번호로 설정
+        traveler.setPassword(newPassword);
+        travelerRepository.save(traveler);
+
+        return "비밀번호";
+    }
+
+    public String deleteTraveler(String traveler_name) {
+       travelerRepository.findById(traveler_name).orElseThrow(()->new ResourceNotFoundException("Cannot find Traveler"));
+       travelerRepository.deleteById(traveler_name);
+       return "성공하였습니다.";
     }
 }
