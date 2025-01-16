@@ -1,5 +1,7 @@
 package com.dw.forest.model;
 
+import com.dw.forest.dto.PointDTO;
+import com.dw.forest.dto.PointEventDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,4 +31,12 @@ public class Point {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart_fk;
+
+    public PointDTO toDTO() {
+        return new PointDTO(this.points, this.actionType);
+    }
+
+    public PointEventDTO toEvent() {
+        return new PointEventDTO(this.eventDate, this.points, this.actionType);
+    }
 }

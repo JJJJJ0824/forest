@@ -67,13 +67,15 @@ public class TravelerService {
         return passwordEncoder.matches(password, traveler.getPassword());
     }
 
-    public Traveler getCurrentTraveler(HttpServletRequest request) {
+    public TravelerDTO getCurrentTraveler(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        return travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
+        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
+
+        return traveler.toDTO();
     }
 
     public TravelerDTO updateTraveler(TravelerResponseDTO travelerResponseDTO) {

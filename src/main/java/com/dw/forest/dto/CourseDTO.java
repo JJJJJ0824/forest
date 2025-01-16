@@ -29,5 +29,4 @@ public class CourseDTO {
         this.price = course.getPrice();
         this.createdAt = course.getCreatedAt();
     }
-
 }

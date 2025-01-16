@@ -1,14 +1,13 @@
 package com.dw.forest.controller;
 
+import com.dw.forest.dto.PointDTO;
+import com.dw.forest.dto.PointEventDTO;
 import com.dw.forest.model.Point;
 import com.dw.forest.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,17 +18,39 @@ public class PointController {
     PointService pointService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Point>> getAllPoints() {
+    public ResponseEntity<List<PointEventDTO>> getAllPoints() {
         return new ResponseEntity<>(pointService.getAllPoints(), HttpStatus.OK);
     }
 
+    @PostMapping("/{travelerName}/add")
+    public Point addPoints(@PathVariable String travelerName, @RequestBody PointDTO pointDTO) {
+        return pointService.addPointsToTraveler(travelerName,
+                pointDTO.getPoints(), pointDTO.getActionType());
+    }
+
+    @PostMapping("/{travelerName}/use")
+    public Point usePoints(@PathVariable String travelerName, @RequestBody PointDTO pointDTO) {
+        return pointService.usePointsFromTraveler(travelerName, pointDTO.getPoints(), pointDTO.getActionType());
+    }
+
+    @PostMapping("/event")
+    public ResponseEntity<String> triggerEventPoints(@RequestBody PointEventDTO pointEventDTO) {
+        pointService.giveDoublePointsOnEvent(pointEventDTO);
+        return ResponseEntity.ok("포인트 이벤트가 성공적으로 적용되었습니다.");
+    }
+
     @GetMapping("/{traveler_name}/all")
-    public ResponseEntity<List<Point>> getAllPointsOfTraveler(@PathVariable String traveler_name) {
+    public ResponseEntity<List<PointEventDTO>> getAllPointsOfTraveler(@PathVariable String traveler_name) {
         return new ResponseEntity<>(pointService.getAllPointsOfTraveler(traveler_name), HttpStatus.OK);
     }
 
-    @GetMapping("/{traveler_name}/usage")
-    public ResponseEntity<List<Point>> getUsedPointsOfTraveler(@PathVariable String traveler_name) {
-        return new ResponseEntity<>(pointService.getUsedPointsOfTraveler(traveler_name), HttpStatus.OK);
+    @GetMapping("/{travelerName}/get-charged-all")
+    public ResponseEntity<List<PointEventDTO>> getChargedPointsOfTraveler(@PathVariable String travelerName) {
+        return new ResponseEntity<>(pointService.getChargedPointsOfTraveler(travelerName), HttpStatus.OK);
+    }
+
+    @GetMapping("/{travelerName}/get-used-all")
+    public ResponseEntity<List<PointEventDTO>> getUsedPointsOfTraveler(@PathVariable String travelerName) {
+        return new ResponseEntity<>(pointService.getUsedPointsOfTraveler(travelerName), HttpStatus.OK);
     }
 }
