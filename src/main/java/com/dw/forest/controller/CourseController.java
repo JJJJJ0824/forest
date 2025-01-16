@@ -46,43 +46,30 @@ public class CourseController {
 
     @DeleteMapping("/{course_id}/delete")
     public ResponseEntity<String> deleteCourse(@PathVariable Long course_id) {
-        return courseService.deleteCourse(course_id);
+        return new ResponseEntity<>(courseService.deleteCourse(course_id), HttpStatus.OK);
     }
 
     @GetMapping("/category/{category_name}") // 특정 카테고리의 강의목록을 조회
     public ResponseEntity<List<CourseDTO>> getCoursesByCategory(@PathVariable String category_name ) {
         List<CourseDTO> courses = courseService.getCoursesByCategory(category_name);
-        return new ResponseEntity<>(courses,HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @GetMapping("/price-range") // 특정가격 범위 내의 강의를 조회
-    public ResponseEntity<List<CourseDTO>> getCoursesByPriceRange(
-            @RequestParam("minPrice") long minPrice,
-            @RequestParam("maxPrice") long maxPrice) {
-
+    public ResponseEntity<List<CourseDTO>> getCoursesByPriceRange(@RequestParam("minPrice") long minPrice, @RequestParam("maxPrice") long maxPrice) {
         List<CourseDTO> courses = courseService.getCoursesByPriceRange(minPrice, maxPrice);
-
         return ResponseEntity.ok(courses);
     }
 
     @GetMapping("/type/free")
-    public List<CourseDTO> getFreeCourses() {
-        return courseService.getFreeCourses();
-    }
+    public List<CourseDTO> getFreeCourses() {return courseService.getFreeCourses();}
 
     @GetMapping("/type/family")
-    public List<CourseDTO> getFamilyCourses() {
-        return courseService.getFamilyCourses();
-    }
+    public List<CourseDTO> getFamilyCourses() {return courseService.getFamilyCourses();}
 
     @GetMapping("/type/package")
-    public List<CourseDTO> getPackageCourses() {
-        return courseService.getPackageCourses();
-    }
+    public List<CourseDTO> getPackageCourses() {return courseService.getPackageCourses();}
 
     @GetMapping("/type/common")
-    public List<CourseDTO> getCommonCourses() {
-        return courseService.getCommonCourses();
-    }
-
+    public List<CourseDTO> getCommonCourses() {return courseService.getCommonCourses();}
 }

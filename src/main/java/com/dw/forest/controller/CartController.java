@@ -31,7 +31,6 @@ public class CartController {
     public ResponseEntity<CartDTO> addCourseToCart(@RequestBody CartDTO cartDTO) {
 
         return new ResponseEntity<>(cartService.addCourseToCart(cartDTO), HttpStatus.CREATED);
-
     }
 
     @GetMapping("/{travelerName}")
@@ -63,22 +62,17 @@ public class CartController {
     }
 
     @GetMapping("/{travelerName}/exists/{courseId}")
-    public ResponseEntity<String> isCourseInCart(
-            @PathVariable String travelerName,
-            @PathVariable Long courseId) {
-
+    public ResponseEntity<String> isCourseInCart(@PathVariable String travelerName, @PathVariable Long courseId) {
         try {
             boolean isInCart = cartService.isCourseInCart(travelerName, courseId);
 
             if (isInCart) {
-                return ResponseEntity.ok("해당강의는 이미 장바구니 안에 있습니다.");
+                return new ResponseEntity<>("해당 강의는 이미 장바구니 안에 있습니다.", HttpStatus.OK);
             } else {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                        .body("해당 강의는 장바구니안에 없습니다.");
+                throw new ResourceNotFoundException("해당 강의는 장바구니 안에 없습니다.");
             }
         } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
+            throw new ResourceNotFoundException(e.getMessage());
         }
     }
 

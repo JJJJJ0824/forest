@@ -58,12 +58,12 @@ public class CourseService {
         return new CourseDTO(course);
     }
 
-    public ResponseEntity<String> deleteCourse(Long courseId) {
+    public String deleteCourse(Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다."));
 
         courseRepository.delete(course);
-        return new ResponseEntity<>("강의 삭제 성공 !!" , HttpStatus.OK);
+        return "강의 삭제 성공 !!";
     }
 
     public List<CourseDTO> getCoursesByCategory(String categoryName) {
