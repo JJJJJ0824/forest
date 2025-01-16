@@ -4,6 +4,8 @@ import com.dw.forest.dto.CartDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -35,5 +37,17 @@ public class Cart {
 
     public CartDTO toDTO() {
         return new CartDTO(this.course.getCourseId(), this.traveler.getTravelerName(), this.purchaseStatus);
+    }
+
+    public void addPoint(String actionType, double pointsValue) {
+        if (this.points == null) {
+            this.points = new ArrayList<>();
+        }
+        Point point = new Point();
+        point.setActionType(actionType);
+        point.setPoints(pointsValue);
+        point.setEventDate(LocalDate.now());
+        point.setCart_fk(this); // Point와 Cart의 연관 관계 설정
+        this.points.add(point);
     }
 }

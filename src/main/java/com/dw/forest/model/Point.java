@@ -23,7 +23,7 @@ public class Point {
     @Column(name = "action_type") // 포인트 사용 목적
     private String actionType;
     @Column(name = "points") // 충전, 사용 다 나타낼 수 있음 (양수면 충전, 음수면 사용)
-    private long points;
+    private double points;
     @Column(name = "event_date") // 포인트 충전, 사용 일자
     private LocalDate eventDate;
     @ManyToOne

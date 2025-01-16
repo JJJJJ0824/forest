@@ -64,7 +64,7 @@ public class TravelerController {
     }
 
     @PutMapping("/{traveler_name}/update")
-    public ResponseEntity<Traveler> updateTraveler(@RequestBody TravelerResponseDTO travelerResponseDTO) {
+    public ResponseEntity<TravelerDTO> updateTraveler(@RequestBody TravelerResponseDTO travelerResponseDTO) {
         return new ResponseEntity<>(travelerService.updateTraveler(travelerResponseDTO),HttpStatus.OK);
     }
 

@@ -38,18 +38,18 @@ public class TravelerService {
     public List<Traveler> getAllTravelers() {
         List<Traveler> travelers = travelerRepository.findAll();
         if (travelers.isEmpty()) {
-            throw new ResourceNotFoundException("Cannot find any traveler");
+            throw new ResourceNotFoundException("여행자가 없습니다.");
         }
         return travelers;
     }
 
     public TravelerDTO registerTraveler(TravelerDTO travelerDTO) {
         if (travelerRepository.existsById(travelerDTO.getTravelerName())) {
-            throw new InvalidRequestStateException("Traveler name already exists");
+            throw new InvalidRequestStateException("이미 존재하는 계정명입니다.");
         }
 
         Traveler newTraveler = new Traveler(travelerDTO.getTravelerName(), authorityRepository.findById("USER")
-                .orElseThrow(()->new ResourceNotFoundException("No Role")), travelerDTO.getEmail(),
+                .orElseThrow(()->new UnauthorizedTravelerException("올바른 역할이 아닙니다.")), travelerDTO.getEmail(),
                 travelerDTO.getContact(), passwordEncoder.encode(travelerDTO.getPassword()), travelerDTO.getRealName(),
                 LocalDate.now(), null, null, null, null, null);
 
@@ -58,32 +58,27 @@ public class TravelerService {
         Point welcomePoint = new Point(null, newTraveler, "Welcome Bonus", 100, LocalDate.now(), null);
 
         pointRepository.save(welcomePoint);
-        
+
         return newTraveler.toDTO();
     }
 
     public boolean validateUser(String travelerName, String password) {
-        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new InvalidRequestException("Invalid TravelerName"));
+        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
         return passwordEncoder.matches(password, traveler.getPassword());
     }
 
     public Traveler getCurrentTraveler(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
-            throw new UnauthorizedTravelerException("No Session exist");
+            throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        return travelerRepository.findById(travelerName).orElseThrow(()->new InvalidRequestException("No TravelerName"));
+        return travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
     }
 
-    public Traveler updateTraveler(TravelerResponseDTO travelerResponseDTO) {
-        Optional<Traveler> travelerOptional = travelerRepository.findById(travelerResponseDTO.getTravelerName());
-
-        if (travelerOptional.isEmpty()) {
-            throw new InvalidRequestException("유저 정보 업데이트에 실패하였습니다.");
-        }
-
-        Traveler traveler = travelerOptional.get();
+    public TravelerDTO updateTraveler(TravelerResponseDTO travelerResponseDTO) {
+        Traveler traveler = travelerRepository.findById(travelerResponseDTO.getTravelerName())
+                .orElseThrow(()->new InvalidRequestException("유저 정보 업데이트에 실패하였습니다."));
 
         // 업데이트할 정보 설정
         if (travelerResponseDTO.getContact() != null) {
@@ -96,14 +91,16 @@ public class TravelerService {
             traveler.setRealName(travelerResponseDTO.getRealName());
         }
 
-        return travelerRepository.save(traveler);
+        travelerRepository.save(traveler);
+
+        return traveler.toDTO();
     }
 
     public String changePassword(String traveler_name, String oldPassword, String newPassword) {
         Traveler traveler = travelerRepository.findById(traveler_name).orElseThrow();
 
-        if (traveler==null) {
-            throw new ResourceNotFoundException("유저 이름이 맞지 않습니다.");
+        if (traveler == null) {
+            throw new ResourceNotFoundException("계정명이 잘못되었습니다.");
         }
 
         // 기존 비밀번호 검증
@@ -119,7 +116,7 @@ public class TravelerService {
     }
 
     public String deleteTraveler(String traveler_name) {
-       travelerRepository.findById(traveler_name).orElseThrow(()->new ResourceNotFoundException("Cannot find Traveler"));
+       travelerRepository.findById(traveler_name).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
        travelerRepository.deleteById(traveler_name);
        return "성공하였습니다.";
     }

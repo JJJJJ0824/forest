@@ -38,14 +38,14 @@ public class CourseService {
 
     public CourseDTO getCourseById(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 아이디를 찾을수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다."));
 
         return new CourseDTO(course);
     }
 
     public CourseDTO updateCourse(Long courseId, CourseDTO courseDTO){
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 아이디를 찾을수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다."));
 
         course.setTitle(courseDTO.getTitle());
         course.setDescription(courseDTO.getDescription());
@@ -60,7 +60,7 @@ public class CourseService {
 
     public ResponseEntity<String> deleteCourse(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 아이디를 찾을수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다."));
 
         courseRepository.delete(course);
         return new ResponseEntity<>("강의 삭제 성공 !!" , HttpStatus.OK);
@@ -69,44 +69,31 @@ public class CourseService {
     public List<CourseDTO> getCoursesByCategory(String categoryName) {
         List<Course> courses = courseRepository.findByCategoryCategoryName(categoryName);
 
-        return courses.stream()
-                .map(course -> new CourseDTO(course))
-                .collect(Collectors.toList());
+        return courses.stream().map(CourseDTO::new).toList();
     }
 
     public List<CourseDTO> getCoursesByPriceRange(long minPrice , long maxPrice) {
         List<Course> courses = courseRepository.findByPriceBetween(minPrice, maxPrice);
-        return courses.stream()
-                .map(CourseDTO::new)
-                .collect(Collectors.toList());
+        return courses.stream().map(CourseDTO::new).toList();
     }
 
     public List<CourseDTO> getFreeCourses() {
         List<Course> freeCourses = courseRepository.findByType("자유");
-        return freeCourses.stream()
-                .map(CourseDTO::new)
-                .collect(Collectors.toList());
+        return freeCourses.stream().map(CourseDTO::new).toList();
     }
 
     public List<CourseDTO> getFamilyCourses() {
         List<Course> familyCourses = courseRepository.findByType("가족");
-        return familyCourses.stream()
-                .map(CourseDTO::new)
-                .toList();
+        return familyCourses.stream().map(CourseDTO::new).toList();
     }
 
     public List<CourseDTO> getPackageCourses() {
         List<Course> packageCourses = courseRepository.findByType("패키지");
-        return packageCourses.stream()
-                .map(CourseDTO::new)
-                .toList();
+        return packageCourses.stream().map(CourseDTO::new).toList();
     }
 
     public List<CourseDTO> getCommonCourses() {
         List<Course> commonCourses = courseRepository.findByType("공통");
-        return commonCourses.stream()
-                .map(CourseDTO::new)
-                .toList();
+        return commonCourses.stream().map(CourseDTO::new).toList();
     }
-
 }
