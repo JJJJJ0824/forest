@@ -1,6 +1,7 @@
 package com.dw.forest.model;
 
 import com.dw.forest.dto.QaDTO;
+import com.dw.forest.dto.QaReadDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,7 +36,7 @@ public class QA {
     @Column(name = "type")
     private String type;
 
-    public QaDTO toDTO() {
-        return new QaDTO(this.Id, this.traveler.getTravelerName(), this.content, this.traveler.getTravelerName());
+    public QaReadDTO toRead() {
+        return new QaReadDTO(this.Id, this.type, this.title, this.content, this.traveler.getTravelerName(), this.createdAt);
     }
 }

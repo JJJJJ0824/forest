@@ -5,14 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
-public class QaDTO {
+public class QaReadDTO {
     private Long id;
+    private String type;
     private String title;
     private String content;
     private String traveler_name;
+    private LocalDate createdAt;
 }
