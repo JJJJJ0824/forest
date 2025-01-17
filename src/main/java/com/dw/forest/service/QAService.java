@@ -9,6 +9,7 @@ import com.dw.forest.repository.QARepository;
 import com.dw.forest.repository.TravelerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -100,13 +101,13 @@ public class QAService {
                     stream().map(QA::toRead).toList();
 
             if (qaReadList.isEmpty()) {
-                throw new ResourceNotFoundException( "해당 제목을 가진 게시글이 없습니다.");
+                throw new ResourceNotFoundException("해당 제목을 가진 게시글이 없습니다.");
             }
 
             return qaReadList;
 
         } catch (Exception e) {
-            throw new ResourceNotFoundException( "게시글 검색 중 오류가 발생했습니다.");
+            throw new ResourceNotFoundException("게시글 검색 중 오류가 발생했습니다.");
         }
     }
 
@@ -126,6 +127,32 @@ public class QAService {
             }
 
             return qaReadList;
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("내용 검색 중 오류가 발생했습니다.");
+        }
+    }
+
+    public List<QaReadDTO> searchByTitleAndContent(String title, String content) {
+        try {
+            if (title == null && content == null) {
+                throw new ResourceNotFoundException("검색어 두 개가 모두 빈 값일 수 없습니다.");
+            }
+
+            if (title == null) {
+                title = content;
+            }
+
+            if (content == null) {
+                content = title;
+            }
+
+            List<QaReadDTO> qaRead = qaRepository.findByTitleAndContentLike(title, content).stream().map(QA::toRead).toList();
+
+            if (qaRead.isEmpty()) {
+                throw new ResourceNotFoundException("검색어로 게시글이 확인되지 않습니다. 다시 확인하세요.");
+            }
+
+            return qaRead;
         } catch (Exception e) {
             throw new ResourceNotFoundException("내용 검색 중 오류가 발생했습니다.");
         }

@@ -42,13 +42,18 @@ public class QAController {
         return new ResponseEntity<>(qaService.updateById(qa_id, qaDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/notifications")
+    @GetMapping("/title")
     public ResponseEntity<List<QaReadDTO>> searchByTitle(@RequestParam String title) {
         return new ResponseEntity<>(qaService.searchByTitle(title), HttpStatus.OK);
     }
 
-    @GetMapping("/contents")
+    @GetMapping("/content")
     public ResponseEntity<List<QaReadDTO>> searchByContent(@RequestParam String content) {
         return new ResponseEntity<>(qaService.searchByContent(content), HttpStatus.OK);
+    }
+
+    @GetMapping("/title-content")
+    public ResponseEntity<List<QaReadDTO>> searchByTitleAndContent(@RequestParam String title, @RequestParam String content) {
+        return new ResponseEntity<>(qaService.searchByTitleAndContent(title, content), HttpStatus.OK);
     }
 }
