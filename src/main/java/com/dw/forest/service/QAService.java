@@ -9,7 +9,6 @@ import com.dw.forest.repository.QARepository;
 import com.dw.forest.repository.TravelerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -146,7 +145,7 @@ public class QAService {
                 content = title;
             }
 
-            List<QaReadDTO> qaRead = qaRepository.findByTitleAndContentLike(title, content).stream().map(QA::toRead).toList();
+            List<QaReadDTO> qaRead = qaRepository.findByTitleOrContentLike(title, content).stream().map(QA::toRead).toList();
 
             if (qaRead.isEmpty()) {
                 throw new ResourceNotFoundException("검색어로 게시글이 확인되지 않습니다. 다시 확인하세요.");

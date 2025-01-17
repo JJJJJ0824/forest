@@ -11,5 +11,5 @@ public interface QARepository extends JpaRepository<QA, Long> {
     List<QA> findByTitleLike(String title);
     List<QA> findByContentLike(String content);
     @Query("SELECT q FROM QA q WHERE q.title LIKE :title OR q.content LIKE :content")
-    List<QA> findByTitleAndContentLike(String title, String content);
+    List<QA> findByTitleOrContentLike(String title, String content);
 }
