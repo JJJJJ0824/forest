@@ -25,13 +25,13 @@ public class PointController {
     }
 
     @PostMapping("/{travelerName}/add")
-    public Point addPoints(@PathVariable String travelerName, @RequestBody PointDTO pointDTO) {
+    public PointEventDTO addPoints(@PathVariable String travelerName, @RequestBody PointDTO pointDTO) {
         return pointService.addPointsToTraveler(travelerName,
                 pointDTO.getPoints(), pointDTO.getActionType());
     }
 
     @PostMapping("/{travelerName}/use")
-    public Point usePoints(@PathVariable String travelerName, @RequestBody PointDTO pointDTO) {
+    public PointEventDTO usePoints(@PathVariable String travelerName, @RequestBody PointDTO pointDTO) {
         return pointService.usePointsFromTraveler(travelerName, pointDTO.getPoints(), pointDTO.getActionType());
     }
 

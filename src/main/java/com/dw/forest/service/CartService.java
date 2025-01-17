@@ -182,9 +182,9 @@ public class CartService {
     private double getDiscountRate(String discountCode) {
         // 할인율 로직을 Service 내부에서 처리
         return switch (discountCode) {
-            case "cannot reach" -> 0.10;
+            case "cannot reach" -> 0.00;
             case "SUMMER2025" -> 0.20;
-            case "cannot reach-2" -> 0.30;
+            case "cannot reach-2" -> 0.00;
             default -> 0.0; // 유효하지 않은 할인 코드
         };
     }

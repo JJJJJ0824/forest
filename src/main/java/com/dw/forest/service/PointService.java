@@ -31,7 +31,7 @@ public class PointService {
         return pointRepository.findAll().stream().map(Point::toEvent).toList();
     }
 
-    public Point addPointsToTraveler(String travelerName, double points, String actionType) {
+    public PointEventDTO addPointsToTraveler(String travelerName, double points, String actionType) {
 
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다."));
@@ -42,10 +42,10 @@ public class PointService {
         point.setActionType(actionType);
         point.setEventDate(LocalDate.now());
 
-        return pointRepository.save(point);
+        return pointRepository.save(point).toEvent();
     }
 
-    public Point usePointsFromTraveler(String travelerName, double points, String actionType){
+    public PointEventDTO usePointsFromTraveler(String travelerName, double points, String actionType){
 
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다"));
@@ -64,8 +64,7 @@ public class PointService {
         point.setActionType(actionType);
         point.setEventDate(LocalDate.now());
 
-        return pointRepository.save(point);
-
+        return pointRepository.save(point).toEvent();
     }
 
     public String giveDoublePointsOnEvent(PointEventDTO pointEventDTO) {

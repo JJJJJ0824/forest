@@ -1,5 +1,6 @@
 package com.dw.forest.model;
 
+import com.dw.forest.dto.NoticeDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,4 +30,8 @@ public class Notice {
 
     @Column(name = "created_at")
     private LocalDate createdAt;
+
+    public NoticeDTO toDTO() {
+        return new NoticeDTO(this.id, this.title, this.content, this.createdAt, this.traveler.getTravelerName());
+    }
 }
