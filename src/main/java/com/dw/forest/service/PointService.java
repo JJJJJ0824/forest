@@ -1,5 +1,7 @@
 package com.dw.forest.service;
 
+import com.dw.forest.dto.PointConvertRequestDTO;
+import com.dw.forest.dto.PointConvertResponseDTO;
 import com.dw.forest.dto.PointDTO;
 import com.dw.forest.dto.PointEventDTO;
 import com.dw.forest.exception.InvalidRequestException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PointService {
@@ -88,6 +91,49 @@ public class PointService {
             throw new InvalidRequestException("이벤트 날짜와 현재 날짜가 일치하지 않습니다.");
         }
         return "포인트 2배 이벤트 적용";
+    }
+
+    public PointConvertResponseDTO convertPointsToCoupon(PointConvertRequestDTO requestDTO) {
+        Traveler traveler = travelerRepository.findById(requestDTO.getTravelerName())
+                .orElseThrow(() -> new ResourceNotFoundException("유저를 찾을수 없습니다."));
+
+        List<Point> points = pointRepository.findByTraveler(traveler);
+
+        double totalPoints = points.stream().mapToDouble(Point::getPoints).sum();
+
+        if (totalPoints < requestDTO.getPointsToConvert()) {
+            throw new InvalidRequestException("전환할 포인트가 부족합니다.");
+        }
+        String couponCode = generateCouponCode();
+
+        double pointUsed = requestDTO.getPointsToConvert();
+        for (Point point : points) {
+            if (pointUsed <= 0) {
+                throw new InvalidRequestException("전환할 포인트가 부족합니다.");
+            };
+
+            if (point.getPoints() >= pointUsed) {
+                point.setPoints(point.getPoints() - pointUsed);
+                pointUsed = 0;
+            } else {
+                pointUsed -= point.getPoints();
+                point.setPoints(0);
+            }
+        }
+
+        pointRepository.saveAll(points);
+
+        PointConvertResponseDTO responseDTO = new PointConvertResponseDTO();
+        responseDTO.setCouponCode(couponCode);
+        responseDTO.setPointsUsed(requestDTO.getPointsToConvert());
+        responseDTO.setMessage("포인트가 성공적으로 쿠폰전환 완료");
+
+        return responseDTO;
+    }
+
+    private String generateCouponCode() {
+        // 쿠폰 코드 생성
+        return UUID.randomUUID().toString();
     }
 
     public List<PointEventDTO> getAllPointsOfTraveler(String travelerName) {

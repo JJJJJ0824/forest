@@ -1,5 +1,7 @@
 package com.dw.forest.controller;
 
+import com.dw.forest.dto.PointConvertRequestDTO;
+import com.dw.forest.dto.PointConvertResponseDTO;
 import com.dw.forest.dto.PointDTO;
 import com.dw.forest.dto.PointEventDTO;
 import com.dw.forest.model.Point;
@@ -47,6 +49,16 @@ public class PointController {
     @GetMapping("/{travelerName}/get-charged-all")
     public ResponseEntity<List<PointEventDTO>> getChargedPointsOfTraveler(@PathVariable String travelerName) {
         return new ResponseEntity<>(pointService.getChargedPointsOfTraveler(travelerName), HttpStatus.OK);
+    }
+
+    @PostMapping("/convert")
+    public ResponseEntity<PointConvertResponseDTO> convertPoints(@RequestBody PointConvertRequestDTO requestDTO) {
+        try {
+            PointConvertResponseDTO responseDTO = pointService.convertPointsToCoupon(requestDTO);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new PointConvertResponseDTO(null, 0, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{travelerName}/get-used-all")
