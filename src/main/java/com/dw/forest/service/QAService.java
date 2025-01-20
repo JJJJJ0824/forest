@@ -118,14 +118,13 @@ public class QAService {
         String abContent = "%" + content + "%";
 
         try {
-            List<QaReadDTO> qaReadList = qaRepository.findByContentLike(abContent).
-                    stream().map(QA::toRead).toList();
+            List<QA> qas = qaRepository.findByContentLike(abContent);
 
-            if (qaReadList.isEmpty()){
+            if (qas.isEmpty()){
                 throw new ResourceNotFoundException("해당 내용을 가진 게시글이 없습니다.");
             }
 
-            return qaReadList;
+            return qas.stream().map(QA::toRead).toList();
         } catch (Exception e) {
             throw new ResourceNotFoundException("내용 검색 중 오류가 발생했습니다.");
         }
@@ -145,13 +144,13 @@ public class QAService {
                 content = title;
             }
 
-            List<QaReadDTO> qaRead = qaRepository.findByTitleOrContentLike(title, content).stream().map(QA::toRead).toList();
+            List<QA> qas = qaRepository.findByTitleOrContentLike(title, content);
 
-            if (qaRead.isEmpty()) {
+            if (qas.isEmpty()) {
                 throw new ResourceNotFoundException("검색어로 게시글이 확인되지 않습니다. 다시 확인하세요.");
             }
 
-            return qaRead;
+            return qas.stream().map(QA::toRead).toList();
         } catch (Exception e) {
             throw new ResourceNotFoundException("내용 검색 중 오류가 발생했습니다.");
         }

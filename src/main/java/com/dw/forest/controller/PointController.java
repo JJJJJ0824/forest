@@ -26,8 +26,7 @@ public class PointController {
 
     @PostMapping("/{travelerName}/add")
     public PointEventDTO addPoints(@PathVariable String travelerName, @RequestBody PointDTO pointDTO) {
-        return pointService.addPointsToTraveler(travelerName,
-                pointDTO.getPoints(), pointDTO.getActionType());
+        return pointService.addPointsToTraveler(travelerName, pointDTO.getPoints(), pointDTO.getActionType());
     }
 
     @PostMapping("/{travelerName}/use")

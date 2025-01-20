@@ -2,7 +2,6 @@ package com.dw.forest.service;
 
 import com.dw.forest.dto.PointConvertRequestDTO;
 import com.dw.forest.dto.PointConvertResponseDTO;
-import com.dw.forest.dto.PointDTO;
 import com.dw.forest.dto.PointEventDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
@@ -12,7 +11,6 @@ import com.dw.forest.repository.PointRepository;
 import com.dw.forest.repository.TravelerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -107,7 +105,7 @@ public class PointService {
 
         double pointUsed = requestDTO.getPointsToConvert();
         for (Point point : points) {
-            if (pointUsed <= 0) {
+            if (pointUsed < 0) {
                 throw new InvalidRequestException("전환할 포인트가 부족합니다.");
             };
 

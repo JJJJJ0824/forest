@@ -18,5 +18,5 @@ public class CourseDTO {
     private String content;
     private long price;
     private LocalDate createdAt;
-    private String category;
+    private String categoryName;
 }

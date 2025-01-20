@@ -16,7 +16,7 @@ public class NoticeController {
     @Autowired
     NoticeService noticeService;
 
-    // 모든 공지사항 조회 (DTO 미사용)
+    // 모든 공지사항 조회
     @GetMapping("/all")
     public ResponseEntity<List<NoticeDTO>> getAllNotices() {
         return new ResponseEntity<>(noticeService.getAllNotice(), HttpStatus.OK);
@@ -29,7 +29,6 @@ public class NoticeController {
         return new ResponseEntity<>(createdNotice, HttpStatus.CREATED);
     }
 
-
     // 특정 공지사항 조회
     @GetMapping("/{id}")
     public ResponseEntity<NoticeDTO> getNoticeById(@PathVariable Long id) {
@@ -38,14 +37,14 @@ public class NoticeController {
     }
 
     // 제목으로 공지사항 검색
-    @GetMapping("/search-by-title?title")
+    @GetMapping("/search-by-title")
     public ResponseEntity<List<NoticeDTO>> searchNoticesByTitle(@RequestParam String title) {
         List<NoticeDTO> notices = noticeService.searchNoticesByTitle(title);
         return new ResponseEntity<>(notices, HttpStatus.OK);
     }
 
     // 내용으로 공지사항 검색
-    @GetMapping("/search-by-content?content")
+    @GetMapping("/search-by-content")
     public ResponseEntity<List<NoticeDTO>> searchNoticesByContent(@RequestParam String content) {
         List<NoticeDTO> notices = noticeService.searchNoticesByContent(content);
         return new ResponseEntity<>(notices, HttpStatus.OK);
@@ -68,12 +67,12 @@ public class NoticeController {
     // 공지사항 제목 수정
     @PutMapping("/update-title")
     public ResponseEntity<NoticeDTO> updateTitle(@RequestParam Long id, @RequestBody NoticeDTO noticeDTO) {
-        NoticeDTO updatedTitle = noticeService.updateTitle(id,noticeDTO);
+        NoticeDTO updatedTitle = noticeService.updateTitle(id, noticeDTO);
         return new ResponseEntity<>(updatedTitle, HttpStatus.OK);
     }
 
     // 공지사항 내용 수정
-    @PutMapping("/update-content?id={id}")
+    @PutMapping("/update-content")
     public ResponseEntity<NoticeDTO> updateContent(@RequestParam Long id, @RequestBody NoticeDTO noticeDTO) {
         NoticeDTO updatedContent = noticeService.updateContent(id, noticeDTO);
         return new ResponseEntity<>(updatedContent, HttpStatus.OK);
@@ -84,7 +83,7 @@ public class NoticeController {
     public ResponseEntity<String> deleteNotice(@PathVariable Long id) {
         return new ResponseEntity<>(noticeService.deleteNotice(id), HttpStatus.OK);
     }
-    //
+
     // 공지사항 삭제 (제목 기준)
     @DeleteMapping("/delete-by-title")
     public ResponseEntity<String> deleteNoticeByTitle(@RequestBody String title) {

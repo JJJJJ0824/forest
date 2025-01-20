@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NoticeService {
@@ -56,35 +58,68 @@ public class NoticeService {
     // 특정 공지사항 조회
     public NoticeDTO getNoticeById(Long id) {
         return noticeRepository.findById(id).map(Notice::toDTO)
-                .orElseThrow(() -> new RuntimeException("공지사항을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("공지사항을 찾을 수 없습니다."));
     }
 
     // 제목으로 공지사항 검색
     public List<NoticeDTO> searchNoticesByTitle(String title) {
-        return noticeRepository.findAll().stream()
-                .filter(notice -> notice.getTitle().contains(title))
-                .map(Notice::toDTO)
-                .toList();
+        if (title == null || title.isEmpty()) {
+            throw new ResourceNotFoundException("제목을 입력해 주세요.");
+        }
+        try {
+            List<NoticeDTO> result = noticeRepository.findAll().stream()
+                    .filter(notice -> notice.getTitle().contains(title))
+                    .map(Notice::toDTO)
+                    .toList();
+
+            if (result.isEmpty()) {
+                throw new ResourceNotFoundException("해당 되는 제목이 없습니다.");
+            }
+            return result;
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("서버 오류가 발생했습니다.");
+        }
     }
 
     // 내용으로 공지사항 검색
     public List<NoticeDTO> searchNoticesByContent(String content) {
-        return noticeRepository.findAll().stream()
-                .filter(notice -> notice.getContent().contains(content))
-                .map(Notice::toDTO)
-                .toList();
+        if (content == null || content.isEmpty()) {
+            throw new ResourceNotFoundException("내용을 입력해 주세요.");
+        }
+        try {
+            List<NoticeDTO> result = noticeRepository.findAll().stream()
+                    .filter(notice -> notice.getContent().contains(content))
+                    .map(Notice::toDTO)
+                    .toList();
+
+            if (result.isEmpty()) {
+                throw new ResourceNotFoundException("해당 되는 내용이 없습니다.");
+            }
+            return result;
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("서버 오류가 발생했습니다.");
+        }
     }
 
     // 특정 날짜의 공지사항 검색
     public List<NoticeDTO> searchNoticesByDate(String date) {
+        if (date == null || date.isEmpty()) {
+            throw new ResourceNotFoundException("날짜를 입력해 주세요.");
+        }
         try {
-            LocalDate localDate = LocalDate.parse(date);
-            return noticeRepository.findAll().stream()
-                    .filter(notice -> notice.getCreatedAt().equals(localDate))
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate searchDate = LocalDate.parse(date, formatter);
+
+            List<NoticeDTO> result = noticeRepository.findAll().stream()
+                    .filter(notice -> notice.getCreatedAt().equals(searchDate))
                     .map(Notice::toDTO)
                     .toList();
-        }catch (DateTimeException e) {
-            throw new InvalidRequestException("유효한 날짜 형태가 아닙니다. yyyy-mm-dd 형식으로 입력해주세요.");
+            if (result.isEmpty()) {
+                throw new ResourceNotFoundException("해당되는 날짜가 없습니다.");
+            }
+            return result;
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("해당되는 날짜가 없습니다.");
         }
     }
 

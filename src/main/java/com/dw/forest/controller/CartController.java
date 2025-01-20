@@ -23,8 +23,8 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/all")
-    public List<Cart> getAllCarts() {
-        return cartService.getAllCarts();
+    public ResponseEntity<List<CartDTO>> getAllCarts() {
+        return new ResponseEntity<>(cartService.getAllCarts(), HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -79,7 +79,7 @@ public class CartController {
     @PostMapping("/{travelerName}/add-multiple")
     public ResponseEntity<List<CartDTO>> addMultipleCoursesToCart(@PathVariable String travelerName, @RequestBody List<Long> courseIds) {
         return new ResponseEntity<>(
-                cartService.addMultipleCoursesToCart(travelerName, courseIds, false), HttpStatus.OK);
+                cartService.addMultipleCoursesToCart(travelerName, courseIds), HttpStatus.OK);
     }
 
     @PutMapping("/{travelerName}/apply-discount")

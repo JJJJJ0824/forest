@@ -38,8 +38,7 @@ public class CourseController {
     }
 
     @PutMapping("/{course_id}/update")
-    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long course_id,
-                                                  @RequestBody CourseDTO courseDTO) {
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long course_id, @RequestBody CourseDTO courseDTO) {
         CourseDTO updatedCourse = courseService.updateCourse(course_id, courseDTO);
         return new ResponseEntity<>(updatedCourse, HttpStatus.OK);
     }
@@ -56,8 +55,8 @@ public class CourseController {
     }
 
     @GetMapping("/price-range") // 특정가격 범위 내의 강의를 조회
-    public ResponseEntity<List<CourseDTO>> getCoursesByPriceRange(@RequestParam("minPrice") long minPrice, @RequestParam("maxPrice") long maxPrice) {
-        List<CourseDTO> courses = courseService.getCoursesByPriceRange(minPrice, maxPrice);
+    public ResponseEntity<List<CourseDTO>> getCoursesByPriceRange(@RequestParam double min_price, @RequestParam double max_price) {
+        List<CourseDTO> courses = courseService.getCoursesByPriceRange(min_price, max_price);
         return ResponseEntity.ok(courses);
     }
 

@@ -26,12 +26,11 @@ public class CartService {
     @Autowired
     TravelerRepository travelerRepository;
 
-    public List<Cart> getAllCarts() {
-        return cartRepository.findAll();
+    public List<CartDTO> getAllCarts() {
+        return cartRepository.findAll().stream().map(Cart::toDTO).toList();
     }
 
     public CartDTO addCourseToCart(CartDTO cartDTO) {
-
         if (cartDTO.getCourseId() == null || cartDTO.getTravelerName() == null) {
             throw new ResourceNotFoundException("카트를 추가할 수 없습니다. 올바른 트래블러 이름과 강의 ID를 확인하세요");
         }
@@ -58,20 +57,16 @@ public class CartService {
             throw new ResourceNotFoundException("장바구니를 찾을 수 없습니다. 올바른 트래블러 이름을 확인하세요.");
         }
 
-        return cartItems.stream()
-                .map(Cart::toDTO)
-                .toList();
+        return cartItems.stream().map(Cart::toDTO).toList();
     }
 
 
     public String removeCourseFromCart(Long cartId) {
-        Optional<Cart> optionalCart = cartRepository.findById(cartId);
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
 
-        if (optionalCart.isEmpty()) {
+        if (cart.equals(new Cart())) {
             throw new ResourceNotFoundException("해당 장바구니 항목을 찾을 수 없습니다.");
         }
-
-        Cart cart = optionalCart.get();
 
         if (cart.isPurchaseStatus()) {
             throw new ResourceNotFoundException("구매 완료된 강의는 삭제할 수 없습니다.");
@@ -114,22 +109,23 @@ public class CartService {
 
         courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다"));
 
-        Optional<Cart> existingCart = cartRepository.findByTraveler_TravelerNameAndCourse_CourseId(travelerName , courseId);
+        Cart cart = cartRepository.findByTraveler_TravelerNameAndCourse_CourseId(travelerName, courseId)
+                .orElseThrow(()->new ResourceNotFoundException("카트를 찾을 수 없습니다."));
 
-        if (existingCart.isEmpty()){
+        if (cart.equals(new Cart())){
             throw new ResourceNotFoundException("해당 강의는 장바구니에 없습니다");
         }
         return true;
     }
 
-    public List<CartDTO> addMultipleCoursesToCart(String travelerName, List<Long> courseIds, Boolean isPurchaseStatus) {
+    public List<CartDTO> addMultipleCoursesToCart(String travelerName, List<Long> courseIds) {
         List<Cart> carts = new ArrayList<>();
 
         for (Long courseId : courseIds) {
             Cart cart = new Cart();
             cart.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
             cart.setCourse(courseRepository.findById(courseId).orElseThrow(()->new ResourceNotFoundException("해당 강좌가 없습니다.")));
-            cart.setPurchaseStatus(isPurchaseStatus);
+            cart.setPurchaseStatus(false);
             cart.addPoint("강좌 담기", -courseRepository.findById(courseId).orElseThrow().getPrice());
             carts.add(cart);
         }
@@ -168,7 +164,6 @@ public class CartService {
         if (carts.isEmpty()) {
             throw new ResourceNotFoundException("해당 여행자의 장바구니가 비어있습니다");
         }
-
 
         long totalPrice = 0;
 
