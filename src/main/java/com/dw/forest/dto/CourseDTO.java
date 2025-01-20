@@ -13,20 +13,10 @@ import java.time.LocalDate;
 @Getter
 @ToString
 public class CourseDTO {
-
     private String title;
     private String description;
     private String content;
-    private String type;
     private long price;
     private LocalDate createdAt;
-
-    public CourseDTO(Course course) {
-        this.title = course.getTitle();
-        this.description = course.getDescription();
-        this.content = course.getContent();
-        this.type = course.getType();
-        this.price = course.getPrice();
-        this.createdAt = course.getCreatedAt();
-    }
+    private String category;
 }

@@ -1,5 +1,6 @@
 package com.dw.forest.model;
 
+import com.dw.forest.dto.CourseDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,10 +30,7 @@ public class Course {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "price") // 해당 코스 가격
+    @Column(name = "price", nullable = false) // 해당 코스 가격
     private long price;
 
     @Column(name = "created_at", nullable = false)
@@ -50,4 +48,8 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "category_name")
     private Category category;
+
+    public CourseDTO toDTO() {
+        return new CourseDTO(this.title, this.description, this.content, this.price, LocalDate.now(), this.category.getCategoryName());
+    }
 }

@@ -18,13 +18,13 @@ public class CourseController {
     CourseService courseService;
 
     @GetMapping("/all")
-    public List<Course> getAllCourses() {
+    public List<CourseDTO> getAllCourses() {
         return courseService.getAllCourses();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Course> createCourse(@RequestBody CourseDTO courseDTO){
-        Course createdCourse = courseService.createCourse(courseDTO);
+    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO){
+        CourseDTO createdCourse = courseService.createCourse(courseDTO);
 
         return new ResponseEntity<>(
                 createdCourse, HttpStatus.CREATED

@@ -17,7 +17,7 @@ public class ChecklistController {
     ChecklistService checklistService;
 
 //    @GetMapping("/{traveler_name}/all")
-//    public List<Checklist> getAllChecklists(@PathVariable String traveler_name) {
+//    public List<ChecklistDTO> getAllChecklists(@PathVariable String traveler_name) {
 //        return checklistService.getAllChecklists(traveler_name);
 //    }
 

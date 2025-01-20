@@ -8,5 +8,4 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByCategoryCategoryName(String categoryName);
     List<Course> findByPriceBetween(long minPrice, long maxPrice);
-    List<Course> findByType(String type);
 }

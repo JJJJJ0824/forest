@@ -36,9 +36,9 @@ public class TravelerController {
         if (travelerService.validateUser(travelerName, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("travelerName", travelerName);
-            return new ResponseEntity<>("Login successful", HttpStatus.OK);
+            return new ResponseEntity<>("로그인 성공!", HttpStatus.OK);
         } else {
-            throw new UnauthorizedTravelerException("Authentication Failed");
+            throw new UnauthorizedTravelerException("계정명 또는 비밀번호가 잘못되었습니다.");
         }
     }
 
@@ -46,15 +46,14 @@ public class TravelerController {
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().invalidate(); // 세션 종료
         if (request==null&&response==null) {
-            throw new ResourceNotFoundException("log out failed.");
+            throw new ResourceNotFoundException("로그아웃 실패 !");
         }
-        return new ResponseEntity<>("You have been logged out.", HttpStatus.OK);
+        return new ResponseEntity<>("로그아웃 성공 !", HttpStatus.OK);
     }
 
-
     @GetMapping("/all")
-    public ResponseEntity<List<Traveler>> getAllTraveler() {
-        return new ResponseEntity<>(travelerService.getAllTravelers(), HttpStatus.OK);
+    public ResponseEntity<List<TravelerDTO>> getAllTravelers(HttpServletRequest request) {
+        return new ResponseEntity<>(travelerService.getAllTravelers(request), HttpStatus.OK);
     }
 
     @GetMapping("/mypage")
@@ -76,6 +75,4 @@ public class TravelerController {
     public ResponseEntity<String> deleteTraveler(@PathVariable String traveler_name) {
         return new ResponseEntity<>("여행자 삭제에 "+travelerService.deleteTraveler(traveler_name), HttpStatus.OK);
     }
-
-
 }
