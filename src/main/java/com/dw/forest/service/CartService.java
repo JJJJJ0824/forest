@@ -240,7 +240,12 @@ public class CartService {
         };
     }
 
-    public String checkout(String travelerName) {
+    public String checkout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findByTravelerName(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("유저를 찾을 수 없습니다."));
 

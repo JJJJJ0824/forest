@@ -68,9 +68,9 @@ public class CartController {
         return new ResponseEntity<>(cartService.applyDiscountToCart(request, discountCode), HttpStatus.OK);
     }
 
-    @PutMapping("/{traveler_name}/checkout")
-    public ResponseEntity<String> checkout(@PathVariable String traveler_name) {
-        String message = cartService.checkout(traveler_name);
+    @PutMapping("/checkout")
+    public ResponseEntity<String> checkout(HttpServletRequest request) {
+        String message = cartService.checkout(request);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
