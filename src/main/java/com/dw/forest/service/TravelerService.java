@@ -98,19 +98,24 @@ public class TravelerService {
         return traveler.toResponse();
     }
 
-    public TravelerResponseDTO updateTraveler(TravelerResponseDTO travelerResponseDTO) {
-        Traveler traveler = travelerRepository.findById(travelerResponseDTO.getTravelerName())
+    public TravelerResponseDTO updateTraveler(HttpServletRequest request,TravelerDTO travelerDTO) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(()->new InvalidRequestException("유저 정보 업데이트에 실패하였습니다."));
 
         // 업데이트할 정보 설정
-        if (travelerResponseDTO.getContact() != null) {
-            traveler.setContact(travelerResponseDTO.getContact());
+        if (travelerDTO.getContact() != null) {
+            traveler.setContact(travelerDTO.getContact());
         }
-        if (travelerResponseDTO.getEmail() != null) {
-            traveler.setEmail(travelerResponseDTO.getEmail());
+        if (travelerDTO.getEmail() != null) {
+            traveler.setEmail(travelerDTO.getEmail());
         }
-        if (travelerResponseDTO.getRealName() != null) {
-            traveler.setRealName(travelerResponseDTO.getRealName());
+        if (travelerDTO.getRealName() != null) {
+            traveler.setRealName(travelerDTO.getRealName());
         }
 
         travelerRepository.save(traveler);
@@ -118,8 +123,14 @@ public class TravelerService {
         return traveler.toResponse();
     }
 
-    public String changePassword(String traveler_name, String oldPassword, String newPassword, String newPassCheck) {
-        Traveler traveler = travelerRepository.findById(traveler_name).orElseThrow(
+    public String changePassword(HttpServletRequest request, String oldPassword, String newPassword, String newPassCheck) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+
+        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(
                 ()->new ResourceNotFoundException("올바른 계정명 및 비밀번호를 입력해주세요."));
 
         // 기존 비밀번호 검증
@@ -136,7 +147,17 @@ public class TravelerService {
         return "비밀번호";
     }
 
-    public String deleteTraveler(String traveler_name) {
+    public String deleteTraveler(HttpServletRequest request, String traveler_name) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String admin = (String) session.getAttribute("travelerName");
+        Traveler traveler1 = travelerRepository.findById(admin).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
+        if (!traveler1.getTravelerName().equals("admin")) {
+            throw new UnauthorizedTravelerException("권한이 없습니다.");
+        }
+
         Traveler traveler = travelerRepository.findById(traveler_name)
                 .orElseThrow(()->new ResourceNotFoundException("해당 여행자를 찾을 수 없습니다."));
 

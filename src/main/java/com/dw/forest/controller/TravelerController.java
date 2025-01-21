@@ -62,18 +62,18 @@ public class TravelerController {
         return new ResponseEntity<>(travelerService.getCurrentTraveler(request), HttpStatus.OK);
     }
 
-    @PutMapping("/{traveler_name}/update")
-    public ResponseEntity<TravelerResponseDTO> updateTraveler(@RequestBody TravelerResponseDTO travelerResponseDTO) {
-        return new ResponseEntity<>(travelerService.updateTraveler(travelerResponseDTO),HttpStatus.OK);
+    @PutMapping("/update")
+    public ResponseEntity<TravelerResponseDTO> updateTraveler(HttpServletRequest request, @RequestBody TravelerDTO travelerDTO) {
+        return new ResponseEntity<>(travelerService.updateTraveler(request, travelerDTO),HttpStatus.OK);
     }
 
-    @PutMapping("/{traveler_name}/password")
-    public ResponseEntity<String> changePassword(@PathVariable String traveler_name, @RequestBody ChangePassDTO passDTO) {
-        return new ResponseEntity<>(travelerService.changePassword(traveler_name, passDTO.getOldPassword(), passDTO.getNewPassword(), passDTO.getNewPasswordCheck())+"가 정상적으로 변경되었습니다.", HttpStatus.OK);
+    @PutMapping("/password")
+    public ResponseEntity<String> changePassword(HttpServletRequest request, @RequestBody ChangePassDTO passDTO) {
+        return new ResponseEntity<>(travelerService.changePassword(request, passDTO.getOldPassword(), passDTO.getNewPassword(), passDTO.getNewPasswordCheck())+"가 정상적으로 변경되었습니다.", HttpStatus.OK);
     }
 
     @DeleteMapping("/{traveler_name}/delete")
-    public ResponseEntity<String> deleteTraveler(@PathVariable String traveler_name) {
-        return new ResponseEntity<>("여행자 삭제에 "+travelerService.deleteTraveler(traveler_name), HttpStatus.OK);
+    public ResponseEntity<String> deleteTraveler(HttpServletRequest request, @PathVariable String traveler_name) {
+        return new ResponseEntity<>("여행자 삭제에 "+travelerService.deleteTraveler(request, traveler_name), HttpStatus.OK);
     }
 }
