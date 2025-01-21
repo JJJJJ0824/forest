@@ -26,13 +26,18 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CartDTO> addCourseToCart(@RequestBody CartDTO cartDTO) {
-        return new ResponseEntity<>(cartService.addCourseToCart(cartDTO), HttpStatus.CREATED);
+    public ResponseEntity<CartDTO> addCourseToCart(HttpServletRequest request,@RequestBody CartDTO cartDTO) {
+        return new ResponseEntity<>(cartService.addCourseToCart(request, cartDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{travelerName}")
-    public ResponseEntity<List<CartDTO>> getCartByTravelerName(@PathVariable String travelerName) {
-        return new ResponseEntity<>(cartService.getCartByTravelerName(travelerName), HttpStatus.OK);
+    @GetMapping("/mycart")
+    public ResponseEntity<List<CartDTO>> getCartByTravelerName(HttpServletRequest request) {
+        return new ResponseEntity<>(cartService.getCartByTravelerName(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<String> checkoutCart(HttpServletRequest request) {
+        return new ResponseEntity<>(cartService.checkoutCart(request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{cartId}")
@@ -40,17 +45,17 @@ public class CartController {
         return new ResponseEntity<>(cartService.removeCourseFromCart(cartId), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{travelerName}/clear")
-    public ResponseEntity<String> clearCartOfTraveler(@PathVariable String travelerName){
-        return new ResponseEntity<>(cartService.clearCartOfTraveler(travelerName), HttpStatus.ACCEPTED);
+    @DeleteMapping("/clear")
+    public ResponseEntity<String> clearCartOfTraveler(HttpServletRequest request){
+        return new ResponseEntity<>(cartService.clearCartOfTraveler(request), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("{travelerName}/total-price")
-    public ResponseEntity<Double> calculateTotalPrice(@PathVariable String travelerName) {
-        return new ResponseEntity<>(cartService.calculateTotalPrice(travelerName), HttpStatus.OK);
+    @GetMapping("/total-price")
+    public ResponseEntity<Double> calculateTotalPrice(HttpServletRequest request) {
+        return new ResponseEntity<>(cartService.calculateTotalPrice(request), HttpStatus.OK);
     }
 
-    @GetMapping("/{travelerName}/exists/{courseId}")
+    @GetMapping("/exists/{courseId}")
     public ResponseEntity<String> isCourseInCart(HttpServletRequest request, @PathVariable Long courseId) {
         try {
             boolean isInCart = cartService.isCourseInCart(request, courseId);
@@ -65,16 +70,16 @@ public class CartController {
         }
     }
 
-    @PostMapping("/{travelerName}/add-multiple")
-    public ResponseEntity<List<CartDTO>> addMultipleCoursesToCart(@PathVariable String travelerName, @RequestBody List<Long> courseIds) {
+    @PostMapping("/add-multiple")
+    public ResponseEntity<List<CartDTO>> addMultipleCoursesToCart(HttpServletRequest request, @RequestBody List<Long> courseIds) {
         return new ResponseEntity<>(
-                cartService.addMultipleCoursesToCart(travelerName, courseIds), HttpStatus.OK);
+                cartService.addMultipleCoursesToCart(request, courseIds), HttpStatus.OK);
     }
 
-    @PutMapping("/{travelerName}/apply-discount")
-    public ResponseEntity<DiscountDTO> applyDiscount(@PathVariable String travelerName, @RequestBody CouponCodeDTO couponCodeDTO) {
+    @PutMapping("/apply-discount")
+    public ResponseEntity<DiscountDTO> applyDiscount(HttpServletRequest request, @RequestBody CouponCodeDTO couponCodeDTO) {
         String discountCode = couponCodeDTO.getDiscountCode();
 //        System.out.println("전달 받은 할인 코드 : " + discountCode);
-        return new ResponseEntity<>(cartService.applyDiscountToCart(travelerName, discountCode), HttpStatus.OK);
+        return new ResponseEntity<>(cartService.applyDiscountToCart(request, discountCode), HttpStatus.OK);
     }
 }

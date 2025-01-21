@@ -31,7 +31,12 @@ public class ChecklistService {
     @Autowired
     CourseRepository courseRepository;
 
-    public List<CheckListDTO> getIncompleteChecklists(String travelerName) {
+    public List<CheckListDTO> getIncompleteChecklists(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         List<Checklist> incompleteChecklists = checklistRepository.findByTraveler_TravelerNameAndIsCheckedFalse(travelerName);
 
         if (incompleteChecklists.isEmpty()) {
@@ -43,21 +48,18 @@ public class ChecklistService {
                 .toList();
     }
 
-    public List<CheckListDTO> getChecklistsByTraveler(String travelerName) {
-
+    public List<CheckListDTO> getChecklistsByTraveler(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 사용자가 존재하지 않습니다."));
 
         List<Checklist> checklists = checklistRepository.findByTraveler(traveler);
 
         return checklists.stream().map(Checklist::toDTO).toList();
-    }
-
-    public boolean isChecklistCompleted(String travelerName) {
-        Traveler traveler = travelerRepository.findById(travelerName)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다."));
-
-        return traveler.getChecklists().stream().allMatch(Checklist::isCompleted);
     }
 
     public List<CourseReadDTO> recommendCourses(HttpServletRequest request) {
@@ -95,8 +97,12 @@ public class ChecklistService {
         return recommendedCourses.stream().map(Course::toRead).toList();
     }
 
-    public boolean checklistCompleted(String travelerName) {
-
+    public boolean checklistCompleted(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다."));
 
@@ -107,11 +113,15 @@ public class ChecklistService {
                 return true;
             }
         }
-        return  false;
+        return false;
     }
 
-    public List<CheckListDTO> resetChecklist(String travelerName) {
-
+    public List<CheckListDTO> resetChecklist(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findByTravelerName(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다."));
 
@@ -125,4 +135,6 @@ public class ChecklistService {
         }
         return updateChecklists;
     }
+
+
 }

@@ -4,6 +4,7 @@ import com.dw.forest.dto.QaDTO;
 import com.dw.forest.dto.QaReadDTO;
 import com.dw.forest.model.QA;
 import com.dw.forest.service.QAService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class QAController {
     }
 
     @PutMapping("/update/{qa_id}")
-    public ResponseEntity<QaReadDTO> updateById(@PathVariable Long qa_id, @RequestBody QaDTO qaDTO) {
-        return new ResponseEntity<>(qaService.updateById(qa_id, qaDTO), HttpStatus.OK);
+    public ResponseEntity<QaReadDTO> updateById(HttpServletRequest request, @PathVariable Long qa_id, @RequestBody QaDTO qaDTO) {
+        return new ResponseEntity<>(qaService.updateById(qa_id, qaDTO, request), HttpStatus.OK);
     }
 
     @GetMapping("/{qa_id}")

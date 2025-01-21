@@ -7,6 +7,8 @@ import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.model.QA;
 import com.dw.forest.repository.QARepository;
 import com.dw.forest.repository.TravelerRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,11 +75,17 @@ public class QAService {
         throw new ResourceNotFoundException("해당 번호의 글이 없습니다.");
     }
 
-    public QaReadDTO updateById(Long qa_id, QaDTO qaDTO) {
+    public QaReadDTO updateById(Long qa_id, QaDTO qaDTO, HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        
         QA qa = qaRepository.findById(qa_id).
                 orElseThrow(()-> new ResourceNotFoundException("해당 번호의 글이 없습니다."));
 
-        if (!qaDTO.getTraveler_name().equals(qa.getTraveler().getTravelerName())) {
+        if (!travelerName.equals(qa.getTraveler().getTravelerName())) {
             throw new InvalidRequestException("본인의 글이 아닌 글은 수정할 수 없습니다.");
         }
 

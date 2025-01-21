@@ -73,7 +73,7 @@ public class PointService {
                 .mapToDouble(Point::getPoints)
                 .sum();
 
-        if (currentPoints + points < 0 ) {
+        if (currentPoints - points < 0 ) {
             throw new InvalidRequestException("포인트가 부족합니다");
         }
 
@@ -161,7 +161,7 @@ public class PointService {
         }
         String travelerName = (String) session.getAttribute("travelerName");
 
-        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
+        List<PointEventDTO> pointDTOList = pointRepository.findByTravelerTravelerName(travelerName).stream()
                 .map(Point::toEvent).toList();
 
         if (pointDTOList.isEmpty()) {
@@ -177,7 +177,7 @@ public class PointService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
+        List<PointEventDTO> pointDTOList = pointRepository.findByTravelerTravelerName(travelerName).stream()
                 .filter(point -> point.getPoints() > 0).map(Point::toEvent).toList();
 
         if (pointDTOList.isEmpty()) {
@@ -212,7 +212,7 @@ public class PointService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
+        List<PointEventDTO> pointDTOList = pointRepository.findByTravelerTravelerName(travelerName).stream()
                 .filter(point -> point.getPoints() < 0).map(Point::toEvent).toList();
 
         if (pointDTOList.isEmpty()) {

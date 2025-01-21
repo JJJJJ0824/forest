@@ -8,7 +8,6 @@ import com.dw.forest.exception.UnauthorizedTravelerException;
 import com.dw.forest.model.Point;
 import com.dw.forest.model.Traveler;
 import com.dw.forest.repository.*;
-import com.sun.jdi.request.InvalidRequestStateException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,7 +161,7 @@ public class TravelerService {
                 .orElseThrow(()->new ResourceNotFoundException("해당 여행자를 찾을 수 없습니다."));
 
         checklistRepository.deleteAll(checklistRepository.findByTraveler_TravelerName(traveler_name));
-        pointRepository.deleteAll(pointRepository.findByTraveler_TravelerName(traveler_name));
+        pointRepository.deleteAll(pointRepository.findByTravelerTravelerName(traveler_name));
         cartRepository.deleteAll(cartRepository.findByTraveler_TravelerName(traveler_name));
         qaRepository.deleteAll(qaRepository.findByTraveler_TravelerName(traveler_name));
         completionRepository.deleteAll(completionRepository.findByTraveler_TravelerName(traveler_name));
