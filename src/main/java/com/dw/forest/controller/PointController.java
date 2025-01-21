@@ -76,8 +76,8 @@ public class PointController {
     }
 
     @PostMapping("/deduct")
-    public ResponseEntity<String> deductPoints(@RequestBody PointDTO pointDTO) {
-        String result = pointService.deductPoints(pointDTO.getTravelerName(), pointDTO.getPoints());
+    public ResponseEntity<String> deductPoints(HttpServletRequest request, @RequestBody PointDTO pointDTO) {
+        String result = pointService.deductPoints(request, pointDTO.getPoints());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
