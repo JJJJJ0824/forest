@@ -98,40 +98,21 @@ public class CartService {
         }
 
         // 사용 가능한 포인트 조회
-        Double useAblePoints = pointRepository.getUseablePoints(travelerName);
+        Double useAblePoints = pointRepository.getUseAblePoints(travelerName);
 
         // 포인트가 부족하면 결제 불가
         if (useAblePoints == null || useAblePoints < totalAmount) {
             return "포인트가 부족하여 결제할 수 없습니다.";
         }
+        double remainingPoints = useAblePoints - totalAmount;
 
-        double usedPoints = totalAmount;
-        double remainingPoints = useAblePoints - usedPoints;
-
-        pointRepository.usePoints(travelerName, usedPoints);
+        pointRepository.usePoints(travelerName, totalAmount);
 
         cartRepository.updateAllPurchaseStatus(travelerName);
 
-        savePurchase(travelerName, usedPoints, cartList);
+//        savePurchase(travelerName, totalAmount, cartList);
 
         return "결제가 완료되었습니다. 총 금액: " + totalAmount + ", 남은 포인트: " + remainingPoints;
-    }
-
-    public void savePurchase(String travelerName, double totalAmount, List<Cart> cartList) {
-        Traveler traveler = travelerRepository.findByTravelerName(travelerName)
-                .orElseThrow(() -> new RuntimeException("Traveler not found"));
-
-        for (Cart cart : cartList) {
-            Point point = new Point();
-            point.setTraveler(traveler);                  // 사용자를 설정
-            point.setActionType("구매");                  // "구매" 액션 설정
-            point.setPoints(-totalAmount);                // 포인트 차감 (음수로 설정)
-            point.setEventDate(LocalDate.now());          // 오늘 날짜로 설정
-            point.setCart_fk(cart);                       // 해당 카트 정보 연결
-
-            // 3. 포인트 내역 저장
-            pointRepository.save(point);
-        }
     }
 
     public String removeCourseFromCart(Long cartId) {
@@ -276,5 +257,43 @@ public class CartService {
             case "SPRING" -> 0.10;
             default -> 0.0;
         };
+    }
+
+    public String checkout(String travelerName) {
+        Traveler traveler = travelerRepository.findByTravelerName(travelerName)
+                .orElseThrow(() -> new ResourceNotFoundException("유저를 찾을 수 없습니다."));
+
+        List<Cart> cartItems = cartRepository.findByTravelerTravelerNameAndPurchaseStatus(travelerName, false);
+
+        if (cartItems.isEmpty()) {
+            throw new ResourceNotFoundException("장바구니에 결제할 강의가 없습니다.");
+        }
+
+        double totalAmount = 0;
+        for (Cart cartItem : cartItems) {
+            totalAmount += cartItem.getCourse().getPrice();
+        }
+
+        double useAblePoints = pointRepository.getUseAblePoints(travelerName);
+
+        if (useAblePoints < totalAmount) {
+            throw new InvalidRequestException("잔액이 부족하여 결제를 진행할 수 없습니다.");
+        }
+
+        for (Cart cartItem : cartItems) {
+            cartItem.setPurchaseStatus(true);
+            cartRepository.save(cartItem);
+
+            Point point = new Point();
+            point.setTraveler(traveler);
+            point.setActionType("COURSE_PURCHASE");
+            point.setPoints(-cartItem.getCourse().getPrice());
+            point.setEventDate(LocalDate.now());
+            point.setCart_fk(cartItem);
+            pointRepository.save(point);
+        }
+        useAblePoints= (long) (useAblePoints-totalAmount);
+
+        return "결제가 완료되었습니다. 총 결제 금액: " + totalAmount + ". 잔액: " +(long) useAblePoints;
     }
 }

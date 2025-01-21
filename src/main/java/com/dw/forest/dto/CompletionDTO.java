@@ -1,6 +1,5 @@
 package com.dw.forest.dto;
 
-import com.dw.forest.model.Point;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @ToString
-public class PointDTO {
+public class CompletionDTO {
     private String travelerName;
-    private double points;
-    private String actionType;
+    private LocalDate completionDate;
 }

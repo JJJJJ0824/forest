@@ -49,4 +49,10 @@ public class ChecklistController {
     public ResponseEntity<List<CheckListDTO>> resetChecklist(HttpServletRequest request) {
         return new ResponseEntity<>(checklistService.resetChecklist(request), HttpStatus.OK);
     }
+
+    @PostMapping("/feedback")
+    public ResponseEntity<String> submitFeedback(HttpServletRequest request, @RequestParam Long checklistId, @RequestParam String feedbackText) {
+        String responseMessage = checklistService.saveFeedback(request, checklistId, feedbackText);
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
 }

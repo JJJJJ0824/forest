@@ -1,11 +1,15 @@
 package com.dw.forest.controller;
 
+import com.dw.forest.dto.CompletionDTO;
+import com.dw.forest.dto.CourseReadDTO;
+import com.dw.forest.dto.CourseWithStudentsDTO;
 import com.dw.forest.model.Completion;
 import com.dw.forest.service.CompletionService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,8 +19,29 @@ public class CompletionController {
     @Autowired
     CompletionService completionService;
 
-    @GetMapping("/all")
-    public List<Completion> getAllCompletions() {
-        return completionService.getAllCompletions();
+    @GetMapping("/completed/{course_id}")
+    public ResponseEntity<Boolean> checkIfCompleted(HttpServletRequest request, @PathVariable Long course_id) {
+        boolean hasCompleted = completionService.completedCourse(request, course_id);
+        return new ResponseEntity<>(hasCompleted, HttpStatus.OK);
+    }
+
+    @GetMapping("/complete/travel")
+    public ResponseEntity<List<CourseReadDTO>> getCompletedCoursesByTraveler(HttpServletRequest request) {
+        List<CourseReadDTO> completedCourses = completionService.getCompletedCoursesByTraveler(request);
+        if (completedCourses.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(completedCourses, HttpStatus.OK);
+    }
+
+    @PutMapping("/complete")
+    public ResponseEntity<String> completeCourse(@PathVariable Long course_id, HttpServletRequest request) {
+        String message = completionService.completeCourse(request, course_id);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("{courseId}/completions")
+    public ResponseEntity<CourseWithStudentsDTO> getCourseWithStudents(HttpServletRequest request, @PathVariable Long courseId) {
+        return new ResponseEntity<>(completionService.getCourseWithStudents(request,courseId), HttpStatus.OK);
     }
 }

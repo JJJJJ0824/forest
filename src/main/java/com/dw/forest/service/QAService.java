@@ -81,7 +81,7 @@ public class QAService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        
+
         QA qa = qaRepository.findById(qa_id).
                 orElseThrow(()-> new ResourceNotFoundException("해당 번호의 글이 없습니다."));
 

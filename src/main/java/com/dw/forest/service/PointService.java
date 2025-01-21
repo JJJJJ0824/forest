@@ -241,4 +241,24 @@ public class PointService {
 
         return pointDTOList;
     }
+
+    public String deductPoints(String travelerName, double pointsToDeduct) {
+        Traveler traveler = travelerRepository.findByTravelerName(travelerName)
+                .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다."));
+
+        Double useAblePoints = pointRepository.getUseAblePoints(travelerName);
+
+        if (useAblePoints == null || useAblePoints < pointsToDeduct) {
+            throw new InvalidRequestException("차감할 포인트가 부족합니다.");
+        }
+
+        Point point = new Point();
+        point.setTraveler(traveler);
+        point.setActionType("POINT_DEDUCTION");
+        point.setPoints(-pointsToDeduct);
+        point.setEventDate(LocalDate.now());
+        pointRepository.save(point);
+
+        return "포인트 차감이 완료되었습니다. 차감된 금액: " + pointsToDeduct + "원.";
+    }
 }

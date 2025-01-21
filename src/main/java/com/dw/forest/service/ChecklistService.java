@@ -136,5 +136,24 @@ public class ChecklistService {
         return updateChecklists;
     }
 
+    public String saveFeedback(HttpServletRequest request, Long checklistId, String feedbackText) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        travelerRepository.findByTravelerName(travelerName)
+                .orElseThrow(() -> new ResourceNotFoundException("사용자를 찾을 수 없습니다."));
 
+        Checklist checklist = checklistRepository.findById(checklistId)
+                .orElseThrow(() -> new ResourceNotFoundException("체크리스트를 찾을 수 없습니다."));
+
+        if (!checklist.isCompleted()) {
+            throw new InvalidRequestException("완료되지 않은 체크리스트에 피드백을 남길 수 없습니다.");
+        }
+
+        String feedbackMessage = "Traveler " + travelerName + " 체크리스트에 관한 피드백을 남겼습니다 " + checklistId + ": " + feedbackText;
+
+        return "피드백이 저장되었습니다: " + feedbackMessage;
+    }
 }

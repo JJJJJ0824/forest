@@ -74,4 +74,10 @@ public class PointController {
     public ResponseEntity<List<PointEventDTO>> getUsedPointsOfTravelers(HttpServletRequest request) {
         return new ResponseEntity<>(pointService.getUsedPointsOfTravelers(request), HttpStatus.OK);
     }
+
+    @PostMapping("/deduct")
+    public ResponseEntity<String> deductPoints(@RequestBody PointDTO pointDTO) {
+        String result = pointService.deductPoints(pointDTO.getTravelerName(), pointDTO.getPoints());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

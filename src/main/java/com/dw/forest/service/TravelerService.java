@@ -164,7 +164,7 @@ public class TravelerService {
         pointRepository.deleteAll(pointRepository.findByTravelerTravelerName(traveler_name));
         cartRepository.deleteAll(cartRepository.findByTraveler_TravelerName(traveler_name));
         qaRepository.deleteAll(qaRepository.findByTraveler_TravelerName(traveler_name));
-        completionRepository.deleteAll(completionRepository.findByTraveler_TravelerName(traveler_name));
+        completionRepository.deleteAll(completionRepository.findByTravelerTravelerName(traveler_name));
 
         travelerRepository.delete(traveler);
 

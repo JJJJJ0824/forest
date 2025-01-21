@@ -82,4 +82,10 @@ public class CartController {
 //        System.out.println("전달 받은 할인 코드 : " + discountCode);
         return new ResponseEntity<>(cartService.applyDiscountToCart(request, discountCode), HttpStatus.OK);
     }
+
+    @PutMapping("/{traveler_name}/checkout")
+    public ResponseEntity<String> checkout(@PathVariable String traveler_name) {
+        String message = cartService.checkout(traveler_name);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 }

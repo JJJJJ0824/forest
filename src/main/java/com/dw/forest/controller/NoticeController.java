@@ -86,7 +86,8 @@ public class NoticeController {
 
     // 공지사항 삭제 (제목 기준)
     @DeleteMapping("/delete-by-title")
-    public ResponseEntity<String> deleteNoticeByTitle(@RequestBody String title) {
-        return new ResponseEntity<>(noticeService.deleteNoticeByTitle(title), HttpStatus.OK);
+    public ResponseEntity<String> deleteNoticeByTitle(@RequestParam String title) {
+        String message = noticeService.deleteNoticeByTitle(title);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

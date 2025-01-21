@@ -33,7 +33,7 @@ public class Point {
     private Cart cart_fk;
 
     public PointDTO toDTO() {
-        return new PointDTO(this.points, this.actionType);
+        return new PointDTO(this.traveler.getTravelerName(), this.points, this.actionType);
     }
 
     public PointEventDTO toEvent() {

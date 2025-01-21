@@ -198,10 +198,11 @@ public class NoticeService {
     // 공지사항 삭제 (제목 기준)
     public String deleteNoticeByTitle(String title) {
         Notice notice = noticeRepository.findByTitleLike2(title);
-        if (notice.equals(new Notice())) {
-            throw new ResourceNotFoundException("해당 제목의 공지사항이 없습니다.");
+        if (notice == null) {
+            throw new ResourceNotFoundException("해당 제목의 공지사항을 찾을 수 없습니다.");
         }
+
         noticeRepository.delete(notice);
-        return "공지사항이 삭제되었습니다";
+        return "공지사항 '" + title + "'이 삭제되었습니다.";
     }
 }

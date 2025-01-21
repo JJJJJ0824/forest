@@ -1,5 +1,6 @@
 package com.dw.forest.model;
 
+import com.dw.forest.dto.CourseReadDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,4 +33,10 @@ public class Completion {
     @ManyToOne
     @JoinColumn(name = "point_id") // 포인트 사용과 연결
     private Point pointUsed;
+
+    public CourseReadDTO toRead() {
+        Course course = this.course;
+        return new CourseReadDTO(course.getCourseId(), course.getTitle(), course.getDescription(), course.getContent(),
+                course.getPrice(), course.getCreatedAt(), course.getUpdatedAt(), course.getCategory().getCategoryName());
+    }
 }
