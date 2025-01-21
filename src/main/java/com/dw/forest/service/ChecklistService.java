@@ -5,6 +5,7 @@ import com.dw.forest.dto.CourseDTO;
 import com.dw.forest.dto.CourseReadDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
+import com.dw.forest.model.Category;
 import com.dw.forest.model.Checklist;
 import com.dw.forest.model.Course;
 import com.dw.forest.model.Traveler;
@@ -65,18 +66,33 @@ public class ChecklistService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        if (!isChecklistCompleted(travelerName)){
-            throw new ResourceNotFoundException("모든 체크리스트를 완료해야 강의추천이 가능합니다.");
+
+        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("사용자를 찾을 수 없습니다."));
+
+        // 체크리스트 완료했는지 확인
+        List<Checklist> completedChecklists = checklistRepository.findByTravelerAndIsCheckedTrue(traveler);
+        if (completedChecklists.isEmpty()) {
+            throw new ResourceNotFoundException("체크리스트를 완료해야 강의를 추천할 수 있습니다.");
         }
 
-        Traveler traveler = travelerRepository.findById(travelerName)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다."));
-        String coursePreference = traveler.getChecklists().stream()
-                .map(Checklist::getDirection)
+        // 유형 찾기
+        String travelerCategory = completedChecklists.stream()
+                .map(Checklist::getCategory)
+                .map(Category::getCategoryName)
                 .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("사용자의 방향성을 찾을 수 없습니다."));
+                .orElse(null);
 
-        return courseRepository.findByCategoryCategoryName(coursePreference).stream().map(Course::toRead).toList();
+        if (travelerCategory.isEmpty()) {
+            throw new ResourceNotFoundException("유형을 찾을 수 없습니다.");
+        }
+
+        // 해당 유형의 강의 가져오기
+        List<Course> recommendedCourses = courseRepository.findByCategoryCategoryName(travelerCategory);
+        if (recommendedCourses.isEmpty()) {
+            throw new RuntimeException("강의를 추천할 수 없습니다.");
+        }
+
+        return recommendedCourses.stream().map(Course::toRead).toList();
     }
 
     public boolean checklistCompleted(String travelerName) {

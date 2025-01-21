@@ -55,6 +55,12 @@ public class QAService {
         return qa.toRead();
     }
 
+    public QaReadDTO getQA(Long qa_id) {
+        QA qa = qaRepository.findById(qa_id).orElseThrow(()->new ResourceNotFoundException("해당 Q&A를 찾을 수 없습니다."));
+        
+        return qa.toRead();
+    }
+
     public String deleteById(Long qa_id) {
         if (qaRepository.existsById(qa_id)) {
             try {

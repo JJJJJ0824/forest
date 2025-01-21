@@ -42,6 +42,11 @@ public class QAController {
         return new ResponseEntity<>(qaService.updateById(qa_id, qaDTO), HttpStatus.OK);
     }
 
+    @GetMapping("/{qa_id}")
+    public ResponseEntity<QaReadDTO> getQA(@PathVariable Long qa_id) {
+        return new ResponseEntity<>(qaService.getQA(qa_id), HttpStatus.OK);
+    }
+
     @GetMapping("/title")
     public ResponseEntity<List<QaReadDTO>> searchByTitle(@RequestParam String title) {
         return new ResponseEntity<>(qaService.searchByTitle(title), HttpStatus.OK);
