@@ -28,9 +28,6 @@ public class CompletionController {
     @GetMapping("/complete/travel")
     public ResponseEntity<List<CourseReadDTO>> getCompletedCoursesByTraveler(HttpServletRequest request) {
         List<CourseReadDTO> completedCourses = completionService.getCompletedCoursesByTraveler(request);
-        if (completedCourses.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
         return new ResponseEntity<>(completedCourses, HttpStatus.OK);
     }
 
