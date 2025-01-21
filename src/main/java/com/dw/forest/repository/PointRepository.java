@@ -14,7 +14,8 @@ public interface PointRepository extends JpaRepository<Point, Long> {
     List<Point> findByTraveler(Traveler traveler);
     @Query("SELECT SUM(p.points) FROM Point p WHERE p.traveler.travelerName = :travelerName AND p.points > 0")
     Double getUseAblePoints(String travelerName); // 총 포인트 반환
+    @Transactional
     @Modifying
     @Query(value = "UPDATE point SET points = points - :amount WHERE traveler_name = :travelerName AND points > 0", nativeQuery = true)
-    int usePoints(double amount, String travelerName);
+    void usePoint(double amount, String travelerName);
 }

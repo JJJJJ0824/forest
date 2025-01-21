@@ -102,7 +102,7 @@ public class CartService {
         }
         double remainingPoints = useAblePoints - totalAmount;
 
-        pointRepository.usePoints(totalAmount, travelerName);
+        pointRepository.usePoint(totalAmount, travelerName);
 
         cartRepository.updateAllPurchaseStatus(travelerName);
 
@@ -285,6 +285,6 @@ public class CartService {
             cartRepository.deleteById(cartItem.getId());
         }
 
-        pointRepository.usePoints(totalAmount, traveler.getTravelerName());
+        pointRepository.usePoint(totalAmount, traveler.getTravelerName());
     }
 }
