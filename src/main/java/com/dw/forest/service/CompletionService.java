@@ -86,7 +86,8 @@ public class CompletionService {
             throw new InvalidRequestException("해당 강의를 수강한 유저를 찾을 수 없습니다.");
         }
 
-        Completion completion = new Completion();
+        Completion completion = completionRepository.findByTravelerAndCourse(traveler, course)
+                .orElseThrow(()->new ResourceNotFoundException("해당 강의가 없습니다."));
         completion.setTraveler(traveler);
         completion.setCourse(course);
         completion.setCompletionDate(LocalDate.now());  // 수강 완료일로 현재 날짜 설정
