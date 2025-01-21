@@ -3,6 +3,7 @@ package com.dw.forest.service;
 import com.dw.forest.dto.CheckListDTO;
 import com.dw.forest.dto.CourseDTO;
 import com.dw.forest.dto.CourseReadDTO;
+import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.model.Checklist;
 import com.dw.forest.model.Course;
@@ -10,6 +11,8 @@ import com.dw.forest.model.Traveler;
 import com.dw.forest.repository.ChecklistRepository;
 import com.dw.forest.repository.CourseRepository;
 import com.dw.forest.repository.TravelerRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +59,12 @@ public class ChecklistService {
         return traveler.getChecklists().stream().allMatch(Checklist::isCompleted);
     }
 
-    public List<CourseReadDTO> recommendCourses(String travelerName) {
+    public List<CourseReadDTO> recommendCourses(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         if (!isChecklistCompleted(travelerName)){
             throw new ResourceNotFoundException("모든 체크리스트를 완료해야 강의추천이 가능합니다.");
         }

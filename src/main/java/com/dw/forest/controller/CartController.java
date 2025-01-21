@@ -5,6 +5,7 @@ import com.dw.forest.dto.CouponCodeDTO;
 import com.dw.forest.dto.DiscountDTO;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.service.CartService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,9 +51,9 @@ public class CartController {
     }
 
     @GetMapping("/{travelerName}/exists/{courseId}")
-    public ResponseEntity<String> isCourseInCart(@PathVariable String travelerName, @PathVariable Long courseId) {
+    public ResponseEntity<String> isCourseInCart(HttpServletRequest request, @PathVariable Long courseId) {
         try {
-            boolean isInCart = cartService.isCourseInCart(travelerName, courseId);
+            boolean isInCart = cartService.isCourseInCart(request, courseId);
 
             if (isInCart) {
                 return new ResponseEntity<>("해당 강의는 이미 장바구니 안에 있습니다.", HttpStatus.OK);

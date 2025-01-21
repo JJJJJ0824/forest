@@ -10,6 +10,8 @@ import com.dw.forest.model.Traveler;
 import com.dw.forest.repository.CartRepository;
 import com.dw.forest.repository.CourseRepository;
 import com.dw.forest.repository.TravelerRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,7 +104,12 @@ public class CartService {
         return totalPrice;
     }
 
-    public boolean isCourseInCart(String travelerName, Long courseId) {
+    public boolean isCourseInCart(HttpServletRequest request, Long courseId) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         travelerRepository.findById(travelerName).orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다."));
 
         courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다"));

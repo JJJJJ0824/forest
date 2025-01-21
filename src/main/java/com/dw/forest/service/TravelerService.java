@@ -98,7 +98,7 @@ public class TravelerService {
         return traveler.toResponse();
     }
 
-    public TravelerResponseDTO updateTraveler(HttpServletRequest request,TravelerDTO travelerDTO) {
+    public TravelerResponseDTO updateTraveler(HttpServletRequest request,TravelerResponseDTO travelerResponseDTO) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
@@ -108,14 +108,14 @@ public class TravelerService {
                 .orElseThrow(()->new InvalidRequestException("유저 정보 업데이트에 실패하였습니다."));
 
         // 업데이트할 정보 설정
-        if (travelerDTO.getContact() != null) {
-            traveler.setContact(travelerDTO.getContact());
+        if (travelerResponseDTO.getContact() != null) {
+            traveler.setContact(travelerResponseDTO.getContact());
         }
-        if (travelerDTO.getEmail() != null) {
-            traveler.setEmail(travelerDTO.getEmail());
+        if (travelerResponseDTO.getEmail() != null) {
+            traveler.setEmail(travelerResponseDTO.getEmail());
         }
-        if (travelerDTO.getRealName() != null) {
-            traveler.setRealName(travelerDTO.getRealName());
+        if (travelerResponseDTO.getRealName() != null) {
+            traveler.setRealName(travelerResponseDTO.getRealName());
         }
 
         travelerRepository.save(traveler);

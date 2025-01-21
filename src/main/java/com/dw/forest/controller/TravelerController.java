@@ -5,7 +5,6 @@ import com.dw.forest.dto.TravelerDTO;
 import com.dw.forest.dto.TravelerResponseDTO;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.exception.UnauthorizedTravelerException;
-import com.dw.forest.model.Traveler;
 import com.dw.forest.service.TravelerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,9 +23,9 @@ public class TravelerController {
     TravelerService travelerService;
 
     @PostMapping("/register")
-    public ResponseEntity<TravelerDTO> registerTraveler(@RequestBody TravelerResponseDTO travelerDTO) {
+    public ResponseEntity<TravelerDTO> registerTraveler(@RequestBody TravelerResponseDTO travelerResponseDTO) {
         return new ResponseEntity<>(
-                travelerService.registerTraveler(travelerDTO),
+                travelerService.registerTraveler(travelerResponseDTO),
                 HttpStatus.CREATED);
     }
 
@@ -63,13 +62,15 @@ public class TravelerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<TravelerResponseDTO> updateTraveler(HttpServletRequest request, @RequestBody TravelerDTO travelerDTO) {
-        return new ResponseEntity<>(travelerService.updateTraveler(request, travelerDTO),HttpStatus.OK);
+    public ResponseEntity<TravelerResponseDTO> updateTraveler(HttpServletRequest request, @RequestBody TravelerResponseDTO travelerResponseDTO) {
+        return new ResponseEntity<>(travelerService.updateTraveler(request, travelerResponseDTO),HttpStatus.OK);
     }
 
     @PutMapping("/password")
     public ResponseEntity<String> changePassword(HttpServletRequest request, @RequestBody ChangePassDTO passDTO) {
-        return new ResponseEntity<>(travelerService.changePassword(request, passDTO.getOldPassword(), passDTO.getNewPassword(), passDTO.getNewPasswordCheck())+"가 정상적으로 변경되었습니다.", HttpStatus.OK);
+        return new ResponseEntity<>(travelerService.changePassword
+                (request, passDTO.getOldPassword(), passDTO.getNewPassword(), passDTO.getNewPasswordCheck())+
+                "가 정상적으로 변경되었습니다.", HttpStatus.OK);
     }
 
     @DeleteMapping("/{traveler_name}/delete")

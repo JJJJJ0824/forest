@@ -3,6 +3,7 @@ package com.dw.forest.controller;
 import com.dw.forest.dto.CheckListDTO;
 import com.dw.forest.dto.CourseReadDTO;
 import com.dw.forest.service.ChecklistService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,9 @@ public class ChecklistController {
         return new ResponseEntity<>(checklistService.getChecklistsByTraveler(traveler_name), HttpStatus.OK);
     }
 
-    @GetMapping("/recommend/{traveler_name}")
-    public ResponseEntity<List<CourseReadDTO>> recommendCourses(@PathVariable String traveler_name) {
-        return new ResponseEntity<>(checklistService.recommendCourses(traveler_name), HttpStatus.OK);
+    @GetMapping("/recommend")
+    public ResponseEntity<List<CourseReadDTO>> recommendCourses(HttpServletRequest request) {
+        return new ResponseEntity<>(checklistService.recommendCourses(request), HttpStatus.OK);
     }
 
     @GetMapping("/{travelerName}/completion")

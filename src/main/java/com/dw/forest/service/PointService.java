@@ -5,10 +5,13 @@ import com.dw.forest.dto.PointConvertResponseDTO;
 import com.dw.forest.dto.PointEventDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
+import com.dw.forest.exception.UnauthorizedTravelerException;
 import com.dw.forest.model.Point;
 import com.dw.forest.model.Traveler;
 import com.dw.forest.repository.PointRepository;
 import com.dw.forest.repository.TravelerRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +28,24 @@ public class PointService {
     @Autowired
     TravelerRepository travelerRepository;
 
-    public List<PointEventDTO> getAllPoints() {
+    public List<PointEventDTO> getAllPoints(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        if (!travelerName.equals("admin")) {
+            throw new UnauthorizedTravelerException("권한이 없습니다");
+        }
         return pointRepository.findAll().stream().map(Point::toEvent).toList();
     }
 
-    public PointEventDTO addPointsToTraveler(String travelerName, double points, String actionType) {
+    public PointEventDTO addPointsToTraveler(HttpServletRequest request, double points, String actionType) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
 
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다."));
@@ -43,8 +59,13 @@ public class PointService {
         return pointRepository.save(point).toEvent();
     }
 
-    public PointEventDTO usePointsFromTraveler(String travelerName, double points, String actionType){
+    public PointEventDTO usePointsFromTraveler(HttpServletRequest request, double points, String actionType){
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
 
+        String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다"));
 
@@ -58,7 +79,7 @@ public class PointService {
 
         Point point = new Point();
         point.setTraveler(traveler);
-        point.setPoints(points);
+        point.setPoints(-points);
         point.setActionType(actionType);
         point.setEventDate(LocalDate.now());
 
@@ -133,7 +154,13 @@ public class PointService {
         return UUID.randomUUID().toString();
     }
 
-    public List<PointEventDTO> getAllPointsOfTraveler(String travelerName) {
+    public List<PointEventDTO> getAllPointsOfTraveler(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+
         List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
                 .map(Point::toEvent).toList();
 
@@ -144,7 +171,12 @@ public class PointService {
         return pointDTOList;
     }
 
-    public List<PointEventDTO> getChargedPointsOfTraveler(String travelerName) {
+    public List<PointEventDTO> getChargedPointsOfTraveler(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
                 .filter(point -> point.getPoints() > 0).map(Point::toEvent).toList();
 
@@ -155,8 +187,52 @@ public class PointService {
         return pointDTOList;
     }
 
-    public List<PointEventDTO> getUsedPointsOfTraveler(String travelerName) {
+    public List<PointEventDTO> getChargedPointsOfTravelers(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        if (!travelerName.equals("admin")) {
+            throw new UnauthorizedTravelerException("권한이 없습니다.");
+        }
+        List<PointEventDTO> pointDTOList = pointRepository.findAll().stream()
+                .filter(point -> point.getPoints() > 0).map(Point::toEvent).toList();
+
+        if (pointDTOList.isEmpty()) {
+            throw new ResourceNotFoundException("포인트 충전 내역이 없습니다.");
+        }
+
+        return pointDTOList;
+    }
+
+    public List<PointEventDTO> getUsedPointsOfTraveler(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
+                .filter(point -> point.getPoints() < 0).map(Point::toEvent).toList();
+
+        if (pointDTOList.isEmpty()) {
+            throw new ResourceNotFoundException("포인트 사용 내역이 없습니다.");
+        }
+
+        return pointDTOList;
+    }
+
+    public List<PointEventDTO> getUsedPointsOfTravelers(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+
+        if (!travelerName.equals("admin")) {
+            throw new UnauthorizedTravelerException("권한이 없습니다");
+        }
+        List<PointEventDTO> pointDTOList = pointRepository.findAll().stream()
                 .filter(point -> point.getPoints() < 0).map(Point::toEvent).toList();
 
         if (pointDTOList.isEmpty()) {
