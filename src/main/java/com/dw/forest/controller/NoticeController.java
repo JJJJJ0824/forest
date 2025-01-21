@@ -30,9 +30,9 @@ public class NoticeController {
     }
 
     // 특정 공지사항 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<NoticeDTO> getNoticeById(@PathVariable Long id) {
-        NoticeDTO notice = noticeService.getNoticeById(id);
+    @GetMapping("/{notice_id}")
+    public ResponseEntity<NoticeDTO> getNoticeById(@PathVariable Long notice_id) {
+        NoticeDTO notice = noticeService.getNoticeById(notice_id);
         return new ResponseEntity<>(notice, HttpStatus.OK);
     }
 
@@ -58,9 +58,9 @@ public class NoticeController {
     }
 
     // 공지사항 수정
-    @PutMapping("/{id}")
-    public ResponseEntity<NoticeDTO> updateNotice(@PathVariable Long id, @RequestBody NoticeDTO noticeDTO) {
-        NoticeDTO updatedNotice = noticeService.updateNotice(id, noticeDTO);
+    @PutMapping("/{notice_id}")
+    public ResponseEntity<NoticeDTO> updateNotice(@PathVariable Long notice_id, @RequestBody NoticeDTO noticeDTO) {
+        NoticeDTO updatedNotice = noticeService.updateNotice(notice_id, noticeDTO);
         return new ResponseEntity<>(updatedNotice, HttpStatus.OK);
     }
 
