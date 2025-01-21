@@ -27,9 +27,18 @@ public class ChecklistService {
     @Autowired
     CourseRepository courseRepository;
 
-    public List<CheckListDTO> getAllChecklists() {
-        return checklistRepository.findAll().stream().map(Checklist::toDTO).toList();
+    public List<CheckListDTO> getIncompleteChecklists(String travelerName) {
+        List<Checklist> incompleteChecklists = checklistRepository.findByTraveler_TravelerNameAndIsCheckedFalse(travelerName);
+
+        if (incompleteChecklists.isEmpty()) {
+            throw new ResourceNotFoundException("완료하지 않은 체크리스트 항목이 없습니다.");
+        }
+
+        return incompleteChecklists.stream()
+                .map(Checklist::toDTO)
+                .toList();
     }
+
     public List<CheckListDTO> getChecklistsByTraveler(String travelerName) {
 
         Traveler traveler = travelerRepository.findById(travelerName)

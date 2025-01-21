@@ -9,4 +9,5 @@ import java.util.List;
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
     List<Checklist> findByTraveler_TravelerName(String travelerName);
     List<Checklist> findByTraveler(Traveler traveler);
+    List<Checklist> findByTraveler_TravelerNameAndIsCheckedFalse(String travelerName);
 }

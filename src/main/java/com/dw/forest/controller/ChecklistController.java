@@ -19,37 +19,33 @@ public class ChecklistController {
     ChecklistService checklistService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<CheckListDTO>> getAllCheckList() {
-        return new ResponseEntity<>(checklistService.getAllChecklists(), HttpStatus.OK);
+    public ResponseEntity<List<CheckListDTO>> getAllIncompleteChecklists(@RequestParam String travelerName) {
+        List<CheckListDTO> incompleteChecklists = checklistService.getIncompleteChecklists(travelerName);
+        return ResponseEntity.ok(incompleteChecklists);
     }
 
     @GetMapping("/{traveler_name}/all")
     public ResponseEntity<List<CheckListDTO>> getChecklistsByTraveler(@PathVariable String traveler_name) {
-        List<CheckListDTO> checklists = checklistService.getChecklistsByTraveler(traveler_name);
-        return new ResponseEntity<>(checklists, HttpStatus.OK);
+        return new ResponseEntity<>(checklistService.getChecklistsByTraveler(traveler_name), HttpStatus.OK);
     }
 
     @GetMapping("/recommend/{traveler_name}")
     public ResponseEntity<List<CourseReadDTO>> recommendCourses(@PathVariable String traveler_name) {
-        List<CourseReadDTO> recommendedCourses = checklistService.recommendCourses(traveler_name);
-        return new ResponseEntity<>(recommendedCourses, HttpStatus.OK);
+        return new ResponseEntity<>(checklistService.recommendCourses(traveler_name), HttpStatus.OK);
     }
 
     @GetMapping("/{travelerName}/completion")
     public ResponseEntity<Map<String, Object>> getTravelerChecklistCompletion(@PathVariable String travelerName) {
         boolean isCompleted = checklistService.checklistCompleted(travelerName);
-
         Map<String, Object> response = new HashMap<>();
         response.put("traveler_name", travelerName);
         response.put("completed", isCompleted);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{travelerName}/reset")
     public ResponseEntity<List<CheckListDTO>> resetChecklist(@PathVariable String travelerName) {
-
-        List<CheckListDTO> updateChecklists = checklistService.resetChecklist(travelerName);
-        return ResponseEntity.ok(updateChecklists);
+        return new ResponseEntity<>(checklistService.resetChecklist(travelerName), HttpStatus.OK);
     }
 }
