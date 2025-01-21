@@ -107,12 +107,15 @@ public class CartService {
 
         courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다"));
 
-        Cart cart = cartRepository.findByTraveler_TravelerNameAndCourse_CourseId(travelerName, courseId)
-                .orElseThrow(()->new ResourceNotFoundException("카트를 찾을 수 없습니다."));
-
-        if (cart.equals(new Cart())){
-            throw new ResourceNotFoundException("해당 강의는 장바구니에 없습니다");
+        List<Cart> carts = cartRepository.findByTraveler_TravelerNameAndCourse_CourseId(travelerName, courseId);
+        if (carts.isEmpty()) {
+            throw new ResourceNotFoundException("카트를 찾을 수 없습니다.");
         }
+
+        if (carts.size() > 1) {
+            throw new IllegalStateException("중복된 카트 항목이 발견되었습니다.");
+        }
+
         return true;
     }
 

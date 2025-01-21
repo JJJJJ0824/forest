@@ -5,6 +5,7 @@ import com.dw.forest.dto.CouponCodeDTO;
 import com.dw.forest.dto.DiscountDTO;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.service.CartService;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class CartController {
             } else {
                 throw new ResourceNotFoundException("해당 강의는 장바구니 안에 없습니다.");
             }
-        } catch (ResourceNotFoundException e) {
+        } catch (NonUniqueResultException e) {
             throw new ResourceNotFoundException(e.getMessage());
         }
     }

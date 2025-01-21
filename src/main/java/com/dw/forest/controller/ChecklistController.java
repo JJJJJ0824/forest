@@ -18,7 +18,7 @@ public class ChecklistController {
     @Autowired
     ChecklistService checklistService;
 
-    @GetMapping("/{traveler_name}/all")
+    @GetMapping("/all")
     public ResponseEntity<List<CheckListDTO>> getAllCheckList() {
         return new ResponseEntity<>(checklistService.getAllChecklists(), HttpStatus.OK);
     }
