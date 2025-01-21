@@ -1,20 +1,16 @@
 package com.dw.forest.controller;
 
 import com.dw.forest.dto.CartDTO;
-import com.dw.forest.dto.DiscountResponseDTO;
+import com.dw.forest.dto.CouponCodeDTO;
+import com.dw.forest.dto.DiscountDTO;
 import com.dw.forest.exception.ResourceNotFoundException;
-import com.dw.forest.model.Cart;
-import com.dw.forest.model.Course;
 import com.dw.forest.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -29,36 +25,27 @@ public class CartController {
 
     @PostMapping("/add")
     public ResponseEntity<CartDTO> addCourseToCart(@RequestBody CartDTO cartDTO) {
-
         return new ResponseEntity<>(cartService.addCourseToCart(cartDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/{travelerName}")
     public ResponseEntity<List<CartDTO>> getCartByTravelerName(@PathVariable String travelerName) {
-        List<CartDTO> cartDTOs = cartService.getCartByTravelerName(travelerName);
-        if (cartDTOs.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(cartDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(cartService.getCartByTravelerName(travelerName), HttpStatus.OK);
     }
 
     @DeleteMapping("/{cartId}")
     public ResponseEntity<String> removeCourseFromCart(@PathVariable Long cartId) {
-        String result = cartService.removeCourseFromCart(cartId);
-
-        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(cartService.removeCourseFromCart(cartId), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{travelerName}/clear")
-    public ResponseEntity<String> clearCartForTraveler(@PathVariable String travelerName){
-        String result = cartService.clearCartForTraveler(travelerName);
-        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+    public ResponseEntity<String> clearCartOfTraveler(@PathVariable String travelerName){
+        return new ResponseEntity<>(cartService.clearCartOfTraveler(travelerName), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("{travelerName}/total-price")
     public ResponseEntity<Double> calculateTotalPrice(@PathVariable String travelerName) {
-        double totalPrice = cartService.calculateTotalPrice(travelerName);
-        return new ResponseEntity<>(totalPrice, HttpStatus.OK);
+        return new ResponseEntity<>(cartService.calculateTotalPrice(travelerName), HttpStatus.OK);
     }
 
     @GetMapping("/{travelerName}/exists/{courseId}")
@@ -83,7 +70,9 @@ public class CartController {
     }
 
     @PutMapping("/{travelerName}/apply-discount")
-    public ResponseEntity<DiscountResponseDTO> applyDiscount(@PathVariable String travelerName, @RequestBody String discountCode) {
-        return new ResponseEntity<>(cartService.applyDiscountToCart(travelerName,discountCode), HttpStatus.OK);
+    public ResponseEntity<DiscountDTO> applyDiscount(@PathVariable String travelerName, @RequestBody CouponCodeDTO couponCodeDTO) {
+        String discountCode = couponCodeDTO.getDiscountCode();
+//        System.out.println("전달 받은 할인 코드 : " + discountCode);
+        return new ResponseEntity<>(cartService.applyDiscountToCart(travelerName, discountCode), HttpStatus.OK);
     }
 }

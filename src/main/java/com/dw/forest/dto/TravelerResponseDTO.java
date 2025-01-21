@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class TravelerResponseDTO {
     private String travelerName;
+    private String password;
     private String contact;
     private String email;
     private String realName;

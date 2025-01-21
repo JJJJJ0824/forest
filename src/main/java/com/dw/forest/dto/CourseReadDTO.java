@@ -11,11 +11,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @ToString
-public class CourseDTO {
+public class CourseReadDTO {
+    private Long courseId;
     private String title;
     private String description;
     private String content;
     private long price;
     private LocalDate createdAt;
+    private LocalDate updatedAt;
     private String categoryName;
 }

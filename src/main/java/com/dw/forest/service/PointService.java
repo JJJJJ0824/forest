@@ -134,26 +134,35 @@ public class PointService {
     }
 
     public List<PointEventDTO> getAllPointsOfTraveler(String travelerName) {
-        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream().map(Point::toEvent).toList();
+        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
+                .map(Point::toEvent).toList();
+
         if (pointDTOList.isEmpty()) {
             throw new ResourceNotFoundException("포인트 충전, 사용 내역이 없습니다.");
         }
+
         return pointDTOList;
     }
 
     public List<PointEventDTO> getChargedPointsOfTraveler(String travelerName) {
-        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream().filter(point -> point.getPoints() > 0).map(Point::toEvent).toList();
+        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
+                .filter(point -> point.getPoints() > 0).map(Point::toEvent).toList();
+
         if (pointDTOList.isEmpty()) {
             throw new ResourceNotFoundException("포인트 충전 내역이 없습니다.");
         }
+
         return pointDTOList;
     }
 
     public List<PointEventDTO> getUsedPointsOfTraveler(String travelerName) {
-        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream().filter(point -> point.getPoints() < 0).map(Point::toEvent).toList();
+        List<PointEventDTO> pointDTOList = pointRepository.findByTraveler_TravelerName(travelerName).stream()
+                .filter(point -> point.getPoints() < 0).map(Point::toEvent).toList();
+
         if (pointDTOList.isEmpty()) {
             throw new ResourceNotFoundException("포인트 사용 내역이 없습니다.");
         }
+
         return pointDTOList;
     }
 }

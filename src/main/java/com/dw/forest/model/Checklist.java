@@ -1,5 +1,6 @@
 package com.dw.forest.model;
 
+import com.dw.forest.dto.CheckListDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,4 +30,13 @@ public class Checklist {
     @ManyToOne
     @JoinColumn(name = "category_name")
     private Category category;
+
+    public CheckListDTO toDTO() {
+        return new CheckListDTO(this.id, this.direction, this.isChecked ,
+                this.traveler.getTravelerName(),this.category.getCategoryName());
+    }
+
+    public boolean isCompleted() {
+        return this.isChecked;
+    }
 }

@@ -36,7 +36,7 @@ public class Cart {
     private boolean purchaseStatus; //  "true" - 구매완료, true 상태가 되면 삭제하도록 설정 필요, "false" - 구매 진행 안됨
 
     public CartDTO toDTO() {
-        return new CartDTO(this.course.getCourseId(), this.traveler.getTravelerName(), this.purchaseStatus);
+        return new CartDTO(this.id, this.course.getCourseId(), this.traveler.getTravelerName(), this.purchaseStatus);
     }
 
     public void addPoint(String actionType, double pointsValue) {

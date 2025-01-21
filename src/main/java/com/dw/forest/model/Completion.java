@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Getter
 @ToString
 @Entity
-@Table(name="course_completion")
-public class CourseCompletion {
+@Table(name="completion")
+public class Completion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "completion_id")

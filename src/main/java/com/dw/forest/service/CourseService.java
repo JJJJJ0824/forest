@@ -1,6 +1,7 @@
 package com.dw.forest.service;
 
 import com.dw.forest.dto.CourseDTO;
+import com.dw.forest.dto.CourseReadDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.model.Category;
@@ -22,19 +23,20 @@ public class CourseService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public List<CourseDTO> getAllCourses() {
+    public List<CourseReadDTO> getAllCourses() {
         List<Course> courses = courseRepository.findAll().stream().toList();
         if (courses.isEmpty()) {
             throw new ResourceNotFoundException("강의 정보를 찾을 수 없습니다.");
         }
-        return courses.stream().map(Course::toDTO).toList();
+        return courses.stream().map(Course::toRead).toList();
     }
 
-    public CourseDTO createCourse(CourseDTO courseDTO){
+    public CourseReadDTO createCourse(CourseDTO courseDTO){
         try {
             Course course = new Course();
             Category category = categoryRepository.findById(courseDTO.getCategoryName())
                     .orElseThrow(() -> new ResourceNotFoundException("카테고리를 찾을 수 없습니다."));
+
             course.setTitle(courseDTO.getTitle());
             course.setDescription(courseDTO.getDescription());
             course.setContent(courseDTO.getContent());
@@ -44,22 +46,23 @@ public class CourseService {
             course.setCategory(category);
 
             courseRepository.save(course);
-            return course.toDTO();
+            return course.toRead();
         }catch (PropertyValueException e) {
             throw new InvalidRequestException("강의를 생성하지 못했습니다. 강의를 생성하려면 모든 내용을 기입해야합니다.");
         }
     }
 
-    public CourseDTO getCourseById(Long courseId) {
+    public CourseReadDTO getCourseById(Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다."));
 
-        return course.toDTO();
+        return course.toRead();
     }
 
-    public CourseDTO updateCourse(Long courseId, CourseDTO courseDTO){
+    public CourseReadDTO updateCourse(Long courseId, CourseDTO courseDTO){
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다."));
+
         Category category = categoryRepository.findById(
                 courseDTO.getCategoryName()).orElseThrow(()->new InvalidRequestException("카테고리를 찾을 수 없습니다."));
 
@@ -72,7 +75,7 @@ public class CourseService {
 
         courseRepository.save(course);
 
-        return course.toDTO();
+        return course.toRead();
     }
 
     public String deleteCourse(Long courseId) {
@@ -83,53 +86,53 @@ public class CourseService {
         return "강의 삭제 성공";
     }
 
-    public List<CourseDTO> getCoursesByCategory(String categoryName) {
+    public List<CourseReadDTO> getCoursesByCategory(String categoryName) {
         List<Course> courses = courseRepository.findByCategoryCategoryName(categoryName);
 
         if (courses.isEmpty()) {
             throw new ResourceNotFoundException("해당 카테고리의 강의를 찾을 수 없습니다.");
         }
 
-        return courses.stream().map(Course::toDTO).toList();
+        return courses.stream().map(Course::toRead).toList();
     }
 
-    public List<CourseDTO> getCoursesByPriceRange(double min_price, double max_price) {
+    public List<CourseReadDTO> getCoursesByPriceRange(double min_price, double max_price) {
         List<Course> courses = courseRepository.findByPriceBetween(min_price, max_price);
         if (courses.isEmpty()) {
             throw new ResourceNotFoundException("해당 가격 범위 내 강의가 없습니다.");
         }
-        return courses.stream().map(Course::toDTO).toList();
+        return courses.stream().map(Course::toRead).toList();
     }
 
-    public List<CourseDTO> getFreeCourses() {
+    public List<CourseReadDTO> getFreeCourses() {
         List<Course> freeCourses = courseRepository.findByCategoryCategoryName("자유여행");
         if (freeCourses.isEmpty()) {
-            throw new ResourceNotFoundException("자유형 강의를 찾을 수 없습니다");
+            throw new ResourceNotFoundException("자유 유형 강의를 찾을 수 없습니다");
         }
-        return freeCourses.stream().map(Course::toDTO).toList();
+        return freeCourses.stream().map(Course::toRead).toList();
     }
 
-    public List<CourseDTO> getFamilyCourses() {
+    public List<CourseReadDTO> getFamilyCourses() {
         List<Course> familyCourses = courseRepository.findByCategoryCategoryName("가족여행");
         if (familyCourses.isEmpty()) {
-            throw new ResourceNotFoundException("가족형 강의를 찾을 수 없습니다");
+            throw new ResourceNotFoundException("가족 유형 강의를 찾을 수 없습니다");
         }
-        return familyCourses.stream().map(Course::toDTO).toList();
+        return familyCourses.stream().map(Course::toRead).toList();
     }
 
-    public List<CourseDTO> getPackageCourses() {
+    public List<CourseReadDTO> getPackageCourses() {
         List<Course> packageCourses = courseRepository.findByCategoryCategoryName("패키지여행");
         if (packageCourses.isEmpty()) {
-            throw new ResourceNotFoundException("패키지형 강의를 찾을 수 없습니다.");
+            throw new ResourceNotFoundException("패키지 유형 강의를 찾을 수 없습니다.");
         }
-        return packageCourses.stream().map(Course::toDTO).toList();
+        return packageCourses.stream().map(Course::toRead).toList();
     }
 
-    public List<CourseDTO> getCommonCourses() {
+    public List<CourseReadDTO> getCommonCourses() {
         List<Course> commonCourses = courseRepository.findByCategoryCategoryName("공통");
         if (commonCourses.isEmpty()) {
-            throw new ResourceNotFoundException("공통형 강의를 찾을 수 없습니다.");
+            throw new ResourceNotFoundException("공통 유형 강의를 찾을 수 없습니다.");
         }
-        return commonCourses.stream().map(Course::toDTO).toList();
+        return commonCourses.stream().map(Course::toRead).toList();
     }
 }

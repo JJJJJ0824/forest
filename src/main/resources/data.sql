@@ -53,7 +53,7 @@ VALUES
 ('admin', '중요 공지', '오늘 오후 8시부터 오후 8시 30분까지 약 30분간 사이트를 점검합니다. 이용에 불편을 드려 죄송합니다.', '2024-11-20');
 
 INSERT INTO cart (course_id, traveler_name, purchase_status)
-VALUES (1, 'traveler', true), (2, 'traveler', true), (3, 'traveler', false);
+VALUES (1, 'traveler', false), (2, 'traveler', false), (3, 'traveler', false);
 
-INSERT INTO course_completion (traveler_name, course_id, completion_date)
+INSERT INTO completion (traveler_name, course_id, completion_date)
 VALUES ('traveler', 1, '2024-12-11'), ('traveler', 2, null);

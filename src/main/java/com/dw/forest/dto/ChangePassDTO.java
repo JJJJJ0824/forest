@@ -9,9 +9,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class CartDTO {
-    private Long cartId;
-    private Long courseId;
-    private String travelerName;
-    private boolean purchaseStatus;
+public class ChangePassDTO {
+    String oldPassword;
+    String newPassword;
+    String newPasswordCheck;
 }

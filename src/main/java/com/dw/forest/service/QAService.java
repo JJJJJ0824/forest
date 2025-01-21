@@ -132,27 +132,30 @@ public class QAService {
 
     public List<QaReadDTO> searchByTitleAndContent(String title, String content) {
         try {
-            if (title == null && content == null) {
-                throw new ResourceNotFoundException("검색어 두 개가 모두 빈 값일 수 없습니다.");
+            if (title.isEmpty() && content.isEmpty()) {
+                throw new ResourceNotFoundException("검색어가 모두 빈 값일 수 없습니다.");
             }
 
-            if (title == null) {
-                title = content;
+            String asTitle = "%" + title + "%";
+            String asContent = "%" + content + "%";
+
+            if (title.isEmpty()) {
+                asTitle = asContent;
             }
 
-            if (content == null) {
-                content = title;
+            if (content.isEmpty()) {
+                asContent = asTitle;
             }
 
-            List<QA> qas = qaRepository.findByTitleOrContentLike(title, content);
+            List<QA> qas = qaRepository.findByTitleOrContentLike(asTitle, asContent);
 
             if (qas.isEmpty()) {
-                throw new ResourceNotFoundException("검색어로 게시글이 확인되지 않습니다. 다시 확인하세요.");
+                throw new ResourceNotFoundException("검색어로 게시글이 확인되지 않습니다. 올바른 검색어를 입력하세요.");
             }
 
             return qas.stream().map(QA::toRead).toList();
         } catch (Exception e) {
-            throw new ResourceNotFoundException("내용 검색 중 오류가 발생했습니다.");
+            throw new ResourceNotFoundException(e.getMessage());
         }
     }
 }

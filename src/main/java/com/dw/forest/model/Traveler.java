@@ -1,6 +1,7 @@
 package com.dw.forest.model;
 
 import com.dw.forest.dto.TravelerDTO;
+import com.dw.forest.dto.TravelerResponseDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,7 +40,7 @@ public class Traveler {
     private LocalDate createdAt; // 만들어진 날짜, 계정 생성일
 
     @OneToMany(mappedBy = "traveler")
-    private List<CourseCompletion> courseCompletions;
+    private List<Completion> completions;
 
     @OneToMany(mappedBy = "traveler")
     private List<QA> QAs;
@@ -55,5 +56,9 @@ public class Traveler {
 
     public TravelerDTO toDTO() {
         return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, null, this.realName);
+    }
+
+    public TravelerResponseDTO toResponse() {
+        return new TravelerResponseDTO(this.travelerName, null, this.contact, this.email, this.realName);
     }
 }

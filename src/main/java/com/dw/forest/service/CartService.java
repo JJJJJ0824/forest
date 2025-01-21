@@ -1,13 +1,11 @@
 package com.dw.forest.service;
 
 import com.dw.forest.dto.CartDTO;
-import com.dw.forest.dto.CourseDTO;
-import com.dw.forest.dto.DiscountResponseDTO;
+import com.dw.forest.dto.DiscountDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.model.Cart;
 import com.dw.forest.model.Course;
-import com.dw.forest.model.Point;
 import com.dw.forest.model.Traveler;
 import com.dw.forest.repository.CartRepository;
 import com.dw.forest.repository.CourseRepository;
@@ -54,7 +52,7 @@ public class CartService {
         List<Cart> cartItems = cartRepository.findByTraveler_TravelerName(travelerName);
 
         if (cartItems.isEmpty()) {
-            throw new ResourceNotFoundException("장바구니를 찾을 수 없습니다. 올바른 트래블러 이름을 확인하세요.");
+            throw new ResourceNotFoundException("장바구니를 찾을 수 없습니다. 올바른 여행자명을 입력하세요.");
         }
 
         return cartItems.stream().map(Cart::toDTO).toList();
@@ -62,7 +60,7 @@ public class CartService {
 
 
     public String removeCourseFromCart(Long cartId) {
-        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        Cart cart = cartRepository.findById(cartId).orElseThrow(()->new ResourceNotFoundException("해당 장바구니 항목을 찾을 수 없습니다."));
 
         if (cart.equals(new Cart())) {
             throw new ResourceNotFoundException("해당 장바구니 항목을 찾을 수 없습니다.");
@@ -77,7 +75,7 @@ public class CartService {
         return "강의가 장바구니에서 삭제되었습니다.";
     }
 
-    public String clearCartForTraveler(String travelerName) {
+    public String clearCartOfTraveler(String travelerName) {
         List<Cart> carts = cartRepository.findByTraveler_TravelerName(travelerName);
 
         if (carts.isEmpty()) {
@@ -89,14 +87,14 @@ public class CartService {
         return "사용자의 장바구니가 모두 삭제되었습니다.";
     }
 
-    public long calculateTotalPrice(String travelerName) {
+    public double calculateTotalPrice(String travelerName) {
         List<Cart> carts = cartRepository.findByTraveler_TravelerName(travelerName);
 
         if (carts.isEmpty()) {
             throw new ResourceNotFoundException("해당 여행자의 장바구니가 비어있습니다");
         }
 
-        long totalPrice = 0;
+        double totalPrice = 0;
 
         for (Cart cart : carts) {
             totalPrice += cart.getCourse().getPrice();
@@ -134,15 +132,18 @@ public class CartService {
         return carts.stream().map(Cart::toDTO).toList();
     }
 
-    public DiscountResponseDTO applyDiscountToCart(String travelerName, String discountCode) {
+    public DiscountDTO applyDiscountToCart(String travelerName, String discountCode) {
+        if (discountCode==null) {
+            throw new InvalidRequestException("유효하지 않은 할인 코드입니다.")  ;
+        }
         List<Cart> carts = cartRepository.findByTraveler_TravelerName(travelerName);
 
         if (carts.isEmpty()) {
             throw new ResourceNotFoundException("해당 여행자의 장바구니가 비어있습니다");
         }
 
-        // 총 금액 계산 (Course 가격 기준)
-        double originalTotal = calculateCartTotal(travelerName);
+        // 총 금액 계산
+        double originalTotal = calculateCartTotal(carts);
 
         // 할인율 계산
         double discountRate = getDiscountRate(discountCode.toUpperCase());
@@ -154,33 +155,23 @@ public class CartService {
         double discountedTotal = originalTotal * (1 - discountRate);
 
         // 결과 생성
-        return new DiscountResponseDTO(originalTotal, discountedTotal, discountRate * 100);
+        return new DiscountDTO(discountCode, originalTotal, discountedTotal, discountRate * 100);
     }
 
-    private double calculateCartTotal(String travelerName) {
+    private double calculateCartTotal(List<Cart> carts) {
         // 카트의 Course 가격 총합 계산
-        List<Cart> carts = cartRepository.findByTraveler_TravelerName(travelerName);
-
-        if (carts.isEmpty()) {
-            throw new ResourceNotFoundException("해당 여행자의 장바구니가 비어있습니다");
-        }
-
-        long totalPrice = 0;
-
-        for (Cart cart : carts) {
-            totalPrice += cart.getCourse().getPrice();
-        }
-
-        return totalPrice;
+        return carts.stream()
+                .mapToDouble(cart -> cart.getCourse().getPrice())
+                .sum();
     }
 
     private double getDiscountRate(String discountCode) {
         // 할인율 로직을 Service 내부에서 처리
         return switch (discountCode) {
-            case "cannot reach" -> 0.00;
-            case "SUMMER2025" -> 0.20;
-            case "cannot reach-2" -> 0.00;
-            default -> 0.0; // 유효하지 않은 할인 코드
+            case "SUMMER" -> 0.15;
+            case "WINTER" -> 0.20;
+            case "SPRING" -> 0.10;
+            default -> 0.0;
         };
     }
 }

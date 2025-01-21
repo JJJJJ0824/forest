@@ -9,8 +9,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class DiscountResponseDTO {
-    private double originalTotal;
-    private double discountedTotal;
-    private double discountRate;
+public class CouponCodeDTO {
+    private String discountCode;
 }

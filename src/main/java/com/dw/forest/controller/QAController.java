@@ -17,7 +17,7 @@ public class QAController {
     @Autowired
     QAService qaService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<QaReadDTO>> getAllQas() {
         return new ResponseEntity<>(qaService.getAllQas(), HttpStatus.OK);
     }

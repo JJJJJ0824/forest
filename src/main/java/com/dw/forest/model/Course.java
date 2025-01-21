@@ -1,11 +1,11 @@
 package com.dw.forest.model;
 
 import com.dw.forest.dto.CourseDTO;
+import com.dw.forest.dto.CourseReadDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -40,7 +40,7 @@ public class Course {
     private LocalDate updatedAt;
 
     @OneToMany(mappedBy = "course")
-    private List<CourseCompletion> courseCompletions;
+    private List<Completion> completions;
 
     @OneToMany(mappedBy = "course")
     private List<Cart> cartItems;
@@ -49,7 +49,7 @@ public class Course {
     @JoinColumn(name = "category_name")
     private Category category;
 
-    public CourseDTO toDTO() {
-        return new CourseDTO(this.title, this.description, this.content, this.price, LocalDate.now(), this.category.getCategoryName());
+    public CourseReadDTO toRead() {
+        return new CourseReadDTO(this.courseId, this.title, this.description, this.content, this.price, this.createdAt, this.updatedAt, this.category.getCategoryName());
     }
 }

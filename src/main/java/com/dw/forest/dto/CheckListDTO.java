@@ -9,9 +9,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class CartDTO {
-    private Long cartId;
-    private Long courseId;
-    private String travelerName;
-    private boolean purchaseStatus;
+public class CheckListDTO {
+    private Long id;
+    private String direction;
+    private boolean isChecked;
+    private String traveler;
+    private String category;
 }
