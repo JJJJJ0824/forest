@@ -4,14 +4,8 @@ import com.dw.forest.dto.CartDTO;
 import com.dw.forest.dto.DiscountDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
-import com.dw.forest.model.Cart;
-import com.dw.forest.model.Course;
-import com.dw.forest.model.Point;
-import com.dw.forest.model.Traveler;
-import com.dw.forest.repository.CartRepository;
-import com.dw.forest.repository.CourseRepository;
-import com.dw.forest.repository.PointRepository;
-import com.dw.forest.repository.TravelerRepository;
+import com.dw.forest.model.*;
+import com.dw.forest.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +24,8 @@ public class CartService {
     TravelerRepository travelerRepository;
     @Autowired
     PointRepository pointRepository;
+    @Autowired
+    CompletionRepository completionRepository;
 
     public List<CartDTO> getAllCarts() {
         return cartRepository.findAll().stream().map(Cart::toDTO).toList();
@@ -106,7 +102,7 @@ public class CartService {
         }
         double remainingPoints = useAblePoints - totalAmount;
 
-        pointRepository.usePoints(travelerName, totalAmount);
+        pointRepository.usePoints(totalAmount, travelerName);
 
         cartRepository.updateAllPurchaseStatus(travelerName);
 
@@ -241,45 +237,54 @@ public class CartService {
     }
 
     public String checkout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        HttpSession session = request.getSession(false);
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
+
         String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findByTravelerName(travelerName)
-                .orElseThrow(() -> new ResourceNotFoundException("유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("여행자를 찾을 수 없습니다."));
 
-        List<Cart> cartItems = cartRepository.findByTravelerTravelerNameAndPurchaseStatus(travelerName, false);
-
-        if (cartItems.isEmpty()) {
+        List<Cart> carts = cartRepository.findByTravelerTravelerNameAndPurchaseStatus(travelerName, false);
+        if (carts.isEmpty()) {
             throw new ResourceNotFoundException("장바구니에 결제할 강의가 없습니다.");
         }
 
-        double totalAmount = 0;
-        for (Cart cartItem : cartItems) {
-            totalAmount += cartItem.getCourse().getPrice();
+        double totalAmount = calculateCartTotal(carts);
+
+        Double useAblePoints = pointRepository.getUseAblePoints(travelerName);
+        if (useAblePoints == null) {
+            // null일 경우 기본값을 사용하거나, 예외 처리
+            useAblePoints = 0.0; // 기본값 설정
         }
-
-        double useAblePoints = pointRepository.getUseAblePoints(travelerName);
-
         if (useAblePoints < totalAmount) {
             throw new InvalidRequestException("잔액이 부족하여 결제를 진행할 수 없습니다.");
         }
 
-        for (Cart cartItem : cartItems) {
-            cartItem.setPurchaseStatus(true);
-            cartRepository.save(cartItem);
+        processPurchase(traveler, carts, totalAmount);
 
+        return "결제가 완료되었습니다. 총 결제 금액: " +(long) totalAmount + ". 잔액: " + useAblePoints.doubleValue();
+    }
+
+    private void processPurchase(Traveler traveler, List<Cart> carts, double totalAmount) {
+        for (Cart cartItem : carts) {
             Point point = new Point();
             point.setTraveler(traveler);
-            point.setActionType("COURSE_PURCHASE");
+            point.setActionType("강의 구매");
             point.setPoints(-cartItem.getCourse().getPrice());
             point.setEventDate(LocalDate.now());
-            point.setCart_fk(cartItem);
-            pointRepository.save(point);
-        }
-        useAblePoints= useAblePoints-totalAmount;
+            point.setCart_fk(null);
 
-        return "결제가 완료되었습니다. 총 결제 금액: " +(long) totalAmount + ". 잔액: " +(long) useAblePoints;
+            pointRepository.save(point);
+
+            Completion completion = new Completion(null, traveler, cartItem.getCourse(), null, point);
+            completionRepository.save(completion);
+            cartItem.setPurchaseStatus(true);
+            cartRepository.save(cartItem);
+            cartRepository.deleteById(cartItem.getId());
+        }
+
+        pointRepository.usePoints(totalAmount, traveler.getTravelerName());
     }
 }

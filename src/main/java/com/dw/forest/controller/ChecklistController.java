@@ -39,7 +39,7 @@ public class ChecklistController {
     public ResponseEntity<Map<String, Object>> getTravelerChecklistCompletion(HttpServletRequest request) {
         boolean isCompleted = checklistService.checklistCompleted(request);
         Map<String, Object> response = new HashMap<>();
-        response.put("traveler_name", request.getSession().getAttribute("travelerName"));
+        response.put("travelerName", request.getSession().getAttribute("travelerName"));
         response.put("completed", isCompleted);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
