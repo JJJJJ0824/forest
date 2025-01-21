@@ -83,7 +83,7 @@ public class CompletionService {
 
         Optional<Completion> existingCompletion = completionRepository.findByTravelerAndCourse(traveler, course);
         if (existingCompletion.isEmpty()) {
-            throw new InvalidRequestException("이미 수강 완료된 강의입니다.");
+            throw new InvalidRequestException("해당 강의를 수강한 유저를 찾을 수 없습니다.");
         }
 
         Completion completion = new Completion();

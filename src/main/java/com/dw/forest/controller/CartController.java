@@ -55,21 +55,6 @@ public class CartController {
         return new ResponseEntity<>(cartService.calculateTotalPrice(request), HttpStatus.OK);
     }
 
-    @GetMapping("/exists/{courseId}")
-    public ResponseEntity<String> isCourseInCart(HttpServletRequest request, @PathVariable Long courseId) {
-        try {
-            boolean isInCart = cartService.isCourseInCart(request, courseId);
-
-            if (isInCart) {
-                return new ResponseEntity<>("해당 강의는 이미 장바구니 안에 있습니다.", HttpStatus.OK);
-            } else {
-                throw new ResourceNotFoundException("해당 강의는 장바구니 안에 없습니다.");
-            }
-        } catch (NonUniqueResultException e) {
-            throw new ResourceNotFoundException(e.getMessage());
-        }
-    }
-
     @PostMapping("/add-multiple")
     public ResponseEntity<List<CartDTO>> addMultipleCoursesToCart(HttpServletRequest request, @RequestBody List<Long> courseIds) {
         return new ResponseEntity<>(

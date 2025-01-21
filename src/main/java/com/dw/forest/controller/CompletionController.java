@@ -19,26 +19,26 @@ public class CompletionController {
     @Autowired
     CompletionService completionService;
 
-    @GetMapping("/completed/{course_id}")
-    public ResponseEntity<Boolean> checkIfCompleted(HttpServletRequest request, @PathVariable Long course_id) {
-        boolean hasCompleted = completionService.completedCourse(request, course_id);
-        return new ResponseEntity<>(hasCompleted, HttpStatus.OK);
-    }
-
     @GetMapping("/complete/travel")
     public ResponseEntity<List<CourseReadDTO>> getCompletedCoursesByTraveler(HttpServletRequest request) {
         List<CourseReadDTO> completedCourses = completionService.getCompletedCoursesByTraveler(request);
         return new ResponseEntity<>(completedCourses, HttpStatus.OK);
     }
 
-    @PutMapping("/complete")
-    public ResponseEntity<String> completeCourse(@PathVariable Long course_id, HttpServletRequest request) {
-        String message = completionService.completeCourse(request, course_id);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+    @GetMapping("/complete/{course_id}")
+    public ResponseEntity<Boolean> checkIfCompleted(HttpServletRequest request, @PathVariable Long course_id) {
+        boolean hasCompleted = completionService.completedCourse(request, course_id);
+        return new ResponseEntity<>(hasCompleted, HttpStatus.OK);
     }
 
     @GetMapping("{courseId}/completions")
     public ResponseEntity<CourseWithStudentsDTO> getCourseWithStudents(HttpServletRequest request, @PathVariable Long courseId) {
         return new ResponseEntity<>(completionService.getCourseWithStudents(request,courseId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{course_id}/complete")
+    public ResponseEntity<String> completeCourse(@PathVariable Long course_id, HttpServletRequest request) {
+        String message = completionService.completeCourse(request, course_id);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

@@ -170,25 +170,6 @@ public class CartService {
         return totalPrice;
     }
 
-    public boolean isCourseInCart(HttpServletRequest request, Long courseId) {
-        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
-        if (session == null) {
-            throw new InvalidRequestException("세션이 없습니다.");
-        }
-        String travelerName = (String) session.getAttribute("travelerName");
-        travelerRepository.findById(travelerName).orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다."));
-
-        courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("해당 강의를 찾을 수 없습니다"));
-
-        Cart cart = cartRepository.findByTraveler_TravelerNameAndCourse_CourseId(travelerName, courseId).orElseThrow(()->new ResourceNotFoundException("해당 카트를 찾을 수 없습니다."));
-
-        if (cart.equals(new Cart())) {
-            throw new ResourceNotFoundException("카트를 찾을 수 없습니다.");
-        }
-
-        return true;
-    }
-
     public List<CartDTO> addMultipleCoursesToCart(HttpServletRequest request, List<Long> courseIds) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
