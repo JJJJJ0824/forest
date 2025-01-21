@@ -292,8 +292,8 @@ public class CartService {
             point.setCart_fk(cartItem);
             pointRepository.save(point);
         }
-        useAblePoints= (long) (useAblePoints-totalAmount);
+        useAblePoints= useAblePoints-totalAmount;
 
-        return "결제가 완료되었습니다. 총 결제 금액: " + totalAmount + ". 잔액: " +(long) useAblePoints;
+        return "결제가 완료되었습니다. 총 결제 금액: " +(long) totalAmount + ". 잔액: " +(long) useAblePoints;
     }
 }
