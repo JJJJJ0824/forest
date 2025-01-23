@@ -13,4 +13,5 @@ public interface QARepository extends JpaRepository<QA, Long> {
     @Query("SELECT q FROM QA q WHERE q.title LIKE :title OR q.content LIKE :content")
     List<QA> findByTitleOrContentLike(String title, String content);
     List<QA> findByTraveler_TravelerName(String travelerName);
+    boolean existsByTravelerTravelerName(String travelerName);
 }

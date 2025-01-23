@@ -24,18 +24,18 @@ public class QAController {
     }
 
     @PostMapping("/ask")
-    public ResponseEntity<QaReadDTO> createQuestion(@RequestBody QaDTO qaDTO) {
-        return new ResponseEntity<>(qaService.createQuestion(qaDTO), HttpStatus.CREATED);
+    public ResponseEntity<QaReadDTO> createQuestion(HttpServletRequest request, @RequestBody QaDTO qaDTO) {
+        return new ResponseEntity<>(qaService.createQuestion(request, qaDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/reply")
-    public ResponseEntity<QaReadDTO> createAnswer(@RequestBody QaDTO qaDTO) {
-        return new ResponseEntity<>(qaService.createAnswer(qaDTO), HttpStatus.CREATED);
+    public ResponseEntity<QaReadDTO> createAnswer(HttpServletRequest request,@RequestBody QaDTO qaDTO) {
+        return new ResponseEntity<>(qaService.createAnswer(request, qaDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{qa_id}")
-    public ResponseEntity<String> deleteById(@PathVariable Long qa_id) {
-        return new ResponseEntity<>(qaService.deleteById(qa_id), HttpStatus.OK);
+    public ResponseEntity<String> deleteById(HttpServletRequest request, @PathVariable Long qa_id) {
+        return new ResponseEntity<>(qaService.deleteById(request, qa_id), HttpStatus.OK);
     }
 
     @PutMapping("/update/{qa_id}")

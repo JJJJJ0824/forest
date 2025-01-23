@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QAService {
@@ -31,8 +33,14 @@ public class QAService {
         return q;
     }
 
-    public QaReadDTO createQuestion(QaDTO qaDTO) {
-        QA qa = new QA(qaDTO.getId(), travelerRepository.findById(qaDTO.getTraveler_name()).
+    public QaReadDTO createQuestion(HttpServletRequest request, QaDTO qaDTO) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+
+        String travelerName = (String) session.getAttribute("travelerName");
+        QA qa = new QA(qaDTO.getId(), travelerRepository.findById(travelerName).
                 orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")),
                 qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), "q");
 
@@ -45,8 +53,12 @@ public class QAService {
         return qa.toRead();
     }
 
-    public QaReadDTO createAnswer(QaDTO qaDTO) {
-        QA qa = new QA(qaDTO.getId(), travelerRepository.findById(qaDTO.getTraveler_name()).
+    public QaReadDTO createAnswer(HttpServletRequest request, QaDTO qaDTO) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {throw new InvalidRequestException("세션이 없습니다.");}
+
+        String travelerName = (String) session.getAttribute("travelerName");
+        QA qa = new QA(qaDTO.getId(), travelerRepository.findById(travelerName).
                 orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")),
                 qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), "a");
 
@@ -57,15 +69,24 @@ public class QAService {
         return qa.toRead();
     }
 
+    // 수정 필요. 만약 A가 연관 안된다면 새로 만들거나 엔티티 내부에 추가가 필요함
     public QaReadDTO getQA(Long qa_id) {
         QA qa = qaRepository.findById(qa_id).orElseThrow(()->new ResourceNotFoundException("해당 Q&A를 찾을 수 없습니다."));
 
         return qa.toRead();
     }
 
-    public String deleteById(Long qa_id) {
+    public String deleteById(HttpServletRequest request, Long qa_id) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
         if (qaRepository.existsById(qa_id)) {
             try {
+                if (!qaRepository.findByTraveler_TravelerName(travelerName).equals(new ArrayList<>())) {
+                    throw new ResourceNotFoundException("자신의 글이 아닌 게시글은 삭제할 수 없습니다.");
+                }
                 qaRepository.deleteById(qa_id);
             }catch (ResourceNotFoundException e) {
                 throw new ResourceNotFoundException(e.getMessage());

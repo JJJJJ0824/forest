@@ -14,5 +14,5 @@ public class QaDTO {
     private Long id;
     private String title;
     private String content;
-    private String traveler_name;
+    private Long questionId;
 }
