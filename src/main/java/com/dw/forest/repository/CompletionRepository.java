@@ -13,4 +13,5 @@ public interface CompletionRepository extends JpaRepository<Completion, Long> {
     Optional<Completion> findByTravelerAndCourse(Traveler traveler , Course course);
     List<Completion> findByTravelerTravelerName(String travelerName);
     List<Completion> findByCourseCourseId(Long courseId);
+
 }
