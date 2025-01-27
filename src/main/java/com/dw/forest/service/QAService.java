@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class QAService {
@@ -53,13 +52,13 @@ public class QAService {
         return qa.toRead();
     }
 
-    public QaReadDTO createAnswer(HttpServletRequest request, QaDTO qaDTO) {
+    public QaReadDTO createAnswer(String travelerName, HttpServletRequest request, QaDTO qaDTO) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {throw new InvalidRequestException("세션이 없습니다.");}
 
-        String travelerName = (String) session.getAttribute("travelerName");
-        QA qa = new QA(qaDTO.getId(), travelerRepository.findById(travelerName).
-                orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")),
+        String travelerName1 = (String) session.getAttribute("travelerName");
+        QA qa = new QA(null,
+                travelerRepository.findById(travelerName1).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")),
                 qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), "a");
 
         if (qa==null) {throw new InvalidRequestException("잘못된 형식입니다.");}

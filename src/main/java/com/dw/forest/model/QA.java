@@ -1,6 +1,5 @@
 package com.dw.forest.model;
 
-import com.dw.forest.dto.QaDTO;
 import com.dw.forest.dto.QaReadDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +17,7 @@ public class QA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long Id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "traveler_name")
@@ -37,6 +36,6 @@ public class QA {
     private String type;
 
     public QaReadDTO toRead() {
-        return new QaReadDTO(this.Id, this.type, this.title, this.content, this.traveler.getTravelerName(), this.createdAt);
+        return new QaReadDTO(this.id, this.traveler.getTravelerName(), this.type, this.title, this.content, this.createdAt);
     }
 }

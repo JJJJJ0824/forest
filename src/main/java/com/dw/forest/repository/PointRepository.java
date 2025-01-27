@@ -16,6 +16,6 @@ public interface PointRepository extends JpaRepository<Point, Long> {
     Double getUseAblePoints(String travelerName); // 총 포인트 반환
     @Transactional
     @Modifying
-    @Query(value = "UPDATE point SET points = points - :amount WHERE traveler_name = :travelerName AND points > 0", nativeQuery = true)
+    @Query(value = "UPDATE Point p SET p.points = points - :amount WHERE p.traveler.travelerName = :travelerName AND p.points > 0", nativeQuery = true)
     void usePoint(double amount, String travelerName);
 }
