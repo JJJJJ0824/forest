@@ -43,7 +43,10 @@ public class Traveler {
     private List<Completion> completions;
 
     @OneToMany(mappedBy = "traveler")
-    private List<QA> QAs;
+    private List<Q> QS;
+
+    @OneToMany(mappedBy = "traveler")
+    private List<A> AS;
 
     @OneToMany(mappedBy = "traveler")
     private List<Checklist> checklists;

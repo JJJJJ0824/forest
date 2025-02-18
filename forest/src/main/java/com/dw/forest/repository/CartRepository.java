@@ -11,10 +11,6 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByTraveler_TravelerName(String travelerName);
     Optional<Cart> findByTraveler_TravelerNameAndCourse_CourseId(String travelerName, Long courseId);
 
-    // 장바구니 결제 상태 업데이트 (구매 완료)
-    @Query("UPDATE Cart c SET c.purchaseStatus = true WHERE c.traveler.travelerName = :travelerName AND c.purchaseStatus = false")
-    void updatePurchaseStatus(String travelerName);
-
     @Query("SELECT c FROM Cart c WHERE c.traveler.travelerName = :travelerName AND c.purchaseStatus = false")
     List<Cart> findToPurchase(String travelerName);
 

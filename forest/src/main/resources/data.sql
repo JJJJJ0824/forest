@@ -44,9 +44,13 @@ INSERT INTO point (traveler_name, action_type, points, event_date)
 VALUES
 ('admin', 'test', 9999999999999, now());
 
-INSERT INTO q_a (traveler_name, title, content, created_at, type)
+INSERT INTO q (traveler_name, title, content, created_at)
 VALUES
-('traveler', '점심 뭐 드셨나요', '저는 순대국밥이요', now(), "q"), ('admin', '제 점심은요' ,'저는 컵라면 먹었습니다 ㅎㅎ 맛있더라구요' , now(), "a");
+('traveler', '점심 뭐 드셨나요', '저는 순대국밥이요', now());
+
+INSERT INTO a (traveler_name, title, content, created_at, q_id)
+VALUES
+('admin', '제 점심은요', '저는 컵라면 먹었습니다 ㅎㅎ 맛있더라구요', now(), 1);
 
 INSERT INTO notice (traveler_name, title, content, created_at)
 VALUES
@@ -56,4 +60,4 @@ INSERT INTO cart (course_id, traveler_name, purchase_status)
 VALUES (1, 'traveler', false), (2, 'traveler', false), (3, 'traveler', false);
 
 INSERT INTO completion (traveler_name, course_id, completion_date)
-VALUES ('traveler', 1, '2024-12-11'), ('traveler', 2, null);
+VALUES ('traveler', 1, '2024-12-11'), ('traveler', 2, null), ('traveler', 3, null);

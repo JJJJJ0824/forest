@@ -31,10 +31,6 @@ public class CompletionService {
     @Autowired
     CourseRepository courseRepository;
 
-    public List<Completion> getAllCompletions() {
-        return completionRepository.findAll();
-    }
-
     public boolean completedCourse(HttpServletRequest request, Long courseId) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {

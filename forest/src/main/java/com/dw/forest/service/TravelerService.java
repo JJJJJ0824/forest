@@ -34,7 +34,7 @@ public class TravelerService {
     @Autowired
     CompletionRepository completionRepository;
     @Autowired
-    QARepository qaRepository;
+    QRepository qRepository;
 
     public List<TravelerDTO> getAllTravelers(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
@@ -60,7 +60,7 @@ public class TravelerService {
         Traveler newTraveler = new Traveler(responseDTO.getTravelerName(), authorityRepository.findById("USER")
                 .orElseThrow(() ->new UnauthorizedTravelerException("올바른 역할이 아닙니다.")), responseDTO.getEmail(),
                 responseDTO.getContact(), passwordEncoder.encode(responseDTO.getPassword()), responseDTO.getRealName(),
-                LocalDate.now(), null, null, null, null, null);
+                LocalDate.now(), null, null, null, null, null, null);
 
         travelerRepository.save(newTraveler);
 
@@ -163,7 +163,7 @@ public class TravelerService {
         checklistRepository.deleteAll(checklistRepository.findByTraveler_TravelerName(traveler_name));
         pointRepository.deleteAll(pointRepository.findByTravelerTravelerName(traveler_name));
         cartRepository.deleteAll(cartRepository.findByTraveler_TravelerName(traveler_name));
-        qaRepository.deleteAll(qaRepository.findByTraveler_TravelerName(traveler_name));
+        qRepository.deleteAll(qRepository.findByTraveler_TravelerName(traveler_name));
         completionRepository.deleteAll(completionRepository.findByTravelerTravelerName(traveler_name));
 
         travelerRepository.delete(traveler);

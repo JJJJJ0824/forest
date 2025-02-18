@@ -4,8 +4,10 @@ import com.dw.forest.dto.QaDTO;
 import com.dw.forest.dto.QaReadDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
-import com.dw.forest.model.QA;
-import com.dw.forest.repository.QARepository;
+import com.dw.forest.model.A;
+import com.dw.forest.model.Q;
+import com.dw.forest.repository.ARepository;
+import com.dw.forest.repository.QRepository;
 import com.dw.forest.repository.TravelerRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,65 +16,68 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class QAService {
     @Autowired
-    QARepository qaRepository;
+    QRepository qRepository;
+
+    @Autowired
+    ARepository aRepository;
 
     @Autowired
     TravelerRepository travelerRepository;
 
-    public List<QaReadDTO> getAllQas() {
-        List<QaReadDTO> q = qaRepository.findAll().stream().map(QA::toRead).toList();
+    public List<QaDTO> getAllQas() {
+        List<QaDTO> q = qRepository.findAll().stream().map(Q::toDTO).toList();
         if (q.isEmpty()) {
             throw new ResourceNotFoundException("Q&A가 없습니다.");
         }
         return q;
     }
 
-    public QaReadDTO createQuestion(HttpServletRequest request, QaDTO qaDTO) {
+    public QaDTO createQuestion(HttpServletRequest request, QaDTO qaDTO) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
 
         String travelerName = (String) session.getAttribute("travelerName");
-        QA qa = new QA(qaDTO.getId(), travelerRepository.findById(travelerName).
-                orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")),
-                qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), "q");
 
-        if (qa==null) {
+        Q q = new Q(null, travelerRepository.findById(travelerName).
+                orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")),
+                qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), null);
+
+        if (q.equals(new Q())) {
             throw new InvalidRequestException("잘못된 형식입니다.");
         }
 
-        qaRepository.save(qa);
+        qRepository.save(q);
 
-        return qa.toRead();
+        return q.toDTO();
     }
 
-    public QaReadDTO createAnswer(String travelerName, HttpServletRequest request, QaDTO qaDTO) {
+    public QaDTO createAnswer(HttpServletRequest request, QaDTO qaDTO) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {throw new InvalidRequestException("세션이 없습니다.");}
 
-        String travelerName1 = (String) session.getAttribute("travelerName");
-        QA qa = new QA(null,
-                travelerRepository.findById(travelerName1).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")),
-                qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), "a");
+        String travelerName = (String) session.getAttribute("travelerName");
+        Q q = qRepository.findById(qaDTO.getQaReadDTO().getId()).orElseThrow(()->new ResourceNotFoundException("작성된 질문에만 답할 수 있습니다."));
 
-        if (qa==null) {throw new InvalidRequestException("잘못된 형식입니다.");}
+        A a = new A(null, travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."))
+                , qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), q);
 
-        qaRepository.save(qa);
+        aRepository.save(a);
 
-        return qa.toRead();
+        return a.toDTO();
     }
 
-    // 수정 필요. 만약 A가 연관 안된다면 새로 만들거나 엔티티 내부에 추가가 필요함
-    public QaReadDTO getQA(Long qa_id) {
-        QA qa = qaRepository.findById(qa_id).orElseThrow(()->new ResourceNotFoundException("해당 Q&A를 찾을 수 없습니다."));
+    public QaDTO getQA(Long q_id) {
+        Q q = qRepository.findById(q_id).orElseThrow(()->new ResourceNotFoundException("해당 Q&A를 찾을 수 없습니다."));
 
-        return qa.toRead();
+        return q.toDTO();
     }
 
     public String deleteById(HttpServletRequest request, Long qa_id) {
@@ -81,12 +86,12 @@ public class QAService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        if (qaRepository.existsById(qa_id)) {
+        if (qRepository.existsById(qa_id)) {
             try {
-                if (!qaRepository.findByTraveler_TravelerName(travelerName).equals(new ArrayList<>())) {
+                if (!qRepository.findByTraveler_TravelerName(travelerName).equals(Collections.emptyList())) {
                     throw new ResourceNotFoundException("자신의 글이 아닌 게시글은 삭제할 수 없습니다.");
                 }
-                qaRepository.deleteById(qa_id);
+                qRepository.deleteById(qa_id);
             }catch (ResourceNotFoundException e) {
                 throw new ResourceNotFoundException(e.getMessage());
             }
@@ -95,34 +100,45 @@ public class QAService {
         throw new ResourceNotFoundException("해당 번호의 글이 없습니다.");
     }
 
-    public QaReadDTO updateById(Long qa_id, QaDTO qaDTO, HttpServletRequest request) {
+    public QaDTO updateById(Long q_id, QaDTO qaDTO, HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
 
-        QA qa = qaRepository.findById(qa_id).
+        Q q = qRepository.findById(q_id).
                 orElseThrow(()-> new ResourceNotFoundException("해당 번호의 글이 없습니다."));
 
-        if (!travelerName.equals(qa.getTraveler().getTravelerName())) {
+        if (!travelerName.equals(q.getTraveler().getTravelerName())) {
             throw new InvalidRequestException("본인의 글이 아닌 글은 수정할 수 없습니다.");
         }
 
-        if (qaDTO.getTitle()==null&&qaDTO.getContent()==null) {
+        if ((qaDTO.getTitle().isEmpty() && qaDTO.getContent().isEmpty()) ||
+                (qaDTO.getQaReadDTO().getTitle().isEmpty() && qaDTO.getQaReadDTO().getContent().isEmpty())) {
             throw new ResourceNotFoundException("변경할 제목 또는 내용을 입력해주세요.");
         }
 
-        if (qaDTO.getTitle()!=null) {qa.setTitle(qa.getTitle());}
+        if (!qaDTO.getTitle().isEmpty()) {
+            q.setTitle(q.getTitle());}
+        // qaReadDTO는 q를 가지며 qaDTO에 있는 메인 객체가 a이다.
+        if (!qaDTO.getContent().isEmpty()) {
+            q.setContent(qaDTO.getContent());}
 
-        if (qaDTO.getContent()!=null) {qa.setContent(qaDTO.getContent());}
+        if (!qaDTO.getQaReadDTO().getTitle().isEmpty()) {
+            q.getA().setTitle(qaDTO.getQaReadDTO().getTitle());
+        }
 
-        qaRepository.save(qa);
+        if (!qaDTO.getQaReadDTO().getContent().isEmpty()) {
+            q.getA().setContent(qaDTO.getQaReadDTO().getContent());
+        }
 
-        return qa.toRead();
+        qRepository.save(q);
+
+        return q.toDTO();
     }
 
-    public List<QaReadDTO> searchByTitle(String title) {
+    public List<QaDTO> searchByQuestionTitle(String title) {
         if (title == null || title.isEmpty()) {
             throw new ResourceNotFoundException("검색어는 빈 값일 수 없습니다.");
         }
@@ -130,21 +146,40 @@ public class QAService {
         String abTitle = "%" + title + "%";
 
         try {
-            List<QaReadDTO> qaReadList = qaRepository.findByTitleLike(abTitle).
-                    stream().map(QA::toRead).toList();
+            List<QaDTO> qaDTOList = qRepository.findByTitleLike(abTitle).
+                    stream().map(Q::toDTO).toList();
 
-            if (qaReadList.isEmpty()) {
+            if (qaDTOList.isEmpty()) {
                 throw new ResourceNotFoundException("해당 제목을 가진 게시글이 없습니다.");
             }
 
-            return qaReadList;
-
+            return qaDTOList;
         } catch (Exception e) {
             throw new ResourceNotFoundException("게시글 검색 중 오류가 발생했습니다.");
         }
     }
 
-    public List<QaReadDTO> searchByContent(String content) {
+    public List<QaDTO> searchByAnswerTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            throw new ResourceNotFoundException("검색어는 빈 값일 수 없습니다.");
+        }
+
+        String abTitle = "%" + title + "%";
+
+        try {
+            List<A> as = aRepository.findByTitleLike(abTitle);
+
+            if (as.equals(new ArrayList<>())) {
+                throw new ResourceNotFoundException("해당 제목을 가진 게시글이 없습니다.");
+            }
+
+            return as.stream().map(A::toDTO).toList();
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("게시글 검색 중 오류가 발생했습니다.");
+        }
+    }
+
+    public List<QaDTO> searchByQuestionContent(String content) {
         if (content == null || content.isEmpty()) {
             throw new ResourceNotFoundException("해당 내용을 찾을 수 없습니다.");
         }
@@ -152,19 +187,39 @@ public class QAService {
         String abContent = "%" + content + "%";
 
         try {
-            List<QA> qas = qaRepository.findByContentLike(abContent);
+            List<Q> qs = qRepository.findByContentLike(abContent);
 
-            if (qas.isEmpty()){
+            if (qs.equals(new ArrayList<>())){
                 throw new ResourceNotFoundException("해당 내용을 가진 게시글이 없습니다.");
             }
 
-            return qas.stream().map(QA::toRead).toList();
+            return qs.stream().map(Q::toDTO).toList();
         } catch (Exception e) {
             throw new ResourceNotFoundException("내용 검색 중 오류가 발생했습니다.");
         }
     }
 
-    public List<QaReadDTO> searchByTitleAndContent(String title, String content) {
+    public List<QaDTO> searchByAnswerContent(String content) {
+        if (content == null || content.isEmpty()) {
+            throw new ResourceNotFoundException("해당 내용을 찾을 수 없습니다.");
+        }
+
+        String abContent = "%" + content + "%";
+
+        try {
+            List<A> qs = aRepository.findByContentLike(abContent);
+
+            if (qs.equals(new ArrayList<>())){
+                throw new ResourceNotFoundException("해당 내용을 가진 게시글이 없습니다.");
+            }
+
+            return qs.stream().map(A::toDTO).toList();
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("내용 검색 중 오류가 발생했습니다.");
+        }
+    }
+
+    public List<QaDTO> searchByQuestionTitleAndContent(String title, String content) {
         try {
             if (title.isEmpty() && content.isEmpty()) {
                 throw new ResourceNotFoundException("검색어가 모두 빈 값일 수 없습니다.");
@@ -181,13 +236,42 @@ public class QAService {
                 asContent = asTitle;
             }
 
-            List<QA> qas = qaRepository.findByTitleOrContentLike(asTitle, asContent);
+            List<Q> qs = qRepository.findByTitleOrContentLike(asTitle, asContent);
 
-            if (qas.isEmpty()) {
+            if (qs.isEmpty()) {
                 throw new ResourceNotFoundException("검색어로 게시글이 확인되지 않습니다. 올바른 검색어를 입력하세요.");
             }
 
-            return qas.stream().map(QA::toRead).toList();
+            return qs.stream().map(Q::toDTO).toList();
+        } catch (Exception e) {
+            throw new ResourceNotFoundException(e.getMessage());
+        }
+    }
+
+    public List<QaDTO> searchByAnswerTitleAndContent(String title, String content) {
+        try {
+            if (title.isEmpty() && content.isEmpty()) {
+                throw new ResourceNotFoundException("검색어가 모두 빈 값일 수 없습니다.");
+            }
+
+            String asTitle = "%" + title + "%";
+            String asContent = "%" + content + "%";
+
+            if (title.isEmpty()) {
+                asTitle = asContent;
+            }
+
+            if (content.isEmpty()) {
+                asContent = asTitle;
+            }
+
+            List<A> as = aRepository.findByTitleOrContentLike(asTitle, asContent);
+
+            if (as.isEmpty()) {
+                throw new ResourceNotFoundException("검색어로 게시글이 확인되지 않습니다. 올바른 검색어를 입력하세요.");
+            }
+
+            return as.stream().map(A::toDTO).toList();
         } catch (Exception e) {
             throw new ResourceNotFoundException(e.getMessage());
         }

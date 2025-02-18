@@ -1,6 +1,6 @@
 package com.dw.forest.model;
 
-import com.dw.forest.dto.QaReadDTO;
+import com.dw.forest.dto.QaDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @Getter
 @ToString
 @Entity
-@Table(name="q_a")
-public class QA {
+@Table(name="a")
+public class A {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -32,10 +32,11 @@ public class QA {
     @Column(name = "created_at")
     private LocalDate createdAt;
 
-    @Column(name = "type")
-    private String type;
+    @OneToOne
+    @JoinColumn(name = "q_id")
+    private Q q;
 
-    public QaReadDTO toRead() {
-        return new QaReadDTO(this.id, this.traveler.getTravelerName(), this.type, this.title, this.content, this.createdAt);
+    public QaDTO toDTO() {
+        return new QaDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt, this.q.toRead());
     }
 }

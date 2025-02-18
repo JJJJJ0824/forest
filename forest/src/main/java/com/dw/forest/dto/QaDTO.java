@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +14,9 @@ import lombok.ToString;
 @ToString
 public class QaDTO {
     private Long id;
+    private String traveler_name;
     private String title;
     private String content;
-    private Long questionId;
+    private LocalDate createdAt;
+    private QaReadDTO qaReadDTO;
 }
