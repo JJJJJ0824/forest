@@ -13,7 +13,6 @@ a {
 	text-decoration: none;
 }
 
-/* header */
 div.wrap {
 	display: block;
 }
@@ -160,9 +159,9 @@ div.wrap div.border {
 	
 	position: relative;
 	width: 680px;
-	border: 2px solid black; /* 검정 실선 테두리 추가 */
+	border: 2px solid black; 
 	padding: 10px;
-	border-radius: 5px; /* 모서리를 살짝 둥글게 (선택 사항) */
+	border-radius: 5px;
 	left: 31.75%;
 }
 
@@ -568,7 +567,6 @@ figure.figure2 input[type="checkbox"]:checked {
     background-color: #f9f9f9;
 }
 
-/* 옵션 선택 (아이디 찾기 & 비밀번호 찾기) */
 .option {
     display: flex;
     justify-content: center;
@@ -596,7 +594,6 @@ figure.figure2 input[type="checkbox"]:checked {
     border-color: #16cf1f;
 }
 
-/* 입력 폼 스타일 */
 .find-container form {
     display: none;
 }
@@ -1036,4 +1033,58 @@ text-align: left;
 .reply p {
     font-size: 14px;
     color: #555;
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.boxes-container {
+    width: 60%;
+    margin: 20px auto;
+    text-align: center;
+}
+.course-image {
+    width: 100%;
+    max-height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px; 
+}
+.info-box {
+    width: 100%;
+    height: 500px;
+    background-color: #444141;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+.button-container {
+    text-align: right;
+    margin-top: 10px;
+}
+.btn {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
 }
