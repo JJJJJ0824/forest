@@ -10,11 +10,6 @@ public class ViewController {
         return "forward:/index.html";
     }
 
-    @GetMapping("/forest/singleProduct.html")
-    public String singleProduct() {
-        return "forward:/singleProduct.html";
-    }
-
     @GetMapping("/forest/course.html")
     public String course() {
         return "forward:/course.html";
