@@ -1,57 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q&A 글쓰기</title>
+    <title>질문1에 대한 답변 작성</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="wrap">
-    <header>
-        <div class="inner">
-            <h1><a href="index.html">Boracay</a></h1>
-            <ul class="util">
-                <li>User님 안녕하세요!</li>
-            </ul>
-            <ul class="gnb">
-                <li><a href="course.html">강의</a></li>
-                <li><a href="qa.html">Q&A</a></li>
-                <li><a href="notice.html">공지사항</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
-                <li><a href="login.html">로그인</a></li>
-            </ul>
-            <div class="center-text">
+    <div class="wrap">
+        <!-- 헤더 -->
+        <header>
+            <div class="logo">
+                <a href="index.html">Boracay</a>
             </div>
-        </div>
-    </header>
-    <main>
-        <div class="qna-board">
-            <div class="board-title">
-                <h2>글 작성 완료</h2>
-            </div>
-            <div class="qna-content">
-                <h3>제목: <span id="post-title">여기에 질문 제목이 들어갑니다.</span></h3>
-                <p>내용: <span id="post-content">여기에 작성된 " 질문 " 내용이 들어갑니다. 작성한 글 내용이 이곳에 표시됩니다.</span></p>
-            </div>
-            <div class="reply-section">
-                <h3>답변 작성</h3>
-                <textarea id="reply-textarea" placeholder="답변을 작성해주세요..."></textarea>
-            </div>
-            <div class="button-container">
-                <button class="list-button"><a href="qa.html">목록</a></button>
-                <button class="submit-reply">답변 제출</button>
-            </div>
-            <div class="replies">
-                <div class="reply">
-                    <p><strong>답변자 1</strong>: 답변 내용이 들어갑니다.</p>
+            <nav>
+                <ul>
+                    <li><a href="course.html">강의</a></li>
+                    <li><a href="qa.html">Q&A</a></li>
+                    <li><a href="notice.html">공지사항</a></li>
+                    <li><a href="mypage.html">마이페이지</a></li>
+                    <li><a href="login.html">로그인</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="qna-board">
+                <div class="board-title">
+                    <h2>글 작성 완료</h2>
                 </div>
-                <div class="reply">
-                    <p><strong>답변자 2</strong>: 또 다른 답변 내용입니다.</p>
+                <div class="qna-content">
+                    <h3>제목: <span id="post-title">여기에 질문 제목이 들어갑니다.</span></h3>
+                    <p>내용: <span id="post-content">여기에 작성된 " 질문 " 내용이 들어갑니다. 작성한 글 내용이 이곳에 표시됩니다.</span></p>
+                </div>
+                <div class="reply-section">
+                    <h3>답변 작성</h3>
+                    <textarea id="reply-textarea" placeholder="답변을 작성해주세요..."></textarea>
+                </div>
+                <div class="button-container">
+                    <button class="list-button"><a href="qa.html">목록</a></button>
+                    <button class="submit-reply">답변 제출</button>
+                </div>
+                <div class="replies">
+                    <div class="reply">
+                        <p><strong>답변자 1</strong>: 답변 내용이 들어갑니다.</p>
+                    </div>
+                    <div class="reply">
+                        <p><strong>답변자 2</strong>: 또 다른 답변 내용입니다.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-  </div>
+        </main>
+    </div>
 </body>
 </html>
