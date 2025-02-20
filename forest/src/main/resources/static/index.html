@@ -3,65 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>보라카이 교육 웹</title>
+    <title>Boracay - 홈</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <div class="wrap">
+        <!-- 헤더 -->
         <header>
-            <div class="inner">
-                <h1><a href="index.html">Boracay</a></h1>
-                <ul class="util">
-                    <li>User님, 안녕하세요!</li>
-                </ul>
-                <ul class="gnb">
+            <div class="logo">
+                <a href="index.html">Boracay</a>
+            </div>
+            <nav>
+                <ul>
                     <li><a href="course.html">강의</a></li>
                     <li><a href="qa.html">Q&A</a></li>
                     <li><a href="notice.html">공지사항</a></li>
                     <li><a href="mypage.html">마이페이지</a></li>
                     <li><a href="login.html">로그인</a></li>
                 </ul>
-                <div class="center-text">
-                    Boracay
-                </div>
-            </div>
+            </nav>
         </header>
-        <figure class="image-gallery">
-            <div class="image-column">
-                <div class="image-wrapper">
-                    <img src="./img/boracay1.png" alt="보라카이 화이트비치">
-                    <div class="text-overlay">안녕하세요 숲입니다.</div>
-                    <div class="arrow left-arrow">&lt;</div>
-                    <div class="arrow right-arrow">&gt;</div>
-                </div>
-                <div class="image-wrapper">
-                    <img src="./img/boracay2.jpg" alt="보라카이 바다">
-                    <div class="text-overlay">잘 보이시나요?</div>
-                    <div class="arrow left-arrow">&lt;</div>
-                    <div class="arrow right-arrow">&gt;</div>
-                </div>
-                <div class="image-wrapper">
-                    <img src="./img/boracay3.png" alt="보라카이 수상 스포츠">
-                    <div class="text-overlay">저는 잘 보입니다.</div>
-                    <div class="arrow left-arrow">&lt;</div>
-                    <div class="arrow right-arrow">&gt;</div>
-                </div>
-            </div>
-            <div class="large-image">
-                <img src="./img/boracay4.jpg" alt="보라카이 일몰">
-                <div class="text-overlay">그럼 20000</div>
-                <div class="arrow left-arrow">&lt;</div>
-                <div class="arrow right-arrow">&gt;</div>
-            </div>
-        </figure>
-        <section class="notice-section">
-            <h2>공지사항</h2>
-            <ul>
-                <li>2025년 2월 20일 - 새로운 강의가 업로드 됩니다.</li>
-                <li>2025년 2월 25일 - 블랙 프라이데이가 곧 시작됩니다.</li>
-                <li>2025년 3월 01일 - 보라카이 여행 정보 업데이트 예정입니다.</li>
-            </ul>
+
+        <!-- 메인 배너 -->
+        <section class="banner">
+            <h1>보라카이와 함께하는 여행</h1>
+            <p>최고의 여행 경험을 만들어보세요!</p>
+            <a href="#courses" class="btn">지금 바로 시작하기</a>
         </section>
+
+        <!-- 인기 강의 섹션 -->
+        <section class="popular-courses" id="courses">
+            <h2>인기 강의</h2>
+            <div class="courses">
+                <div class="course">
+                    <img src="./img/보라카이.jpg" alt="환전하는 법">
+                    <h3>환전하는 법</h3>
+                    <p>간단하고 빠르게 환전하는 방법을 배워보세요.</p>
+                </div>
+                <div class="course">
+                    <img src="./img/bk2.jpg" alt="간단한 현지 단어">
+                    <h3>간단한 현지 단어</h3>
+                    <p>현지에서 자주 쓰는 단어들을 배워보세요.</p>
+                </div>
+                <div class="course">
+                    <img src="./img/boracay4.jpg" alt="추천 먹거리">
+                    <h3>추천 먹거리</h3>
+                    <p>보라카이의 맛집과 먹거리를 알아보세요.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 추천 관광지 섹션 -->
+        <section class="recommendations">
+            <h2>추천 관광지</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="./img/boracay1.png" alt="어쩌구">
+                    <h3>어쩌구</h3>
+                    <p>어쩌구 장소는... </p>
+                </div>
+                <div class="card">
+                    <img src="./img/boracay2.jpg" alt="저쩌구">
+                    <h3>저쩌구</h3>
+                    <p>저쩌구 장소는... </p>
+                </div>
+                <div class="card">
+                    <img src="./img/boracay3.png" alt="이게뭐람">
+                    <h3>이게뭐람</h3>
+                    <p>이게뭐람 장소는... </p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Boracay. All Rights Reserved.</p>
+        </footer>
     </div>
 </body>
 </html>

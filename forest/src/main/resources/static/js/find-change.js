@@ -11,7 +11,6 @@ function toggleFindForm() {
    }
 }
 
-// 아이디 찾기 기능 (가짜 데이터)
 function findID() {
    let name = document.getElementById("name").value;
    let phone = document.getElementById("phone").value;
@@ -28,7 +27,6 @@ function findID() {
    }, 2000);
 }
 
-// 비밀번호 찾기 (가짜 인증 기능)
 function sendVerification() {
    let userID = document.getElementById("userid").value;
    let phone = document.getElementById("phone-pwd").value;
@@ -41,7 +39,6 @@ function sendVerification() {
    alert("인증번호가 전송되었습니다!");
 }
 
-// 비밀번호 변경 기능
 function resetPassword() {
    let newPassword = document.getElementById("new-password").value;
    let confirmPassword = document.getElementById("confirm-password").value;

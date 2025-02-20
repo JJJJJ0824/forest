@@ -1,0 +1,190 @@
+.mypage-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    margin: 30px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-point-history {
+    background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+}
+
+.user-point-history:hover {
+    transform: translateY(-5px);
+}
+
+.user-point-history h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #00796b;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+}
+
+.user-point-history ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-point-history li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.user-point-history li::before {
+    content: "➤";
+    font-size: 18px;
+    margin-right: 10px;
+    color: #ff0095;
+}
+
+.user-point-history li span {
+    font-weight: 600;
+    color: #ff0000;
+}
+
+.user-point-history li .date {
+    font-size: 14px;
+    color: #00ffe1;
+    margin-left: auto;
+    font-style: italic;
+}
+
+.left-side .point-buttons {
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+
+.left-side h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.left-side .user-info,
+.left-side .point-charge {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-side .edit-btn, .left-side .charge-btn {
+    background-color: #16cf1f;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.left-side .edit-btn:hover, .left-side .charge-btn:hover {
+    background-color: #128d0c;
+}
+
+.left-side .profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.center-right {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.checklist {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.checklist h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.question p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.question label {
+    display: block;
+    margin: 5px 0;
+}
+
+.right-side .liked-courses{
+    margin-top: 50px;
+}
+
+.course-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.course-item {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 150px;
+}
+
+.course-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.course-item p {
+    font-size: 14px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .mypage-container {
+        grid-template-columns: 1fr;
+    }
+
+    .course-item {
+        width: 100%;
+    }
+}

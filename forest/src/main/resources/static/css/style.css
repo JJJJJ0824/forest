@@ -1,162 +1,65 @@
-@charset 'utf-8';
+/* 기본 스타일 */
 * {
-	margin: 0px;
-	padding: 0px;
-	box-sizing: border-box;
-}
-ul,
-ol {
-	list-style: none;
-}
-a {
-    color:#111;
-	text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
 }
 
-div.wrap {
-	display: block;
-}
-div.wrap .inner {
-	width: 1420px;
-	height: 130px;
-	
-	margin: 0px auto;
-	position: relative;
-}
-div.wrap header {
-	background-color: wheat;
-	display: grid;
-    place-items: center;
+/* 헤더 스타일 */
+header {
+    background-color: #fff;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 180px;
-    border-bottom: 1px solid #999;
-    position: relative;
-    z-index: 10;
-}
-div.wrap header .inner {
-	display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    justify-items: center;
+    height: 70px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    width: 1560px;
-    overflow: hidden;
-    height: 100%;
-    position: relative;
+    padding: 0 50px;
 }
 
+header .logo a {
+    font-size: 32px;
+    font-weight: bold;
+    color: #16cf1f;
+    text-decoration: none;
+}
 
-footer {
-	width: 100%;
-	background: wheat;
-	padding: 30px 0px;
-	border-top: 1px solid #888;
+header nav ul {
+    display: flex;
+    list-style: none;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #16cf1f;
+    color: white;
+    border-radius: 5px;
+}
+
+.wrap .regist {
     margin-top: 50px;
-}
-footer .inner {
-	width: 1180px;
-	margin: 0px auto;
-}
-footer .inner .upper {
-	width: 100%;
-	border-bottom: 1px solid #777;
-	padding-bottom: 20px;
-}
-footer .inner .upper h1 {
-	float: left;
-	font: bold 24px/ "arial";
-	color: #0792d3;
-}
-footer .inner .upper ul{
-	float: right;
-}
-footer .inner .upper::after {
-	content: "";
-	display: block;
-	clear: both;
-}
-footer .inner .upper ul li {
-	float: left;
-	margin-left: 20px;
-}
-footer .inner .upper ul::after{
-	content: "";
-	display: block;
-	clear: both;
-}
-footer .inner .upper ul li a{
-	font: bold 14px/1 "arial";
-	color: #666;
-}
-footer .inner .lower {
-	width: 100%;
-	padding-top: 20px;
-}
-footer .inner .lower address {
-	width: 100%;
-	font: 12px/1.3 "arial";
-	color: #777;
-	margin-bottom: 20px;
-}
-footer .inner .lower p {
-	width: 100%;
-	font: 12px/1 "arial";
-	color: #777;
-}
-
-.wrap header .inner h1{
-	position: absolute;
-	left:0px;
-	bottom: 80px;
-}
-.wrap header .inner h1 a{
-	font: bold 42px/1 "arial";
-	color: #16cf1f;
-}
-.wrap header .inner .util {
-	position: absolute;
-	top: 20px;
-	right: 0px;
-}
-.wrap header .inner .util li {
-	float: left;
-}
-/* .wrap header .inner .util li a{
-	display: block;
-	font: 12px/1 "arial";
-	color: #964d4d;
-	padding: 0px 10px;
-} */
-.wrap header div.inner div.gnb {
-	position :absolute;
-	bottom: 80px;
-	right: 0px;
-}
-div.wrap header .inner .gnb li {
-	float: left;
-}
-div.wrap header .inner .gnb li a{
-	display: block;
-	font: bold 15px/1 "arial";
-	color: #686464;
-	padding: 20px 40px;
-	transition: all 0.5s;
-}
-div.wrap header .inner .gnb li a:hover {
-	background: #555;
-	color: #fff;
-}
-div.wrap div.regist {
-	width : 1700px;
 	height: 80px;
-	position: relative;
 }
 .wrap .regist h1 {
     text-align: center;
-	left: 50%;
 	font-size: 48px;
 }
-div.wrap div.border {
-	
+.wrap .border {
 	position: relative;
 	width: 680px;
 	border: 2px solid black; 
@@ -165,38 +68,21 @@ div.wrap div.border {
 	left: 31.75%;
 }
 
-div.wrap div.border-in {
+.wrap .border-in {
 	width: 650px;
 	height: 550px;
 	align-items: center;
 	margin: 0px auto;
 }
 .wrap .border-in p.law{
+    border: 1px solid black; 
 	width: 650px;
 	height: 190px;
-	overflow: hidden;
+	overflow: auto;
 	margin-left: 2px;
 	margin-right: 2px;
 }
-header .inner .gnb {
-	position :absolute;
-	bottom: 80px;
-	right: 0px;
-}
-header .inner .gnb li {
-	float: left;
-}
-header .inner .gnb li a{
-	display: block;
-	font: bold 15px/1 "arial";
-	color: #686464;
-	padding: 20px 40px;
-	transition: all 0.5s;
-}
-header .inner .gnb li a:hover {
-	background: #555;
-	color: #fff;
-}
+
 header .inner .center-text {
     position: absolute;
     top: 70%;
@@ -509,11 +395,10 @@ figure.figure2 input[type="checkbox"]:checked {
     width: 100%;
     margin-top: 20px;
 }
+
 .category-container {
-    display: flex;
     align-items: center;
     gap: 10px;
-    width: 30%;
     margin-right: 10px;
 }
 
@@ -1036,7 +921,6 @@ text-align: left;
 }
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     margin: 0;
     padding: 0;
 }

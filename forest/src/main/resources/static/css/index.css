@@ -1,0 +1,193 @@
+/* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 헤더 스타일 */
+header {
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+}
+
+header .logo a {
+    font-size: 32px;
+    font-weight: bold;
+    color: #16cf1f;
+    text-decoration: none;
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #16cf1f;
+    color: white;
+    border-radius: 5px;
+}
+
+/* 배너 섹션 */
+.banner {
+    background-image: url('../img/background3.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 100px 25px;
+    color: rgb(255, 255, 255);
+    position: relative;
+}
+
+.banner h1 {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.banner p {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.banner .btn {
+    background-color: #16cf1f;
+    color: white;
+    font-size: 18px;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.banner .btn:hover {
+    background-color: #128c10;
+}
+
+/* 인기 강의 섹션 */
+.popular-courses {
+    background-color: #f9f9f9;
+    padding: 80px 50px;
+    text-align: center;
+}
+
+.popular-courses h2 {
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+.courses {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.course {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.course:hover {
+    transform: translateY(-10px);
+}
+
+.course img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.course h3 {
+    font-size: 22px;
+    margin-top: 15px;
+}
+
+.course p {
+    color: #777;
+    font-size: 16px;
+}
+
+/* 추천 관광지 섹션 */
+.recommendations {
+    padding: 80px 50px;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+.recommendations h2 {
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.card {
+    background-color: #fff;
+    width: 30%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.card h3 {
+    font-size: 22px;
+    margin-top: 15px;
+}
+
+.card p {
+    color: #777;
+    font-size: 16px;
+}
+
+/* 푸터 */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
