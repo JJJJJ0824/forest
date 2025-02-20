@@ -1,3 +1,58 @@
+/* 기본 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+/* 헤더 스타일 */
+header {
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+}
+
+header .logo a {
+  font-size: 32px;
+  font-weight: bold;
+  color: #16cf1f;
+  text-decoration: none;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+}
+
+header nav ul li {
+  margin-left: 20px;
+}
+
+header nav ul li a {
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+  transition: all 0.3s;
+}
+
+header nav ul li a:hover {
+  background-color: #16cf1f;
+  color: white;
+  border-radius: 5px;
+}
+
+/* 본문 스타일 */
 body {
   padding-top: 80px;
 }

@@ -3,112 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boracay - 강의 살펴보기</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Boracay - 강의</title>
+    <link rel="stylesheet" href="/css/course.css">
 </head>
 <body>
-    <div class="wrap">
-        <!-- 헤더 -->
-        <header>
-            <div class="logo">
-                <a href="index.html">Boracay</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="course.html">강의</a></li>
-                    <li><a href="qa.html">Q&A</a></li>
-                    <li><a href="notice.html">공지사항</a></li>
-                    <li><a href="mypage.html">마이페이지</a></li>
-                    <li><a href="login.html">로그인</a></li>
-                </ul>
-            </nav>
-        </header>
-        <figure class="figure2">
-            <label>
-                <input type="radio" name="travel-type" value="free"> 자유여행
-            </label>
-                <input type="radio" name="travel-type" value="package"> 패키지여행
-            </label>
-                <input type="radio" name="travel-type" value="family"> 가족여행
-            </label>
-        </figure>
-        <section class="search-container">
-            <div class="search-wrapper">
-                <input type="text" placeholder="검색어 입력..." class="search-input">
-                <div class="search-options">
-                    <select class="search-type">
-                        <option value="title">제목</option>
-                        <option value="title-content">제목+내용</option>
-                    </select>
-                </div>
-                <div class="search-handlebar"></div>
-            </div>
-        </section>
-        <section class="category-search">
-            <div class="category-container">
-                <label for="category-select">카테고리:</label>
-                <select id="category-select">
-                    <option value="ex1">Ex1</option>
-                    <option value="ex2">Ex2</option>
-                    <option value="ex3">Ex3</option>
-                    <option value="ex4">Ex4</option>
+    <header>
+        <div class="logo">
+            <a href="index.html">Boracay</a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="course.html">강의</a></li>
+                <li><a href="qa.html">Q&A</a></li>
+                <li><a href="notice.html">공지사항</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li><a href="login.html">로그인</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 여행 유형 선택 -->
+    <section class="travel-type">
+        <label>
+            <input type="radio" name="travel-type" value="free"> 자유여행
+        </label>
+        <label>
+            <input type="radio" name="travel-type" value="package"> 패키지여행
+        </label>
+        <label>
+            <input type="radio" name="travel-type" value="family"> 가족여행
+        </label>
+        <label>
+            <input type="radio" name="travel-type" value="family"> 공통
+        </label>
+    </section>
+
+    <!-- 검색 박스 -->
+    <section class="search-container">
+        <div class="search-wrapper">
+            <div class="search-options">
+                <select class="search-type">
+                    <option value="title">제목</option>
+                    <option value="title-content">제목+내용</option>
                 </select>
             </div>
-            <div class="category-search-bar">
-                <input type="text" placeholder="카테고리 검색">
-                <button>검색</button>
-            </div>
-        </section>
-        <section class="image-description">
-            <div class="image-wrapper">
-                <img src="/img/환전.png" alt="설명 이미지">
-            </div>
-            <div class="description-wrapper">
-                <h3>해외에서 환전할때는 이거하나만 기억하세요 !</h3>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A laboriosam consectetur praesentium illum neque nam, explicabo enim quasi sint accusantium, eum quae est sequi maxime. Ab debitis dignissimos quod nisi.
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur, earum et? Quisquam debitis, nemo facere perspiciatis quis autem ut expedita quaerat cupiditate id, veniam velit non vitae, atque repellendus nihil.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur fugiat odit distinctio soluta assumenda, nostrum fugit. Pariatur, hic eos asperiores eligendi iusto perferendis illum minus, possimus temporibus odit quasi quaerat. </p>
-            </div>
-        <section>
-            <footer2 class="image-description">
-                <div class="image-wrapper">
-                    <img src="/img/액티비티.png" alt="설명 이미지">
-                </div>
-                <div class="description-wrapper">
-                    <h3>보라카이 액티비티를 진행할때는 이거 하나만 기억하세요 !</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde earum explicabo quia placeat, asperiores, impedit reiciendis iure cum dolor facere sed atque aspernatur consequatur, esse perferendis amet quos fugiat. Provident!
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos iure ullam deserunt voluptas ad quidem, eaque magnam, enim sint id veniam doloribus, at eveniet ipsum nam porro cumque vel culpa.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem eius esse veritatis, magni beatae quia mollitia reiciendis! Natus doloremque tenetur eos, voluptate consectetur deleniti veritatis quisquam, nemo omnis minus impedit.
-                    </p>
-                </div>
-            </footer2>
-            
-            <footer2 class="image-description">
-                <div class="image-wrapper">
-                    <img src="/img/숙소.png" alt="설명 이미지">
-                </div>
-                <div class="description-wrapper">
-                    <a href="free_aboard.html">
-                        <h3>보라카이에서 좋은숙소 , 합리적인 예약</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quam, praesentium cumque velit consequatur est modi ipsa quae veniam vel! Laborum maiores cumque aspernatur nobis sapiente debitis, adipisci ducimus accusamus.
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora obcaecati laboriosam nihil quidem amet ab nobis velit neque esse, harum iste soluta corporis quod, iure ipsa architecto. Eligendi, et laborum.
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum alias quam sit tempora laborum? Quod excepturi praesentium ipsa alias quia nulla possimus. Sed, similique! Sit, dolorem? Qui in ducimus eveniet!
-                        </p>
-                    </a>
-                </div>
-            </footer2>
-        </section>
-        <section class="pagination-container">
-            <div class="pagination">
-                <button class="prev-button">‹</button>
-                <button class="page-number">1</button>
-                <button class="page-number">2</button>
-                <button class="page-number">3</button>
-                <button class="page-number">4</button>
-                <button class="page-number">5</button>
-                <button class="next-button">›</button>
-            </div>
-        </section>
-    </div>
+            <input type="text" placeholder="검색어 입력..." class="search-input">
+            <button class="search-bth">검색</button>
+        </div>
+    </section>
+
+    <!-- 카테고리 검색 -->
+    <section class="category-search">
+        <div class="category-container">
+            <label for="category-select">카테고리:</label>
+            <select id="category-select">
+                <option value="ex1">Ex1</option>
+                <option value="ex2">Ex2</option>
+                <option value="ex3">Ex3</option>
+                <option value="ex4">Ex4</option>
+            </select>
+        </div>
+        <div class="category-search-bar">
+            <input type="text" placeholder="카테고리 검색">
+            <button>검색</button>
+        </div>
+    </section>
+
+    <!-- 이미지 및 설명 섹션 -->
+    <section class="image-description">
+        <div class="image-wrapper">
+            <img src="./img/환전.png" alt="설명 이미지">
+        </div>
+        <div class="description-wrapper">
+            <h3>해외에서 환전할때는 이거하나만 기억하세요 !</h3>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A laboriosam consectetur praesentium illum neque nam, explicabo enim quasi sint accusantium, eum quae est sequi maxime. Ab debitis dignissimos quod nisi...</p>
+        </div>
+    </section>
+
+    <!-- 두 번째 이미지 및 설명 섹션 -->
+    <footer class="image-description">
+        <div class="image-wrapper">
+            <img src="./img/액티비티.png" alt="설명 이미지">
+        </div>
+        <div class="description-wrapper">
+            <h3>보라카이 액티비티를 진행할때는 이거 하나만 기억하세요 !</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde earum explicabo quia placeat, asperiores, impedit reiciendis iure cum dolor facere sed atque aspernatur consequatur, esse perferendis amet quos fugiat...</p>
+        </div>
+    </footer>
+
+    <!-- 세 번째 이미지 및 설명 섹션 -->
+    <footer class="image-description">
+        <div class="image-wrapper">
+            <img src="./img/숙소.png" alt="설명 이미지">
+        </div>
+        <div class="description-wrapper">
+            <h3>보라카이에서 좋은숙소 , 합리적인 예약</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quam, praesentium cumque velit consequatur est modi ipsa quae veniam vel! Laborum maiores cumque aspernatur nobis sapiente debitis, adipisci ducimus accusamus...</p>
+        </div>
+    </footer>
+
+    <!-- 페이지 네비게이션 -->
+    <section class="pagination-container">
+        <div class="pagination">
+            <button class="prev-button">‹</button>
+            <button class="page-number">1</button>
+            <button class="page-number">2</button>
+            <button class="page-number">3</button>
+            <button class="page-number">4</button>
+            <button class="page-number">5</button>
+            <button class="next-button">›</button>
+        </div>
+    </section>
 </body>
 </html>
