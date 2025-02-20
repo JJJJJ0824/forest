@@ -1,4 +1,10 @@
-
+.container h1 {
+  padding: 50px;
+  text-align: center;
+}
+.tip-box h1 {
+  padding: 0;
+}
 .tip-box {
   background-color: #f8f9fa;
   border-left: 5px solid #007bff;
