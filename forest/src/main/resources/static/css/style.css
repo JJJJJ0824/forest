@@ -6,6 +6,10 @@
     font-family: 'Arial', sans-serif;
 }
 
+ul, ol{
+    list-style: none;
+}
+
 /* 헤더 스타일 */
 header {
     background-color: #fff;
@@ -979,4 +983,5 @@ footer {
     color: white;
     text-align: center;
     padding: 20px;
+    margin-top: auto;
 }
