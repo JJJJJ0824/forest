@@ -1,0 +1,198 @@
+/* 기본 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+/* 헤더 스타일 */
+header {
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+}
+
+header .logo a {
+  font-size: 32px;
+  font-weight: bold;
+  color: #16cf1f;
+  text-decoration: none;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+}
+
+header nav ul li {
+  margin-left: 20px;
+}
+
+header nav ul li a {
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+  transition: all 0.3s;
+}
+
+header nav ul li a:hover {
+  background-color: #16cf1f;
+  color: white;
+  border-radius: 5px;
+}
+
+.mypage-content {
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar label {
+  font-size: 14px;
+  color: #555;
+}
+
+.search-bar input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 180px;
+  max-width: 100%;
+}
+
+.search-bar button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.styled-table thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.styled-table th {
+  font-weight: 600;
+}
+
+.styled-table tbody tr {
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #e1f1ff;
+}
+
+.styled-table td, .styled-table th {
+  border: 1px solid #ddd;
+}
+
+.styled-table {
+  width: 100%;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  font-size: 20px;
+  margin: 0px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+#memberList {
+  width: 90%;
+  margin: 0 auto;
+}
+.styled-table th, .styled-table td {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #1a1919;
+}
+
+/* .styled-table th:nth-child(1), .styled-table td:nth-child(1) {
+  width: 10%;
+}
+
+.styled-table th:nth-child(2), .styled-table td:nth-child(2) {
+  width: 50%;
+}
+
+.styled-table th:nth-child(3), .styled-table td:nth-child(3) {
+  width: 40%;
+} */

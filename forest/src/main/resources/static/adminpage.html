@@ -1,180 +1,215 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>관리자 페이지</title>
-   <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="/css/adminpage.css">
 </head>
 <body>
     <div class="wrap">
+        <!-- 헤더 -->
         <header>
-            <div class="inner">
-                <h1><a href="index.html">Boracay</a></h1>
-                <ul class="util">
-                    <li>Admin님, 안녕하세요!</li>
-                </ul>
-                <ul class="gnb">
+            <div class="logo">
+                <a href="index.html">Boracay</a>
+            </div>
+            <nav>
+                <ul>
                     <li><a href="course.html">강의</a></li>
                     <li><a href="qa.html">Q&A</a></li>
                     <li><a href="notice.html">공지사항</a></li>
                     <li><a href="mypage.html">마이페이지</a></li>
                     <li><a href="login.html">로그인</a></li>
                 </ul>
-            </div>
+            </nav>
         </header>
-
-        <div class="admypage">
-            <h1>관리자 마이페이지</h1>
-        </div>
-
-        <div class="msg">
-            <h2>ADMIN님 안녕하세요!</h2>
-        </div>
-
-        <div class="pnt-minus">
-            <h3>회원 포인트 차감</h3>
-            <p>
-                회원명: <input type="text">
-                포인트: <input type="text">
-                <button type="button">차감</button>
-            </p>
-        </div>
-
-        <div class="user-list">
-            <h3>회원 명단</h3>
-            <p>회원명: <input type="text"><button class="search">🔍</button></p>
-            <table border="1">
-                <tr>
-                    <th>번호</th>
-                    <th>회원명</th>
-                    <th>가입일</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>traveler1</td>
-                    <td>2020.01.11</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>traveler2</td>
-                    <td>2020.03.02</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>traveler3</td>
-                    <td>2020.04.15</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>traveler4</td>
-                    <td>2020.06.16</td>
-                </tr>
-            </table>
-            <div class="pagination-container">
-                <div class="pagination">
-                    <button class="prev-button">&lt;</button>
-                    <button class="page-number">1</button>
-                    <button class="page-number">2</button>
-                    <button class="page-number">3</button>
-                    <button class="page-number">4</button>
-                    <button class="page-number">5</button>
-                    <button class="next-button">&gt;</button>
+        <div class="mypage-content">
+            <section class="section">
+                <h2>회원 명단</h2>
+                <div class="search-bar">
+                    <label for="memberSearch">회원명 : </label>
+                    <input type="text" id="memberSearch" placeholder="검색할 회원명 입력">
                 </div>
-            </div>
-        </div>
-
-        <div class="lecture-statistics">
-            <h3>접수 강의 통계</h3>
-            <table border="1">
-                <tr>
-                    <th>번호</th>
-                    <th>회원명</th>
-                    <th>일자</th>
-                    <th>사용 포인트</th>
-                    <th>강의명</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>traveler1</td>
-                    <td>2024-02-01</td>
-                    <td>100</td>
-                    <td>HTML 기초</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>traveler2</td>
-                    <td>2024-02-05</td>
-                    <td>200</td>
-                    <td>CSS 심화</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>traveler3</td>
-                    <td>2024-02-10</td>
-                    <td>150</td>
-                    <td>JavaScript 기초</td>
-                </tr>
-            </table>
-
-            <div class="pagination-container">
-                <div class="pagination">
-                    <button class="prev-button">&lt;</button>
-                    <button class="page-number">1</button>
-                    <button class="page-number">2</button>
-                    <button class="page-number">3</button>
-                    <button class="page-number">4</button>
-                    <button class="page-number">5</button>
-                    <button class="next-button">&gt;</button>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>회원명</th>
+                            <th>가입일</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memberList">
+                        <tr>
+                            <td>1</td>
+                            <td>정강철</td>
+                            <td>2025-01-15</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>남재우</td>
+                            <td>2025-02-05</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>오정재</td>
+                            <td>2025-02-20</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <div class="pagination">
+                        <button>&lt;</button>
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>4</button>
+                        <button>5</button>
+                        <button>&gt;</button>
+                    </div>
+            </section>
+    
+            <section class="section">
+                <h2>유저 접수 강의 통계</h2>
+                <div class="search-bar">
+                    <label for="courseSearch">회원명 : </label>
+                    <input type="text" id="courseSearch" placeholder="회원명 검색">
                 </div>
-            </div>
-        </div>
-
-        <div class="point-history">
-            <h3>포인트 내역</h3>
-            <table border="1">
-                <tr>
-                    <th>번호</th>
-                    <th>회원명</th>
-                    <th>적립/차감 포인트</th>
-                    <th>보유 포인트</th>
-                    <th>내역</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>traveler1</td>
-                    <td>-100</td>
-                    <td>900</td>
-                    <td>HTML 강의 수강</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>traveler2</td>
-                    <td>-200</td>
-                    <td>800</td>
-                    <td>CSS 강의 수강</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>traveler3</td>
-                    <td>+300</td>
-                    <td>1300</td>
-                    <td>포인트 충전</td>
-                </tr>
-            </table>
-
-            <div class="pagination-container">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>회원명</th>
+                            <th>수강완료여부</th>
+                            <th>사용포인트</th>
+                            <th>강의명</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseList">
+                        <tr>
+                            <td>1</td>
+                            <td>정강철</td>
+                            <td>완료</td>
+                            <td>500</td>
+                            <td>환전 하는법</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>남재우</td>
+                            <td>미완료</td>
+                            <td>200</td>
+                            <td>간단한 현지 단어</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>이정재</td>
+                            <td>미완료</td>
+                            <td>200</td>
+                            <td>추천 먹거리</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div class="pagination">
-                    <button class="prev-button">&lt;</button>
-                    <button class="page-number">1</button>
-                    <button class="page-number">2</button>
-                    <button class="page-number">3</button>
-                    <button class="page-number">4</button>
-                    <button class="page-number">5</button>
-                    <button class="next-button">&gt;</button>
+                    <button>&lt;</button>
+                    <button>1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button>&gt;</button>
                 </div>
-            </div>
+            </section>
+
+            <section class="section">
+                <h2>유저 포인트 사용 내역</h2>
+                <div class="search-bar">
+                    <label for="pointSearch">회원명 : </label>
+                    <input type="text" id="pointSearch" placeholder="회원명 검색">
+                    <button id="addPointsBtn">적립포인트</button>
+                    <button id="deductPointsBtn">차감포인트</button>
+                </div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>회원명</th>
+                            <th>적립/차감포인트</th>
+                            <th>보유포인트</th>
+                            <th>내역</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pointHistory">
+                        <tr>
+                            <td>1</td>
+                            <td>정강철</td>
+                            <td>+500</td>
+                            <td>1500</td>
+                            <td>포인트 적립</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>남재우</td>
+                            <td>-200</td>
+                            <td>700</td>
+                            <td>강의 결제</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>오정재</td>
+                            <td>-999999</td>
+                            <td>700</td>
+                            <td>강의 결제</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <button>&lt;</button>
+                    <button>1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button>&gt;</button>
+                </div>
+            </section>
         </div>
     </div>
+    <!-- <footer>
+        <div class="footer-content">
+            < 사이트 맵 >
+            <div class="footer-section">
+                <h3>사이트 맵</h3>
+                <ul>
+                    <li><a href="#">홈</a></li>
+                    <li><a href="#">강의</a></li>
+                    <li><a href="#">Q&A</a></li>
+                    <li><a href="#">공지사항</a></li>
+                    <li><a href="#">마이페이지</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h3>소셜 미디어</h3>
+                <ul class="social-links">
+                    <li><a href="#" class="social-icon">Facebook</a></li>
+                    <li><a href="#" class="social-icon">Twitter</a></li>
+                    <li><a href="#" class="social-icon">Instagram</a></li>
+                    <li><a href="#" class="social-icon">Naver</a></li>
+                    <li><a href="#" class="social-icon">Daum</a></li>
+                    <li><a href="#" class="social-icon">Yahoo</a></li>
+                    <li><a href="#" class="social-icon">Nate</a></li>
+                    <li><a href="#" class="social-icon">Google</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h3>연락처</h3>
+                <p>Email: asdfasdf@boracay.com</p>
+                <p>전화: 123-456-7890</p>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; 2025 Boracay. All Rights Reserved.</p>
+        </div>
+    </footer> -->
 </body>
 </html>
