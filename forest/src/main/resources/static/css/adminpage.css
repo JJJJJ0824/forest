@@ -185,6 +185,14 @@ h2 {
   color: #1a1919;
 }
 
+/* 푸터 */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
 /* .styled-table th:nth-child(1), .styled-table td:nth-child(1) {
   width: 10%;
 }
