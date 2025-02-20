@@ -1,0 +1,207 @@
+body {
+  padding-top: 80px;
+}
+
+/* 여행 유형 선택 */
+.travel-type {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  padding: 10px;
+}
+
+.travel-type label {
+  font-size: 16px;
+  color: #333;
+}
+
+.travel-type label {
+  font-size: 16px;
+  color: #333;
+  margin: 0 15px;
+}
+
+/* 검색 박스 */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.search-input, .search-type {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.search-input {
+  width: 250px;
+}
+
+.search-type {
+  width: 150px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #16cf1f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #13a917;
+}
+
+/* 카테고리 검색 */
+.category-search {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.category-container {
+  display: flex;
+  align-items: center;
+}
+
+.category-container label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.category-container select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.category-search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.category-search-bar input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.category-search-bar button {
+  margin-left: 10px;
+  background-color: #16cf1f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.category-search-bar button:hover {
+  background-color: #13a917;
+}
+
+/* 이미지 및 설명 섹션 */
+.image-description {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.image-description .image-wrapper {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.image-description .description-wrapper {
+  flex: 2;
+}
+
+.image-description .image-wrapper img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.image-description h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.image-description p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* 페이지 네비게이션 */
+.pagination-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  background-color: #16cf1f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+  background-color: #13a917;
+}
+
+.pagination .page-number {
+  background-color: #f4f4f4;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.pagination .page-number:hover {
+  background-color: #ddd;
+}
+
+.pagination .active {
+  background-color: #13a917;
+  color: white;
+  border-radius: 5px;
+}
+
+footer .image-wrapper img {
+  width: 100%;
+  height: auto;
+}
+
+footer .description-wrapper h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+footer .description-wrapper p {
+  font-size: 1rem;
+  color: #555;
+}

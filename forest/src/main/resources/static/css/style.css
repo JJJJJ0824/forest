@@ -10,6 +10,11 @@ ul, ol{
     list-style: none;
 }
 
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
 /* 헤더 스타일 */
 header {
     background-color: #fff;
@@ -29,7 +34,6 @@ header .logo a {
     font-size: 32px;
     font-weight: bold;
     color: #16cf1f;
-    text-decoration: none;
 }
 
 header nav ul {
