@@ -9,7 +9,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.left-side {
+div#left-side {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -71,26 +71,26 @@
     font-style: italic;
 }
 
-.left-side .point-buttons {
+div#left-side .point-buttons {
     margin-top: 50px;
     margin-bottom: 0px;
 }
 
-.left-side h3 {
+div#left-side h3 {
     font-size: 20px;
     font-weight: bold;
     color: #333;
 }
 
-.left-side .user-info,
-.left-side .point-charge {
+div#left-side .user-info,
+div#left-side .point-charge {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.left-side .edit-btn, .left-side .charge-btn {
+div#left-side .edit-btn, div#left-side .charge-btn {
     background-color: #16cf1f;
     color: white;
     border: none;
@@ -101,11 +101,11 @@
     margin-top: 10px;
 }
 
-.left-side .edit-btn:hover, .left-side .charge-btn:hover {
+div#left-side .edit-btn:hover, div#left-side .charge-btn:hover {
     background-color: #128d0c;
 }
 
-.left-side .profile-img {
+div#left-side .profile-img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -114,7 +114,7 @@
     object-fit: cover;
 }
 
-.center-right {
+div#center {
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -147,7 +147,7 @@
     margin: 5px 0;
 }
 
-.right-side .liked-courses{
+div#right-side .liked-courses{
     margin-top: 50px;
 }
 
@@ -189,6 +189,26 @@
     }
 }
 
+.paid-courses {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'monospace', sans-serif;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.liked-courses {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'monospace', sans-serif;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .point-buttons button {
     padding: 8px 12px;
     font-size: 14px;
@@ -201,4 +221,71 @@
 
 .point-buttons button:hover {
     background-color: #0056b3;
+}
+
+#left-side, #center, #right-side {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+#left-side.active, #center.active, #right-side.active {
+    height: 100%;
+}
+
+.mypage-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.mypage-btn {
+    background-color: #4e73df; /* 기본 배경색 */
+    color: white;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.mypage-buttons button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 5px; /* 버튼 모서리 둥글게 */
+}
+
+.mypage-buttons button i {
+    margin-right: 5px; /* 아이콘과 텍스트 사이 여백 */
+}
+
+.mypage-buttons button.active {
+    background-color: #1e90ff; /* 활성화된 버튼 배경색 */
+    color: #fff; /* 텍스트 색상 */
+    border-color: #1e90ff; /* 테두리 색상 */
+}
+
+.mypage-buttons button:hover {
+    background-color: #d0e0ff; /* 호버 상태의 배경색 */
+}
+
+#left-side, #center, #right-side {
+    display: none;
+    transition: all 0.3s ease;
+}
+
+#left-side.active, #center.active, #right-side.active {
+    display: block;
 }

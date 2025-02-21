@@ -86,9 +86,12 @@ header nav ul li a:hover {
     border: 1px solid black; 
 	width: 650px;
 	height: 190px;
-	overflow: auto;
 	margin-left: 2px;
 	margin-right: 2px;
+}
+
+.border-in .cbx {
+    text-align: right;
 }
 
 header .inner .center-text {
@@ -528,6 +531,7 @@ figure.figure2 input[type="radio"]:checked {
     background-color: #13a214;
 }
 .id-pwd-cng {
+    margin-top: 10%;
     text-align: center;
 }
 

@@ -26,134 +26,155 @@
         </header>
 
         <div class="mypage-container">
-            <div class="left-side">
-                <div class="user-info">
-                    <h3>내 정보</h3>
-                    <p>이름: <span id="userName">홍길동</span></p>
-                    <p>연락처: <span id="userPhone">010-1234-5678</span></p>
-                    <p>이메일: <span id="userEmail">hong@example.com</span></p>
-                    <button class="edit-btn">수정</button>
+            <div class="first"></div>
+            <div class="second">
+                <!-- 네이버 스타일 버튼 추가 -->
+                <div class="mypage-buttons">
+                    <button id="btn-info" class="active">
+                        <i class="fas fa-user"></i> 내 정보
+                    </button>
+                    <button id="btn-checklist">
+                        <i class="fas fa-check-circle"></i> 체크리스트
+                    </button>
+                    <button id="btn-courses">
+                        <i class="fas fa-book"></i> 강의 목록
+                    </button>
+                </div>                
+
+                <div class="active" id="left-side">
+                    <div class="user-info">
+                        <h3>내 정보</h3>
+                        <p>이름: <span id="userName">홍길동</span></p>
+                        <p>연락처: <span id="userPhone">010-1234-5678</span></p>
+                        <p>이메일: <span id="userEmail">hong@example.com</span></p>
+                        <button class="edit-btn">수정</button>
+                    </div>
+                    <div class="point-charge">
+                        <h3>포인트 충전</h3>
+                        <p>현재 포인트: <span id="currentPoints">1000</span>포인트</p>
+                        <p>충전 포인트: <input type="number" id="chargeAmount" min="0" placeholder="충전할 포인트"></p>
+                        <button class="charge-btn">충전</button>
+                    </div>
+                    <div class="point-buttons">
+                        <button class="add-points-btn">적립포인트</button>
+                        <button class="subtract-points-btn">차감포인트</button>
+                    </div>
+                    <div class="user-point-history">
+                        <h3>유저 포인트 내역</h3>
+                        <ul>
+                            <li>2025-02-18 : +500 포인트 충전</li>
+                            <li>2025-02-15 : -100 포인트 사용</li>
+                            <li>2025-02-12 : +300 포인트 충전</li>
+                            <li>2025-01-18 : +500 포인트 충전</li>
+                            <li>2025-01-15 : -100 포인트 사용</li>
+                            <li>2025-01-12 : +300 포인트 충전</li>
+                            <li>2025-12-18 : +500 포인트 충전</li>
+                            <li>2025-12-15 : -100 포인트 사용</li>
+                            <li>2025-12-12 : +300 포인트 충전</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="point-charge">
-                    <h3>포인트 충전</h3>
-                    <p>현재 포인트: <span id="currentPoints">1000</span>포인트</p>
-                    <p>충전 포인트: <input type="number" id="chargeAmount" min="0" placeholder="충전할 포인트"></p>
-                    <button class="charge-btn">충전</button>
+            
+                <div id="center">
+                    <div class="checklist">
+                        <h3>체크리스트</h3>
+                        <form>
+                            <div class="question">
+                                <p>1. 질문 1</p>
+                                <label><input type="checkbox"> 답 1 </label>
+                                <label><input type="checkbox"> 답 2 </label>
+                                <label><input type="checkbox"> 답 3 </label>
+                            </div>
+                            <div class="question">
+                                <p>2. 질문 2</p>
+                                <label><input type="checkbox"> 답 1</label>
+                                <label><input type="checkbox"> 답 2</label>
+                                <label><input type="checkbox"> 답 3</label>
+                            </div>
+                            <div class="question">
+                                <p>3. 질문 3</p>
+                                <label><input type="checkbox"> 답 1</label>
+                                <label><input type="checkbox"> 답 2</label>
+                                <label><input type="checkbox"> 답 3</label>
+                            </div>
+                            <div class="question">
+                                <p>4. 오정재는 이정재와 무슨 관계일까?</p>
+                                <label><input type="checkbox"> 친구 </label>
+                                <label><input type="checkbox"> 연인 </label>
+                                <label><input type="checkbox"> 가족 </label>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="point-buttons">
-                    <button class="add-points-btn">적립포인트</button>
-                    <button class="subtract-points-btn">차감포인트</button>
-                </div>
-                <div class="user-point-history">
-                    <h3>유저 포인트 내역</h3>
-                    <ul>
-                        <li>2025-02-18 : +500 포인트 충전</li>
-                        <li>2025-02-15 : -100 포인트 사용</li>
-                        <li>2025-02-12 : +300 포인트 충전</li>
-                        <li>2025-01-18 : +500 포인트 충전</li>
-                        <li>2025-01-15 : -100 포인트 사용</li>
-                        <li>2025-01-12 : +300 포인트 충전</li>
-                        <li>2025-12-18 : +500 포인트 충전</li>
-                        <li>2025-12-15 : -100 포인트 사용</li>
-                        <li>2025-12-12 : +300 포인트 충전</li>
-                    </ul>
-                </div>
-            </div>
-        
-            <div class="center-right">
-                <div class="checklist">
-                    <h3>체크리스트</h3>
-                    <form>
-                        <div class="question">
-                            <p>1. 질문 1</p>
-                            <label><input type="checkbox"> 답 1 </label>
-                            <label><input type="checkbox"> 답 2 </label>
-                            <label><input type="checkbox"> 답 3 </label>
+            
+                <div id="right-side">
+                    <div class="paid-courses">
+                        <h3>결제한 강의 목록</h3>
+                        <div class="course-list">
+                            <div class="course-item">
+                                <img src="/img/boracay1.png" alt="강의1">
+                                <p>반지의 제왕: 반지원정대</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/boracay2.jpg" alt="강의2">
+                                <p>반지의 제왕 : 두개의 탑</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/boracay3.png" alt="강의3">
+                                <p>반지의 제왕: 왕의 귀환</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/boracay4.jpg" alt="강의4">
+                                <p>반지의 제왕 : 완결났나</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/boracay1.png" alt="강의1">
+                                <p>반지의 제왕: 반지원정대</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/boracay2.jpg" alt="강의2">
+                                <p>반지의 제왕 : 두개의 탑</p>
+                            </div>
                         </div>
-                        <div class="question">
-                            <p>2. 질문 2</p>
-                            <label><input type="checkbox"> 답 1</label>
-                            <label><input type="checkbox"> 답 2</label>
-                            <label><input type="checkbox"> 답 3</label>
-                        </div>
-                        <div class="question">
-                            <p>3. 질문 3</p>
-                            <label><input type="checkbox"> 답 1</label>
-                            <label><input type="checkbox"> 답 2</label>
-                            <label><input type="checkbox"> 답 3</label>
-                        </div>
-                        <div class="question">
-                            <p>4. 오정재는 이정재와 무슨 관계일까?</p>
-                            <label><input type="checkbox"> 친구 </label>
-                            <label><input type="checkbox"> 연인 </label>
-                            <label><input type="checkbox"> 가족 </label>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        
-            <div class="right-side">
-                <div class="paid-courses">
-                    <h3>결제한 강의 목록</h3>
-                    <div class="course-list">
-                        <div class="course-item">
-                            <img src="/img/boracay1.png" alt="강의1">
-                            <p>반지의 제왕: 반지원정대</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/boracay2.jpg" alt="강의2">
-                            <p>반지의 제왕 : 두개의 탑</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/boracay3.png" alt="강의3">
-                            <p>반지의 제왕: 왕의 귀환</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/boracay4.jpg" alt="강의4">
-                            <p>반지의 제왕 : 완결났나</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/boracay1.png" alt="강의1">
-                            <p>반지의 제왕: 반지원정대</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/boracay2.jpg" alt="강의2">
-                            <p>반지의 제왕 : 두개의 탑</p>
+                    </div>
+                    
+                    <div class="liked-courses">
+                        <h3>찜한 강의 목록</h3>
+                        <div class="course-list">
+                            <div class="course-item">
+                                <img src="/img/환전.png" alt="환전 관련 강의">
+                                <p>환전 관련 강의</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/숙소.png" alt="숙소 관련 강의">
+                                <p>숙소 관련 강의</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/환전.png" alt="환전 관련 강의">
+                                <p>환전 관련 강의</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/숙소.png" alt="숙소 관련 강의">
+                                <p>숙소 관련 강의</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/bk2.jpg" alt="숙소 관련 강의">
+                                <p>다운로드 관련 강의</p>
+                            </div>
+                            <div class="course-item">
+                                <img src="/img/액티비티.png" alt="숙소 관련 강의">
+                                <p>액티비티 관련 강의</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="liked-courses">
-                    <h3>찜한 강의 목록</h3>
-                    <div class="course-list">
-                        <div class="course-item">
-                            <img src="/img/환전.png" alt="환전 관련 강의">
-                            <p>환전 관련 강의</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/숙소.png" alt="숙소 관련 강의">
-                            <p>숙소 관련 강의</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/환전.png" alt="환전 관련 강의">
-                            <p>환전 관련 강의</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/숙소.png" alt="숙소 관련 강의">
-                            <p>숙소 관련 강의</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/bk2.jpg" alt="숙소 관련 강의">
-                            <p>다운로드 관련 강의</p>
-                        </div>
-                        <div class="course-item">
-                            <img src="/img/액티비티.png" alt="숙소 관련 강의">
-                            <p>액티비티 관련 강의</p>
-                        </div>
-                    </div>
-                </div>
             </div>
+            <div class="last"></div>
         </div>
     </div>
+    <script src="/js/mypage.js"></script>
 </body>
+
+
+
 </html>
