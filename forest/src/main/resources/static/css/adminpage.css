@@ -22,12 +22,18 @@ header {
 }
 
 header .logo a {
-  font-size: 32px;
-  font-weight: bold;
-  color: #ff9900; /* 밝은 주황색으로 강조 */
+  font-size: 36px;
+  font-family: 'Pacifico', sans-serif;
+  font-weight: normal;
+  color: #ff5733;
   text-decoration: none;
+  align-items: center;
 }
 
+header .logo a:hover {
+  color: #16cf1f;
+  transition: color 0.3s ease;
+}
 header nav ul {
   display: flex;
   list-style: none;
