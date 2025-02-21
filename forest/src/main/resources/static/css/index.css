@@ -22,10 +22,17 @@ header {
 }
 
 header .logo a {
-    font-size: 32px;
-    font-weight: bold;
-    color: #16cf1f;
+    font-size: 36px;
+    font-family: 'Pacifico', sans-serif;
+    font-weight: normal;
+    color: #ff5733;
     text-decoration: none;
+    align-items: center;
+}
+
+header .logo a:hover {
+    color: #16cf1f;
+    transition: color 0.3s ease;
 }
 
 header nav ul {

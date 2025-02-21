@@ -11,7 +11,7 @@ ul, ol{
 }
 
 a {
-    color: #000000;
+    color : #0d1f22;
     text-decoration: none;
 }
 
@@ -31,9 +31,17 @@ header {
 }
 
 header .logo a {
-    font-size: 32px;
-    font-weight: bold;
+    font-size: 36px;
+    font-family: 'Pacifico', sans-serif;
+    font-weight: normal;
+    color: #ff5733;
+    text-decoration: none;
+    align-items: center;
+}
+
+header .logo a:hover {
     color: #16cf1f;
+    transition: color 0.3s ease;
 }
 
 header nav ul {
@@ -83,6 +91,7 @@ header nav ul li a:hover {
 	margin: 0px auto;
 }
 .wrap .border-in p.law{
+    overflow: auto;
     border: 1px solid black; 
 	width: 650px;
 	height: 190px;

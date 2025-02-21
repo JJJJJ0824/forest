@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  font-family: 'monospace', sans-serif;
 }
 
 /* 헤더 스타일 */
@@ -25,7 +25,7 @@ header {
 header .logo a {
   font-size: 32px;
   font-weight: bold;
-  color: #16cf1f;
+  color: #ff9900; /* 밝은 주황색으로 강조 */
   text-decoration: none;
 }
 
