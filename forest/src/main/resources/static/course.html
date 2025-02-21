@@ -22,91 +22,63 @@
         </nav>
     </header>
 
-    <!-- 여행 유형 선택 -->
-    <section class="travel-type">
-        <label>
-            <input type="radio" name="travel-type" value="free"> 자유여행
-        </label>
-        <label>
-            <input type="radio" name="travel-type" value="package"> 패키지여행
-        </label>
-        <label>
-            <input type="radio" name="travel-type" value="family"> 가족여행
-        </label>
-        <label>
-            <input type="radio" name="travel-type" value="family"> 공통
-        </label>
-    </section>
-
-    <!-- 검색 박스 -->
-    <section class="search-container">
-        <div class="search-wrapper">
-            <div class="search-options">
-                <select class="search-type">
-                    <option value="title">제목</option>
-                    <option value="title-content">제목+내용</option>
-                </select>
-            </div>
-            <input type="text" placeholder="검색어 입력..." class="search-input">
-            <button class="search-bth">검색</button>
-        </div>
-    </section>
-
-    <!-- 카테고리 검색 -->
-    <section class="category-search">
-        <div class="category-container">
-            <label for="category-select">카테고리:</label>
-            <select id="category-select">
-                <option value="ex1">Ex1</option>
-                <option value="ex2">Ex2</option>
-                <option value="ex3">Ex3</option>
-                <option value="ex4">Ex4</option>
-            </select>
-        </div>
-        <div class="category-search-bar">
-            <input type="text" placeholder="카테고리 검색">
-            <button>검색</button>
-        </div>
-    </section>
+    <!-- 카테고리 네비게이션 추가 -->
+    <nav class="category-nav">
+        <ul>
+            <li><a href="#" data-category="all">전체</a></li>
+            <li><a href="#" data-category="free">자유여행</a></li>
+            <li><a href="#" data-category="package">패키지여행</a></li>
+            <li><a href="#" data-category="family">가족여행</a></li>
+            <li><a href="#" data-category="common">공통</a></li>
+        </ul>
+    </nav>
 
     <!-- 이미지 및 설명 섹션 -->
-    <section class="image-description">
-        <div class="image-wrapper">
-            <a href="family_aboard.html">
-                <img src="/img/환전.png" alt="설명 이미지">
-            </a>
+    <section class="content-wrapper">
+        <div class="content free">
+            <div class="image-wrapper">
+                <img src="./img/환전.png" alt="설명 이미지">
+            </div>
+            <div class="text-wrapper">
+                <h3>해외에서 환전할때는 이거 하나만 기억하세요!</h3>
+                <p>효율적으로 해외에서 환전하는 방법을 알려드립니다. 무조건 이렇게만 하면 걱정 없어요!</p>
+                <a href="#">자세히 보기</a>
+            </div>
         </div>
-        <div class="description-wrapper">
-            <h3>해외에서 환전할때는 이거하나만 기억하세요 !</h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A laboriosam consectetur praesentium illum neque nam, explicabo enim quasi sint accusantium, eum quae est sequi maxime. Ab debitis dignissimos quod nisi...</p>
+
+        <div class="content package">
+            <div class="image-wrapper">
+                <img src="./img/액티비티.png" alt="설명 이미지">
+            </div>
+            <div class="text-wrapper">
+                <h3>보라카이 액티비티를 진행할때는 이거 하나만 기억하세요!</h3>
+                <p>보라카이에서의 액티비티! 반드시 알아야 할 필수 정보를 공유합니다.</p>
+                <a href="#">자세히 보기</a>
+            </div>
+        </div>
+
+        <div class="content family">
+            <div class="image-wrapper">
+                <img src="./img/숙소.png" alt="설명 이미지">
+            </div>
+            <div class="text-wrapper">
+                <h3>보라카이에서 좋은숙소, 합리적인 예약</h3>
+                <p>보라카이에서 최고의 숙소를 예약하는 팁! 가격대비 최고의 선택을 알려드립니다.</p>
+                <a href="#">자세히 보기</a>
+            </div>
+        </div>
+
+        <div class="content common">
+            <div class="image-wrapper">
+                <img src="./img/숙소.png" alt="설명 이미지">
+            </div>
+            <div class="text-wrapper">
+                <h3>보라카이에서 좋은숙소, 합리적인 예약</h3>
+                <p>보라카이에서 최고의 숙소를 예약하는 팁! 가격대비 최고의 선택을 알려드립니다.</p>
+                <a href="#">자세히 보기</a>
+            </div>
         </div>
     </section>
-
-    <!-- 두 번째 이미지 및 설명 섹션 -->
-    <footer class="image-description">
-        <div class="image-wrapper">
-            <a href="free_activity.html">
-                <img src="/img/액티비티.png" alt="설명 이미지">
-            </a>
-        </div>
-        <div class="description-wrapper">
-            <h3>보라카이 액티비티를 진행할때는 이거 하나만 기억하세요 !</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde earum explicabo quia placeat, asperiores, impedit reiciendis iure cum dolor facere sed atque aspernatur consequatur, esse perferendis amet quos fugiat...</p>
-        </div>
-    </footer>
-
-    <!-- 세 번째 이미지 및 설명 섹션 -->
-    <footer class="image-description">
-        <div class="image-wrapper">
-            <a href="package_attraction.html">
-                <img src="/img/숙소.png" alt="설명 이미지">
-            </a>
-        </div>
-        <div class="description-wrapper">
-            <h3>보라카이에서 좋은숙소 , 합리적인 예약</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quam, praesentium cumque velit consequatur est modi ipsa quae veniam vel! Laborum maiores cumque aspernatur nobis sapiente debitis, adipisci ducimus accusamus...</p>
-        </div>
-    </footer>
 
     <!-- 페이지 네비게이션 -->
     <section class="pagination-container">
