@@ -68,55 +68,55 @@
     <p>&copy; 2025 Boracay. All Rights Reserved.</p>
   </footer>
 
-    <script>
-      let isEditing = false;
+  <script>
+    let isEditing = false;
 
-      function handleFocus() {
-        const titleInput = document.getElementById('courseTitle');
-        
-        if (titleInput.value.trim() === '제목을 입력하세요' || !titleInput.value.trim()) {
-          titleInput.value = ''; 
-        }
+    function handleFocus() {
+      const titleInput = document.getElementById('courseTitle');
+      
+      if (titleInput.value.trim() === '제목을 입력하세요' || !titleInput.value.trim()) {
+        titleInput.value = ''; 
       }
+    }
 
-      function handleBlur() {
-        const titleInput = document.getElementById('courseTitle');
-        
-        if (titleInput.value.trim() !== '') {
-          titleInput.classList.add('filled');
-        } else {
-          titleInput.value = '제목을 입력하세요';  
-          titleInput.classList.remove('filled'); 
-        }
+    function handleBlur() {
+      const titleInput = document.getElementById('courseTitle');
+      
+      if (titleInput.value.trim() !== '') {
+        titleInput.classList.add('filled');
+      } else {
+        titleInput.value = '제목을 입력하세요';  
+        titleInput.classList.remove('filled'); 
       }
+    }
 
-      function handleClick() {
-        const titleInput = document.getElementById('courseTitle');
+    function handleClick() {
+      const titleInput = document.getElementById('courseTitle');
 
-        if (isEditing) {
-          titleInput.classList.add('filled');
-        } else {
-          titleInput.value = '';
-          titleInput.classList.add('filled');
-          isEditing = true; 
-        }
+      if (isEditing) {
+        titleInput.classList.add('filled');
+      } else {
+        titleInput.value = '';
+        titleInput.classList.add('filled');
+        isEditing = true; 
       }
+    }
 
-      document.getElementById('imageUpload').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        const imagePreview = document.getElementById('imagePreview');
-        const imageUploadText = document.getElementById('imageUploadText');
-        
-        if (file) {
-          reader.onload = function(event) {
-            imagePreview.src = event.target.result;
-            imagePreview.style.display = 'block';  
-            imageUploadText.style.display = 'none'; 
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-    </script>
+    document.getElementById('imageUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      const imagePreview = document.getElementById('imagePreview');
+      const imageUploadText = document.getElementById('imageUploadText');
+      
+      if (file) {
+        reader.onload = function(event) {
+          imagePreview.src = event.target.result;
+          imagePreview.style.display = 'block';  
+          imageUploadText.style.display = 'none'; 
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
 </body>
 </html>
