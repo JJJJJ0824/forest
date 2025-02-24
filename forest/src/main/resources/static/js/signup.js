@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// ✅ 이메일 인증 코드 전송
 function sendEmailVerification() {
   let email = document.getElementById("signupEmail").value.trim();
   let message = document.getElementById("emailVerifyMessage");
@@ -29,15 +28,17 @@ function sendEmailVerification() {
       return;
   }
 
-  // 📌 서버에서 인증 코드 전송 (현재는 123456 가상 코드 사용)
-  let verificationCode = "123456"; 
+  // 🔥 6자리 랜덤 인증 코드 생성
+  let verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
   localStorage.setItem("emailVerificationCode", verificationCode);
 
-  alert("이메일로 인증 코드가 전송되었습니다!");
+  console.log("📌 생성된 인증 코드:", verificationCode); // 🔥 생성된 코드 확인 (테스트용)
+  
+  alert(`이메일로 인증 코드가 전송되었습니다! (테스트용 코드: ${verificationCode})`);
 
   document.getElementById("emailCode").disabled = false;
   document.getElementById("verifyCodeBtn").disabled = false;
-}
+};
 
 // ✅ 이메일 인증 코드 검증
 function verifyEmailCode() {
@@ -58,7 +59,7 @@ function verifyEmailCode() {
       message.textContent = "잘못된 인증 코드입니다.";
       message.style.color = "red";
   }
-}
+};
 
 // ✅ 회원가입 함수
 function register() {
@@ -78,12 +79,17 @@ function register() {
       return;
   }
 
+  if (!localStorage.getItem("emailVerified")) {
+      errorMsg.textContent = "이메일 인증을 완료해야 회원가입이 가능합니다.";
+      return;
+  }
+
   if (!email.includes("@") || !email.includes(".")) {
       errorMsg.textContent = "올바른 이메일 형식을 입력하세요.";
       return;
   }
 
-  if (!contact.match(/^01[0-9]-\d{3,4}-\d{4}$/)) {
+  if (!contact.match(/^01[0-9]-?\d{3,4}-?\d{4}$/)) {
       errorMsg.textContent = "연락처 형식이 올바르지 않습니다. (예: 010-1234-5678)";
       return;
   }
@@ -113,7 +119,11 @@ function register() {
   };
 
   localStorage.setItem(username, JSON.stringify(userData));
+  localStorage.removeItem("emailVerified"); // 이메일 인증 상태 초기화
+
+  console.log("📌 저장된 회원 데이터:", localStorage.getItem(username)); // 데이터 저장 확인
 
   alert("회원가입이 완료되었습니다!");
   window.location.href = "login.html"; // 로그인 페이지로 이동
-}
+};
+
