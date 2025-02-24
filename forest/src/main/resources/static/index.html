@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boracay - 홈</title>
-    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/top.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -22,16 +21,29 @@
                     <li><a href="qa.html">Q&A</a></li>
                     <li><a href="notice.html">공지사항</a></li>
                     <li><a href="mypage.html">마이페이지</a></li>
-                    <li><a href="login.html" id="nav-login">로그인</a></li>
+                    <li><a href="login.html">로그인</a></li>
                 </ul>
             </nav>
         </header>
 
         <!-- 메인 배너 -->
         <section class="banner">
+            <div class="slider">
+                <div class="slide active">
+                    <img src="/img/AIR.jpg" alt="배너 1">
+                </div>
+                <div class="slide">
+                    <img src="/img/background3.jpg" alt="배너 2">
+                </div>
+                <div class="slide">
+                    <img src="/img/bk2.jpg" alt="배너 3">
+                </div>
+                <div class="slider-button prev" onclick="moveSlide(-1)">⮜</div>
+                <div class="slider-button next" onclick="moveSlide(1)">⮞</div>
+            </div>
             <h1>보라카이와 함께하는 여행</h1>
             <p>최고의 여행 경험을 만들어보세요!</p>
-            <a href="#courses" class="btn">지금 바로 시작하기</a>
+            <a href="#courses" class="start-btn">지금 바로 시작하기</a>
         </section>
 
         <!-- 인기 강의 섹션 -->
@@ -97,7 +109,8 @@
     </footer>
 
     <script src="/js/top_button.js"></script>
-    <script src="/js/index.js"></script>
+    <script src="/js/slide.js"></script>
+    <script src="/js/login.js"></script>
     <script src="/js/logout.js"></script>
 </body>
 </html>

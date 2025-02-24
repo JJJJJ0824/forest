@@ -1,26 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("logout.js 로드됨!");
+  console.log('logout() 실행됨!');
 
-    let loggedInUser = localStorage.getItem("loggedInUser");
-    let loginMenuItem = document.getElementById("nav-login"); // 네비게이션 로그인 버튼
+  let loggedInUser = localStorage.getItem("loggedInUser");
+  let loginMenuItem = document.getElementById("nav-login"); // 네비게이션 로그인 버튼
 
-    if (loggedInUser) {
-        // "로그인"을 "로그아웃"으로 변경
-        loginMenuItem.textContent = "로그아웃";
-        loginMenuItem.href = "#"; // href 제거
-        loginMenuItem.addEventListener("click", logout);
-    }
+  if (loggedInUser) {
+      // "로그인"을 "로그아웃"으로 변경
+      loginMenuItem.textContent = "로그아웃";
+      loginMenuItem.href = "#"; // href 제거
+      loginMenuItem.addEventListener("click", logout);
+  }
 });
 
-// 로그아웃 함수
 function logout() {
-    console.log("로그아웃 실행됨!");
-    
-    // 로그인 정보 삭제
-    localStorage.removeItem("loggedInUser");
-    
-    console.warn("로그아웃 되었습니다!");
-    
-    // 메인 페이지로 이동
-    window.location.href = "index.html";
-}
+  console.log("로그아웃 실행됨!");
+  
+  localStorage.removeItem("loggedInUser");
+  
+  window.location.href = "login.html";
+};

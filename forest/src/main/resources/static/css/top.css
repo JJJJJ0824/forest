@@ -1,16 +1,15 @@
- /* #topBtn 스타일 */
- #topBtn {
+#topBtn {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: linear-gradient(135deg, #007BFF, #00B4FF); /* 그라디언트 배경 */
+    background: linear-gradient(135deg, #007BFF, #00B4FF);
     color: white;
     border: none;
     padding: 12px 18px;
     font-size: 18px;
     border-radius: 50%;
     cursor: pointer;
-    display: none; /* 처음에는 안 보이게 */
+    display: none;
     transition: all 0.3s ease-out;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     transform: scale(1);
@@ -19,20 +18,18 @@
     z-index: 9999;
 }
 
-/* Hover 상태에서 버튼 스타일 */
 #topBtn:hover {
-    background: linear-gradient(135deg, #0056b3, #0084d1); /* 호버 시 색상 변화 */
-    transform: scale(1.1); /* 버튼 크기 확대 */
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); /* 그림자 강화 */
+    background: linear-gradient(135deg, #0056b3, #0084d1);
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); 
 }
 
-/* 클릭 시 버튼 스타일 */
 #topBtn:active {
-    transform: scale(0.95); /* 클릭 시 버튼 크기 축소 */
+    transform: scale(0.95);
 }
 
-/* 버튼 아이콘 크기 */
+
 #topBtn i {
-    font-size: 28px; /* 아이콘 크기 */
+    font-size: 28px;
     color: white;
 }

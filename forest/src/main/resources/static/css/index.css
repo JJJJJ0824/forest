@@ -65,27 +65,55 @@ header nav ul li a:hover {
 
 /* 배너 섹션 */
 .banner {
-    background-image: url('../img/background3.jpg');
-    background-size: cover;
-    background-position: center;
-    text-align: center;
-    padding: 100px 25px;
-    color: rgb(255, 255, 255);
+    width: 100%;
+    height: 400px;
     position: relative;
+    overflow: hidden; 
+    text-align: center;
+    color: white;
+    z-index: 1; 
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    z-index: -1;
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .banner h1 {
     font-size: 50px;
     font-weight: bold;
     margin-bottom: 20px;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    left: 0;
+    z-index: 10;
 }
 
 .banner p {
     font-size: 20px;
     margin-bottom: 40px;
+    position: absolute;
+    top: 55%;
+    width: 100%;
+    left: 0;
+    z-index: 10;
 }
 
-.banner .btn {
+.banner .start-btn {
     background-color: #16cf1f;
     color: white;
     font-size: 18px;
@@ -93,10 +121,35 @@ header nav ul li a:hover {
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
+    position: absolute;
+    bottom: 20px;
+    z-index: 10;
+    display: inline-block;
 }
 
 .banner .btn:hover {
     background-color: #128c10;
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 15; 
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
 }
 
 /* 인기 강의 섹션 */
