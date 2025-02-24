@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boracay - Q&A 게시판</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/top.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 </head>
@@ -31,10 +32,10 @@
                 <a href="q.html"><button class="write-button">글쓰기</button></a>
             </div>
             <ul class="qna-list">
-                <a href="q1.html"><li class="qna-item">
-                    질문 제목 질문 제목 질문 제목 1
+                <li class="qna-item">
+                    <a href="q1.html">질문 제목 질문 제목 질문 제목 1</a>
                     <span class="date">2025-02-19</span>
-                </li></a>
+                </li>
                 <li class="qna-item">
                     <a href="#.html">질문 제목 질문 제목 질문 제목 2</a>
                     <span class="date">2025-02-18</span>
@@ -93,9 +94,10 @@
             </div>
         </div>
     </div>
-    
+    <button id="topBtn" onclick="scrollToTop()">⮝</button>
     <footer>
         <p>&copy; 2025 Boracay. All Rights Reserved.</p>
     </footer>
+    <script src="/js/top_button.js"></script>
 </body>
 </html>

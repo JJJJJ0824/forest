@@ -1,4 +1,4 @@
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('button#btn-info, button#btn-checklist, button#btn-courses');
 const leftSide = document.getElementById('left-side');
 const center = document.getElementById('center');
 const rightSide = document.getElementById('right-side');

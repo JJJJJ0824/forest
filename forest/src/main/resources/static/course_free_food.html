@@ -6,6 +6,7 @@
     <title>자유여행 - 추천 먹거리</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/course_attraction.css">
+    <link rel="stylesheet" href="/css/top.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -55,10 +56,16 @@
                 </div>
             </div>
         </div>
+        <div class="buttons">
+            <a href="course.html"><button>목록으로</button></a>
+            <a href="index.html"><button>홈가기</button></a>
+            <button onclick="alert('수강 신청이 접수되었습니다.')">수강 신청</button>
+        </div>
     </div>
-    
+    <button id="topBtn" onclick="scrollToTop()">⮝</button>
     <footer>
         <p>&copy; 2025 Boracay. All Rights Reserved.</p>
     </footer>
+    <script src="/js/top_button.js"></script>
 </body>
 </html>
