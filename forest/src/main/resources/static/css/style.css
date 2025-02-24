@@ -86,11 +86,12 @@ header nav ul li a:hover {
 
 .wrap .border-in {
 	width: 650px;
-	height: 550px;
+	height: 1000px;
 	align-items: center;
 	margin: 0px auto;
 }
 .wrap .border-in p.law{
+    text-align: left;
     overflow: auto;
     border: 1px solid black; 
 	width: 650px;

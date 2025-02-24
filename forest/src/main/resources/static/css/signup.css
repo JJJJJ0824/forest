@@ -1,0 +1,131 @@
+body {
+  font-family: monospace, sans-serif;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.signup-container {
+  width: 350px;
+  background: white;
+  padding: 20px;
+  margin: 50px auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column; /* 🔥 입력 필드를 세로 정렬 */
+  gap: 10px; /* 입력 필드 간 간격 조정 */
+}
+
+.border-in label {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.signup-options {
+  margin-top: 15px;
+}
+
+.signup-options a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signup-options a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+.terms {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.terms input {
+  margin-right: 10px;
+}
+
+#emailVerifyBtn {
+  margin-top: 5px;
+  padding: 8px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#emailVerifyBtn:hover {
+  background-color: #218838;
+}
+
+#emailVerifyMessage {
+  font-size: 14px;
+  margin-top: 5px;
+}
+.terms-container {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.terms-container h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.terms-container p {
+  font-size: 14px;
+  color: #666;
+}
+
+.terms {
+  display: flex;              /* 🔥 한 줄 정렬 적용 */
+  align-items: center;        /* 🔥 수직 중앙 정렬 */
+  justify-content: flex-end;
+  gap: 8px;                   /* 🔥 체크박스와 텍스트 사이 간격 */
+  margin-top: 10px;
+  width: 100%;
+}
+
+.terms input {
+  width: 16px;                /* 🔥 체크박스 크기 조정 */
+  height: 16px;
+}
