@@ -1,5 +1,6 @@
 package com.dw.forest.service;
 
+import com.dw.forest.dto.FindID_PWD;
 import com.dw.forest.dto.TravelerDTO;
 import com.dw.forest.dto.TravelerResponseDTO;
 import com.dw.forest.exception.InvalidRequestException;
@@ -84,6 +85,16 @@ public class TravelerService {
         }catch (NullPointerException e) {
             throw new InvalidRequestException("올바른 계정명 및 비밀번호를 입력해주세요.");
         }
+    }
+
+    public String findId(FindID_PWD findIDPwd) {
+        Traveler traveler = travelerRepository.findByRealNameAndContact(findIDPwd.getRealName(), findIDPwd.getContact()).orElseThrow(()->new ResourceNotFoundException("해당 이름과 전화번호의 여행자를 찾지 못했습니다."));
+        return traveler.getTravelerName();
+    }
+
+    public String findPwd(FindID_PWD findIDPwd) {
+        travelerRepository.findById(findIDPwd.getTravelerName()).orElseThrow(()->new ResourceNotFoundException("해당 이름과 전화번호의 여행자를 찾지 못했습니다."));
+        return null;
     }
 
     public TravelerResponseDTO getCurrentTraveler(HttpServletRequest request) {

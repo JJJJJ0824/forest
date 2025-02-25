@@ -1,6 +1,7 @@
 package com.dw.forest.controller;
 
 import com.dw.forest.dto.ChangePassDTO;
+import com.dw.forest.dto.FindID_PWD;
 import com.dw.forest.dto.TravelerDTO;
 import com.dw.forest.dto.TravelerResponseDTO;
 import com.dw.forest.exception.ResourceNotFoundException;
@@ -71,6 +72,16 @@ public class TravelerController {
         return new ResponseEntity<>(travelerService.changePassword
                 (request, passDTO.getOldPassword(), passDTO.getNewPassword(), passDTO.getNewPasswordCheck())+
                 "가 정상적으로 변경되었습니다.", HttpStatus.OK);
+    }
+
+    @GetMapping("/find-id")
+    public ResponseEntity<String> findId(@RequestBody FindID_PWD findIDPwd) {
+        return new ResponseEntity<>(travelerService.findId(findIDPwd), HttpStatus.OK);
+    }
+
+    @GetMapping("/find-pwd")
+    public ResponseEntity<String> findPwd(@RequestBody FindID_PWD findIDPwd) {
+        return new ResponseEntity<>(travelerService.findPwd(findIDPwd), HttpStatus.OK);
     }
 
     @DeleteMapping("/{traveler_name}/delete")

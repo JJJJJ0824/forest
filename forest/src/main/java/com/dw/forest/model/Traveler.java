@@ -57,7 +57,8 @@ public class Traveler {
     @OneToMany(mappedBy = "traveler")
     private List<Cart> cartItems;
 
-    @ManyToMany(mappedBy = "traveler")
+    @ManyToMany
+    @JoinTable(name = "traveler_course", joinColumns = @JoinColumn(name = "traveler_name"))
     private List<Course> courses;
 
     public TravelerDTO toDTO() {

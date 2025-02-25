@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 폼 전환 버튼 이벤트 추가
     document.getElementById("find-id").addEventListener("click", toggleFindForm);
     document.getElementById("find-pwd").addEventListener("click", toggleFindForm);
 });
 
-let generatedCode = null;  // 🔹 인증번호 저장용 변수
+let generatedCode = null; 
 
-// 폼 전환 기능
 function toggleFindForm() {
     const idForm = document.getElementById("id-form");
     const pwdForm = document.getElementById("pwd-form");
@@ -48,7 +46,7 @@ function sendVerification() {
     const phone = document.getElementById("phone-pwd").value;
 
     if (userId && phone) {
-        generatedCode = Math.floor(100000 + Math.random() * 900000);  
+        generatedCode = Math.floor(100000 + Math.random() * 900000); 
         alert(`인증번호가 전송되었습니다! (테스트용: ${generatedCode})`);
     } else {
         alert("아이디와 전화번호를 입력해주세요.");
@@ -111,11 +109,10 @@ function resetPassword() {
     generatedCode = null;
 
     alert("비밀번호 변경이 완료되었습니다. 다시 로그인 해주세요.");
-
     window.location.href = "login.html";
 }
 
-let generatedIDCode = null;  
+let generatedIDCode = null; 
 
 function sendIDVerification() {
     const name = document.getElementById("name").value.trim();
@@ -144,7 +141,7 @@ function verifyIDCode() {
     
     if (enteredCode === generatedIDCode.toString()) {
         alert("인증번호 확인 완료!");
-        findUserID();  
+        findUserID(); 
     } else {
         resultElement.innerText = "인증번호가 일치하지 않습니다.";
         resultElement.style.color = "red";

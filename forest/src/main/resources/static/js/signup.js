@@ -50,10 +50,8 @@ function verifyEmailCode() {
       message.textContent = "이메일 인증 완료!";
       message.style.color = "green";
 
-      // 🔥 인증 완료 후 localStorage에서 인증 코드 삭제
       localStorage.removeItem("emailVerificationCode");
 
-      // 🔥 인증 성공 상태 저장 (회원가입 버튼 클릭 시 검증)
       localStorage.setItem("emailVerified", "true");
   } else {
       message.textContent = "잘못된 인증 코드입니다.";
@@ -61,7 +59,6 @@ function verifyEmailCode() {
   }
 };
 
-// ✅ 회원가입 함수
 function register() {
   console.log("register() 실행됨!");
 
@@ -109,21 +106,34 @@ function register() {
       return;
   }
 
-  // 🔥 JSON 형식으로 사용자 정보 저장
-  let userData = {
-      username: username,
-      realName: realName,
-      email: email,
-      contact: contact,
-      password: password
-  };
-
-  localStorage.setItem(username, JSON.stringify(userData));
-  localStorage.removeItem("emailVerified"); // 이메일 인증 상태 초기화
-
-  console.log("📌 저장된 회원 데이터:", localStorage.getItem(username)); // 데이터 저장 확인
-
-  alert("회원가입이 완료되었습니다!");
-  window.location.href = "login.html"; // 로그인 페이지로 이동
+   let userData = {
+    travelerName: username,
+    email: email,
+    contact: contact,
+    password: password,
+    realName: realName
 };
 
+
+let xhr = new XMLHttpRequest();
+xhr.open("POST", "/api/traveler/register", true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onload = function() {
+    if (xhr.status === 201) {
+        
+        alert("회원가입이 완료되었습니다!");
+        window.location.href = "login.html"; 
+    } else {
+        
+        errorMsg.textContent = "회원가입에 실패했습니다. 다시 시도해주세요.";
+    }
+};
+
+xhr.onerror = function() {
+
+    errorMsg.textContent = "네트워크 오류가 발생했습니다. 다시 시도해주세요.";
+};
+
+xhr.send(JSON.stringify(userData));
+}
