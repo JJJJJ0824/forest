@@ -133,18 +133,76 @@ div#center {
     color: #333;
 }
 
-.question {
-    margin-bottom: 20px;
+#question {
+    margin-bottom: 0px;
+    height: 0;
 }
 
-.question p {
+#question.active {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: auto;
+    transition: height 0.2s;
+}
+
+#question.active p {
+    text-align: center;
     font-size: 16px;
     margin-bottom: 10px;
 }
 
-.question label {
+#question p {
+    font-size: 0;
+}
+
+#question.active label {
     display: block;
     margin: 5px 0;
+}
+
+#question label {
+    display: none;
+}
+
+/* .active 클래스가 있는 경우 보이게 설정 */
+#question.active {
+    height: auto;
+}
+
+#submit-btn {
+    height: 0;
+    display: none;
+    border: none;
+}
+
+#submit-btn.active {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 12px/1;
+    color: white;
+    background-color: #007BFF;
+}
+
+#resultSection {
+    display: none;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#resultSection.active {
+    display: block;
+    transition: display 0.5s ease;
+}
+
+#resultText {
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
 }
 
 div#right-side .liked-courses{

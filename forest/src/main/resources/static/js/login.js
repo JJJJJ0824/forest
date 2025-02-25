@@ -1,21 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("✅ login.js 로드됨!"); // JavaScript 로드 확인
-
-    // 회원가입 버튼 이벤트 (signup.html에서 실행)
-    let signupBtn = document.getElementById("signupBtn");
-    if (signupBtn) {
-        signupBtn.addEventListener("click", register);
-    }
-
-    // 로그인 버튼 이벤트 (login.html에서 실행)
-    let loginBtn = document.getElementById("loginBtn");
-    if (loginBtn) {
-        loginBtn.addEventListener("click", login);
-    }
-});
-
-// ✅ 회원가입 함수 (signup.html에서 실행)
-document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ login.js 로드됨!"); // 🔥 JavaScript 파일이 실행되는지 확인
 
     let loginButton = document.getElementById("loginBtn");
@@ -64,3 +47,21 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("loginBtn 요소를 찾을 수 없습니다. login.html을 확인하세요.");
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ login.js 로드됨!"); // JavaScript 로드 확인
+
+    // 회원가입 버튼 이벤트 (signup.html에서 실행)
+    let signupBtn = document.getElementById("signupBtn");
+    if (signupBtn) {
+        signupBtn.addEventListener("click", register);
+    }
+
+    // 로그인 버튼 이벤트 (login.html에서 실행)
+    // let loginBtn = document.getElementById("loginBtn");
+    // if (loginBtn) {
+    //     loginBtn.addEventListener("click", login);
+    // }
+});
+
+

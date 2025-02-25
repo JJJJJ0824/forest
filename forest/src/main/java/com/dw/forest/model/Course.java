@@ -39,6 +39,9 @@ public class Course {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
+    @ManyToMany(mappedBy = "traveler")
+    private List<Traveler> travelers;
+
     @OneToMany(mappedBy = "course")
     private List<Completion> completions;
 

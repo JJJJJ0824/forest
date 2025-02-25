@@ -30,7 +30,6 @@
         <div class="mypage-container">
             <div class="first"></div>
             <div class="second">
-                <!-- 네이버 스타일 버튼 추가 -->
                 <div class="mypage-buttons">
                     <button id="btn-info" class="active">
                         <i class="fas fa-user"></i> 내 정보
@@ -81,29 +80,100 @@
                     <div class="checklist">
                         <h3>체크리스트</h3>
                         <form>
-                            <div class="question">
-                                <p>1. 질문 1</p>
-                                <label><input type="checkbox"> 답 1 </label>
-                                <label><input type="checkbox"> 답 2 </label>
-                                <label><input type="checkbox"> 답 3 </label>
+                            <!-- 여행의 주요 목적 -->
+                            <div id="question" class="active">
+                                <p>보라카이에 가는 주된 목적은 무엇인가요?</p>
+                                <label><input type="radio" name="q1"> 휴식과 여유 </label>
+                                <label><input type="radio" name="q1"> 액티비티와 모험 </label>
+                                <label><input type="radio" name="q1"> 문화 체험과 관광 </label>
+                                <label><input type="radio" name="q1"> 해양 스포츠 및 다이빙 </label>
                             </div>
-                            <div class="question">
-                                <p>2. 질문 2</p>
-                                <label><input type="checkbox"> 답 1</label>
-                                <label><input type="checkbox"> 답 2</label>
-                                <label><input type="checkbox"> 답 3</label>
+                    
+                            <!-- 숙소 유형 선호 -->
+                            <div id="question">
+                                <p>보라카이에서 선호하는 숙소 유형은 무엇인가요?</p>
+                                <label><input type="radio" name="q2"> 럭셔리 리조트 </label>
+                                <label><input type="radio" name="q2"> 가족 친화적인 호텔 </label>
+                                <label><input type="radio" name="q2"> 저렴한 게스트하우스 또는 호스텔 </label>
+                                <label><input type="radio" name="q2"> 에어비앤비와 같은 독립형 숙소 </label>
                             </div>
-                            <div class="question">
-                                <p>3. 질문 3</p>
-                                <label><input type="checkbox"> 답 1</label>
-                                <label><input type="checkbox"> 답 2</label>
-                                <label><input type="checkbox"> 답 3</label>
+                    
+                            <!-- 여행 스타일 -->
+                            <div id="question">
+                                <p>보라카이 여행을 계획하면서 어떤 스타일을 선호하시나요?</p>
+                                <label><input type="radio" name="q3"> 완전 자유 여행 (자유롭게 일정 조정) </label>
+                                <label><input type="radio" name="q3"> 패키지 여행 (사전 계획된 일정) </label>
+                                <label><input type="radio" name="q3"> 반자유 여행 (일정 일부 자유롭게 변경 가능) </label>
                             </div>
-                            <div class="question">
-                                <p>4. 오정재는 이정재와 무슨 관계일까?</p>
-                                <label><input type="checkbox"> 친구 </label>
-                                <label><input type="checkbox"> 연인 </label>
-                                <label><input type="checkbox"> 가족 </label>
+                    
+                            <!-- 동행자 유형 -->
+                            <div id="question">
+                                <p>여행에 누구와 함께 가나요?</p>
+                                <label><input type="radio" name="q4"> 가족 (아이들과 함께) </label>
+                                <label><input type="radio" name="q4"> 친구들 </label>
+                                <label><input type="radio" name="q4"> 혼자 </label>
+                                <label><input type="radio" name="q4"> 연인 </label>
+                            </div>
+
+                            <!-- 여행 일정 계획 정도가 유연한지 -->
+                            <div id="question">
+                                <p>여행 일정은 얼마나 유동적이어야 하나요?</p>
+                                <label><input type="radio" name="q5"> 완전 고정 일정 (정해진 시간에 맞추어 모든 것을 계획) </label>
+                                <label><input type="radio" name="q5"> 일부 유동적 일정 (몇 가지 활동은 예약되어 있지만 여유 시간이 있음) </label>
+                                <label><input type="radio" name="q5"> 자유 일정 (대부분 자율적으로 계획하고 실행) </label>
+                            </div>
+
+                            <!-- 해양 스포츠 -->
+                            <div id="question">
+                                <p>보라카이에서 해양 스포츠 활동을 얼마나 선호하시나요?</p>
+                                <label><input type="radio" name="q6"> 서핑, 스노클링 등 다양한 해양 스포츠를 즐기고 싶다 </label>
+                                <label><input type="radio" name="q6"> 해양 스포츠보다는 해변에서 휴식을 취하는 것이 좋다 </label>
+                                <label><input type="radio" name="q6"> 해양 스포츠에는 관심이 없다 </label>
+                            </div>
+
+                            <!-- 식사 스타일 -->
+                            <div id="question">
+                                <p>보라카이에서 어떤 스타일의 식사를 선호하시나요?</p>
+                                <label><input type="radio" name="q7"> 현지 음식 (해산물, 필리핀 전통 음식) </label>
+                                <label><input type="radio" name="q7"> 고급 레스토랑에서의 다이닝 </label>
+                                <label><input type="radio" name="q7"> 간편한 길거리 음식 </label>
+                                <label><input type="radio" name="q7"> 다양한 국제적 요리를 즐기고 싶다 </label>
+                            </div>
+
+                            <!-- 쇼핑과 기념품 -->
+                            <div id="question">
+                                <p>여행 중 쇼핑을 얼마나 중요하게 생각하시나요?</p>
+                                <label><input type="radio" name="q8"> 현지에서 쇼핑하고 기념품을 구입하는 것을 중요시함 </label>
+                                <label><input type="radio" name="q8"> 쇼핑보다는 활동 위주로 계획 </label>
+                                <label><input type="radio" name="q8"> 쇼핑에 관심 없음 </label>
+                            </div>
+
+                            <!-- 자연과의 연결 -->
+                            <div id="question">
+                                <p>자연을 가까이에서 경험하는 것이 중요하신가요?</p>
+                                <label><input type="radio" name="q9"> 산책, 트레킹 등 자연을 즐기고 싶다 </label>
+                                <label><input type="radio" name="q9"> 자연을 즐기기보다는 관광지나 활동을 더 선호한다 </label>
+                                <label><input type="radio" name="q9"> 자연과의 연결은 중요하지 않다 </label>
+                            </div>
+
+                            <!-- 여행 예산 -->
+                            <div id="question">
+                                <p>보라카이 여행의 예산은 어느 정도인가요?</p>
+                                <label><input type="radio" name="q10"> 고급스러운 여행을 원한다 (럭셔리 예산) </label>
+                                <label><input type="radio" name="q10"> 합리적인 가격대의 여행 (중간 예산) </label>
+                                <label><input type="radio" name="q10"> 예산을 아끼며 저렴하게 여행하고 싶다 </label>
+                            </div>
+
+                            <div id="progressBar">
+                                <progress value="0" max="100"></progress>
+                            </div>
+                            
+                            <button type="submit">결과 보기</button>
+
+                            <div id="resultSection">
+                                <p id="resultText"></p>
+                                <button type="button" id="btn-checklist-view">체크리스트 보기</button>
+                                <button type="button" id="btn-checklist-rewrite">체크리스트 재작성</button>
                             </div>
                         </form>
                     </div>
@@ -178,9 +248,9 @@
     <footer>
         <p>&copy; 2025 Boracay. All Rights Reserved.</p>
     </footer>
-    <script src="/js/login.js"></script>
     <script src="/js/mypage.js"></script>
     <script src="/js/top_button.js"></script>
     <script src="/js/logout.js"></script>
+    <script src="/js/checklist.js"></script>
 </body>
 </html>

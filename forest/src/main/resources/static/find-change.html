@@ -13,18 +13,19 @@
       <!-- 헤더 -->
       <header>
          <div class="logo">
-               <a href="index.html">Boracay</a>
+            <a href="index.html">Boracay</a>
          </div>
          <nav>
-               <ul>
-                  <li><a href="course.html">강의</a></li>
-                  <li><a href="qa.html">Q&A</a></li>
-                  <li><a href="notice.html">공지사항</a></li>
-                  <li><a href="mypage.html">마이페이지</a></li>
-                  <li><a href="login.html" id="nav-login">로그인</a></li>
-               </ul>
+            <ul>
+               <li><a href="course.html">강의</a></li>
+               <li><a href="qa.html">Q&A</a></li>
+               <li><a href="notice.html">공지사항</a></li>
+               <li><a href="mypage.html">마이페이지</a></li>
+               <li><a href="login.html" id="nav-login">로그인</a></li>
+            </ul>
          </nav>
       </header>
+
       <h1 class="id-pwd-cng">ID/PWD 변경</h1>
       <div class="find-container">
          <div class="option">
@@ -35,45 +36,57 @@
             <label for="find-pwd">비밀번호 찾기</label>
          </div>
 
+         <!-- 아이디 찾기 폼 -->
          <form id="id-form" class="active">
             <label for="name">이름</label>
             <input type="text" id="name" placeholder="이름 입력">
-
+            
             <label for="phone">전화번호</label>
             <input type="text" id="phone" placeholder="전화번호 입력">
+        
+            <!-- 인증번호 요청 및 입력 -->
+            <button type="button" onclick="sendIDVerification()">인증번호 받기</button>
+            <label for="id-verification-code">인증번호</label>
+            <input type="text" id="id-verification-code" placeholder="인증번호 입력">
+        
+            <!-- 인증 후 아이디 찾기 -->
+            <button type="button" onclick="verifyIDCode()">인증 확인 후 아이디 찾기</button>
+            <p id="id-result" class="result-text"></p>
+        </form>
 
-            <label for="email">이메일</label>
-            <input type="email" id="email" placeholder="이메일 입력">
-
-            <button type="button" onclick="findID()">아이디 찾기</button>
-         </form>
-
+         <!-- 비밀번호 찾기 폼 -->
          <form id="pwd-form">
             <label for="userid">아이디</label>
             <input type="text" id="userid" placeholder="아이디 입력">
-
+        
             <label for="phone-pwd">전화번호</label>
             <input type="text" id="phone-pwd" placeholder="전화번호 입력">
-
+        
             <button type="button" onclick="sendVerification()">인증번호 받기</button>
-
+        
+            <label for="verification-code">인증번호</label>
+            <input type="text" id="verification-code" placeholder="인증번호 입력">
+            <button type="button" onclick="verifyCode()">인증 확인</button>  <!-- 인증번호 확인 버튼 추가 -->
+        
             <label for="new-password">새 비밀번호</label>
             <input type="password" id="new-password" placeholder="새 비밀번호 입력">
-
+        
             <label for="confirm-password">새 비밀번호 확인</label>
             <input type="password" id="confirm-password" placeholder="새 비밀번호 확인">
-
+        
             <button type="button" onclick="resetPassword()">비밀번호 변경</button>
-         </form>
+            <p id="pwd-result"></p>
+        </form>
       </div>
    </div>
+
    <button id="topBtn" onclick="scrollToTop()">⮝</button>
+
    <footer>
       <p>&copy; 2025 Boracay. All Rights Reserved.</p>
    </footer>
+
    <script src="/js/find-change.js"></script>
    <script src="/js/top_button.js"></script>
-   <script src="/js/login.js"></script>
-   <script src="/js/logout.js"></script>
 </body>
 </html>

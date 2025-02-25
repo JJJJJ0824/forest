@@ -57,6 +57,9 @@ public class Traveler {
     @OneToMany(mappedBy = "traveler")
     private List<Cart> cartItems;
 
+    @ManyToMany(mappedBy = "traveler")
+    private List<Course> courses;
+
     public TravelerDTO toDTO() {
         return new TravelerDTO(this.travelerName, authority.getAuthorityName(), this.contact, this.email, null, this.realName);
     }

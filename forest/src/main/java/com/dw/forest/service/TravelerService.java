@@ -60,7 +60,7 @@ public class TravelerService {
         Traveler newTraveler = new Traveler(responseDTO.getTravelerName(), authorityRepository.findById("USER")
                 .orElseThrow(() ->new UnauthorizedTravelerException("올바른 역할이 아닙니다.")), responseDTO.getEmail(),
                 responseDTO.getContact(), passwordEncoder.encode(responseDTO.getPassword()), responseDTO.getRealName(),
-                LocalDate.now(), null, null, null, null, null, null);
+                LocalDate.now(), null, null, null, null, null, null, null);
 
         travelerRepository.save(newTraveler);
 
