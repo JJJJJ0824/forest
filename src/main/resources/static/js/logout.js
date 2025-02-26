@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
           xhr.send(JSON.stringify(loginData)); 
       });
   } else {
-      console.error("loginBtn 요소를 찾을 수 없습니다. login.html을 확인하세요.");
+      console.log("loginBtn 요소를 찾을 수 없습니다. login.html을 확인하세요.");
   }
 });
 

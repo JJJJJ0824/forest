@@ -1,5 +1,3 @@
-// q1.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const questionId = urlParams.get('id');  
@@ -10,15 +8,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", `/api/q_a/${questionId}`, true); 
+    xhr.open("GET", `/api/q_a/${questionId}`, true);
 
     xhr.onload = function() {
         if (xhr.status === 200) {
-            const question = JSON.parse(xhr.responseText); 
+            const question = JSON.parse(xhr.responseText);
 
-            
             document.getElementById("question-title").textContent = question.title;
             document.getElementById("question-content").textContent = question.content;
+
+            // document.title = document.getElementById("question-title").textContent;
         } else {
             console.error("질문 세부 정보를 불러오는데 실패했습니다.");
         }

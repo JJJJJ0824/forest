@@ -1,8 +1,12 @@
-// qa.js
 document.addEventListener('DOMContentLoaded', function() {
     const qaList = document.getElementById("qaList");
 
-    qaList.innerHTML = "";
+    // qaList.innerHTML = "";
+
+    if (!qaList) {
+        console.error("qaList 요소를 찾을 수 없습니다.");
+        return;
+    }
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/q_a/all", true); 
