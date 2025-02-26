@@ -1,13 +1,12 @@
+// qa.js
 document.addEventListener('DOMContentLoaded', function() {
     const qaList = document.getElementById("qaList");
 
-    // qaList.innerHTML = "";
-
     if (!qaList) {
         console.error("qaList 요소를 찾을 수 없습니다.");
-        return;
+        return; 
     }
-
+  
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/q_a/all", true); 
 
@@ -24,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="date">${new Date(question.createdAt).toLocaleDateString()}</span>
                 `;
                 
+                // 생성된 li 요소를 qaList에 추가
                 qaList.appendChild(listItem);
             });
         } else {
@@ -31,9 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // 네트워크 오류 처리
     xhr.onerror = function() {
         console.error("네트워크 오류가 발생했습니다.");
     };
 
+    // 요청을 보냄
     xhr.send();
 });
