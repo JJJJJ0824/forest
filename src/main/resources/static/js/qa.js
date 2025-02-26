@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             let questions = JSON.parse(xhr.responseText);
-
+            console.log(questions);
+            questions.forEach((question) => {
+                console.log(question); // 각 질문 객체를 출력하여 title 필드가 있는지 확인
+            });
             questions.forEach((question) => {
                 const listItem = document.createElement("li");
                 listItem.classList.add("qna-item");

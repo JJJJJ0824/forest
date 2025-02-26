@@ -6,10 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="cdef9fe8-ef95-4af0-bdd6-6bb95be5dcab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/A.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/A.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Q.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Q.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/repository/ARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/repository/ARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/QAService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/QAService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/a.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/a.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/a.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/a.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/q1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/q1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/qa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/qa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/q1.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/q1.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

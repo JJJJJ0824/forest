@@ -36,17 +36,12 @@ public class Q {
     @OneToOne(mappedBy = "q")
     private A a;
 
-    public QaReadDTO toRead() {
-        return new QaReadDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt);
-    }
-
     public QaDTO toDTO() {
-        if (a==null) {
-            return new QaDTO(null, null, null, null, null,
-                    new QaReadDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt));
+        if (this.a==null) {
+            return new QaDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt,
+                    null);
         }
-
-        return new QaDTO(a.getId(), a.getTraveler().getTravelerName(), a.getTitle(), a.getContent(), a.getCreatedAt(),
-                new QaReadDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt));
+        return new QaDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt,
+                new QaReadDTO(this.a.getId(), this.a.getTraveler().getTravelerName(), this.a.getTitle(), this.a.getContent(), this.a.getCreatedAt()));
     }
 }

@@ -76,8 +76,13 @@ public class QAService {
 
     public QaDTO getQA(Long q_id) {
         Q q = qRepository.findById(q_id).orElseThrow(()->new ResourceNotFoundException("해당 Q&A를 찾을 수 없습니다."));
+        A a = aRepository.findByQ_Id(q_id);
 
-        return q.toDTO();
+        if (a != null) {
+            return new QaDTO(q.getId(), q.getTraveler().getTravelerName(), q.getTitle(), q.getContent(), q.getCreatedAt(), a.toRead());
+        } else {
+            return q.toDTO();
+        }
     }
 
     public String deleteById(HttpServletRequest request, Long qa_id) {

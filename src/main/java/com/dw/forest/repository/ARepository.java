@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ARepository extends JpaRepository<A, Long> {
+    A findByQ_Id(Long q_id);
     @Query("SELECT a FROM A a WHERE a.title LIKE :title")
     List<A> findByTitleLike(String title);
     @Query("SELECT a FROM A a WHERE a.content LIKE :content")

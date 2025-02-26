@@ -1,6 +1,7 @@
 package com.dw.forest.model;
 
 import com.dw.forest.dto.QaDTO;
+import com.dw.forest.dto.QaReadDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,7 +37,12 @@ public class A {
     @JoinColumn(name = "q_id")
     private Q q;
 
+    public QaReadDTO toRead() {
+        return new QaReadDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt);
+    }
+
     public QaDTO toDTO() {
-        return new QaDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt, this.q.toRead());
+        return new QaDTO(this.q.getId(), this.q.getTraveler().getTravelerName(), this.q.getTitle(), this.q.getContent(), this.q.getCreatedAt(),
+                new QaReadDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt));
     }
 }

@@ -1,53 +1,53 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. URL에서 questionId를 받아옴
     const urlParams = new URLSearchParams(window.location.search);
-    const questionId = urlParams.get('id');  // URL에서 'id' 파라미터를 추출
+    const questionId = urlParams.get('id'); // URL에서 questionId 가져오기
 
-    // 2. 'id'가 없으면 경고 메시지 출력
-    if (!questionId) {
-        alert("잘못된 접근입니다. 질문 ID가 없습니다.");
+    if (!questionId || questionId === "null") {
+        alert("잘못된 접근입니다.");
         return;
     }
 
-    // 3. 서버에서 해당 질문 정보를 가져오는 AJAX 요청
+    // 1. 질문 정보와 답변 정보 가져오기
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", `/api/q_a/${questionId}`, true);  // 질문 ID를 포함한 GET 요청
+    xhr.open("GET", `/api/q_a/${questionId}`, true); // 해당 질문과 답변을 포함한 QaDTO 가져오기
     xhr.onload = function() {
         if (xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText); // 서버 응답 데이터 파싱
-            document.getElementById('question-title').textContent = data.title;  // 질문 제목 표시
-            document.getElementById('question-content').textContent = data.content;  // 질문 내용 표시
+            const qaDTO = JSON.parse(xhr.responseText); // QaDTO 파싱
+            console.log(qaDTO);
 
-            // 4. 답변 리스트 가져오기
-            const answerList = data.answers;  // 응답 데이터
-            const answerListContainer = document.getElementById('answer-list');
+            // 2. 질문 제목과 내용을 화면에 표시
+            document.getElementById("question-title").textContent = qaDTO.title;
+            document.getElementById("question-content").textContent = qaDTO.content;
 
-            // 5. 답변이 없을 경우 처리
-            if (answerList.length === 0) {
-                const noAnswerItem = document.createElement('li');
-                noAnswerItem.textContent = '답변이 아직 없습니다.';  // 답변이 없을 경우 메시지 표시
-                answerListContainer.appendChild(noAnswerItem);
+            // 3. 답변 표시
+            const answerElement = document.getElementById("answer");
+            
+        
+            
+            const answer = qaDTO.qaReadDTO ? qaDTO.qaReadDTO.content : null; 
+
+            const li = document.createElement('li');
+            if (answer) {
+                li.textContent = answer;  // 답변 내용 추가
             } else {
-                // 6. 답변이 있을 경우 리스트에 추가
-                answerList.forEach(answer => {
-                    const answerItem = document.createElement('li');
-                    answerItem.textContent = `${answer.author}: ${answer.content}`;  // 답변자와 내용 표시
-                    answerListContainer.appendChild(answerItem);
-                });
+                li.textContent = "답변이 없습니다.";  // 답변이 없을 경우
             }
+            answerElement.appendChild(li);  // li 요소를 답변 목록에 추가
         } else {
-            alert("질문 데이터를 가져오는 데 실패했습니다.");
+            console.error("질문과 답변 정보를 불러오는데 실패했습니다. 상태 코드:", xhr.status);
         }
     };
     xhr.onerror = function() {
-        alert("네트워크 오류가 발생했습니다.");
+        console.error("네트워크 오류가 발생했습니다.");
     };
-
     xhr.send();
 
-    // 7. '답변하기' 버튼의 링크 수정
-    const answerButton = document.querySelector('.button-container a');  // 답변하기 버튼
-    if (answerButton && questionId) {
-        answerButton.href = `a.html?id=${questionId}`;  // 버튼에 id 값 포함시켜서 링크 설정
+    const replyButton = document.querySelector(".button_reply");
+    if (replyButton) {
+        replyButton.addEventListener("click", function () {
+            window.location.href = "q.html?id=" + questionId; 
+        });
+    } else {
+        console.error("답변하기 버튼을 찾을 수 없습니다.");
     }
 });
