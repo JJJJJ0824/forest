@@ -41,6 +41,11 @@ public class Q {
     }
 
     public QaDTO toDTO() {
+
+        if (a==null) {
+            return new QaDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt, null);
+        }
+
         return new QaDTO(a.getId(), a.getTraveler().getTravelerName(), a.getTitle(), a.getContent(), a.getCreatedAt(),
                 new QaReadDTO(this.id, this.traveler.getTravelerName(), this.title, this.content, this.createdAt));
     }
