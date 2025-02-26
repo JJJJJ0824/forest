@@ -4,16 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b863938-3c07-42a4-acb7-3235bc6ac4b3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="cdef9fe8-ef95-4af0-bdd6-6bb95be5dcab" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Exception" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -22,30 +30,69 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="2sBwdLGCOLfo23BjrQGToFNxetV" />
+  <component name="ProjectId" id="2rKrUnTn0vf4fsdEPIQihj4euAl" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ForestApplication.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/dw-014/Documents/GitHub/forest/forest",
-    "settings.editor.selected.configurable": "vcs.Git"
+    "last_opened_file_path": "C:/Users/dw-014/Documents/GitHub/forest/forest/src/main/resources/static",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\forest\src\main\resources\static" />
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\forest\src\main\resources\static\css" />
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\forest\src\main\resources\static\js" />
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\forest\src\main\resources\static\img" />
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\src\main\java\com\dw\forest\service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\forest\src\main\resources\static\css" />
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\src\main\java\com\dw\forest\controller" />
+      <recent name="C:\Users\dw-014\Documents\GitHub\forest\src\main\java\com\dw\forest\dto" />
+      <recent name="C:\Users\dw-014\Documents\GitHub\spring\forest\src\main\java\com\dw\forest\model" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ForestApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dw.forest.ForestApplication" />
+      <module name="forest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dw.forest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ForestApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration>C:\Users\dw-014\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3b863938-3c07-42a4-acb7-3235bc6ac4b3" name="Changes" comment="" />
+      <changelist id="cdef9fe8-ef95-4af0-bdd6-6bb95be5dcab" name="Changes" comment="" />
       <created>1731383117845</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
