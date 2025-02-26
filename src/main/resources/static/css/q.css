@@ -7,6 +7,15 @@
   border-radius: 8px;
 }
 
+.answer-section {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
 .board-title h2 {
   font-size: 24px;
   font-weight: bold;
