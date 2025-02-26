@@ -10,6 +10,30 @@ document.addEventListener('DOMContentLoaded', function() {
     let userResponses = {}; 
     let currentQuestionIndex = 0; 
 
+    // 서버에서 데이터를 받아오는 함수 (페이지 로딩 시)
+    const loadUserDataFromServer = () => {
+        // 서버에서 사용자 데이터를 받아옵니다.
+        fetch('/get-user-responses', {  // 서버 URL을 실제로 변경해주세요
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 서버에서 받은 데이터를 처리
+            if (data.userResponses) {
+                userResponses = data.userResponses;
+                currentQuestionIndex = data.currentQuestionIndex || 0;
+                updateQuestionDisplay();
+            }
+        })
+        .catch((error) => {
+            console.error('Error loading user data:', error);
+        });
+    };
+
+    // 질문을 화면에 표시하고, 진행 상황을 업데이트하는 함수
     const updateQuestionDisplay = () => {
         questions.forEach((question, index) => {
             if (index === currentQuestionIndex) {
@@ -18,33 +42,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 question.classList.remove("active");
             }
         });
-        const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
-        console.log("currentQuestionIndex:", currentQuestionIndex);
-        console.log("questions.length:", questions.length);
-        console.log("calculated progress:", progress);
+        // 진행 상태 업데이트
+        const progress = ((currentQuestionIndex) / questions.length) * 100;
+        progressBar.value = isNaN(progress) || progress < 0 || progress > 100 ? 0 : progress;
 
-        if (isNaN(progress) || progress < 0 || progress > 100) {
-            console.error("Invalid progress value: ", progress);
-            progressBar.value = 0;  
-        } else {
-            progressBar.value = progress;
-        }
-
+        // 마지막 질문에 도달한 경우
         if (currentQuestionIndex === questions.length - 1) {
-            resultSection.style.display = "block"; 
-            submitButton.style.display = "block"; 
+            resultSection.style.display = "block";  // 결과 화면 보이기
+            submitButton.style.display = "block";   // 제출 버튼 보이기
+            questions.forEach((question) => question.style.display = "none");  // 모든 질문 숨기기
         }
     };
-
-    const savedData = JSON.parse(localStorage.getItem("userResponses"));
-    const savedProgress = localStorage.getItem("currentQuestionIndex");
-
-    if (savedData) {
-        userResponses = savedData;
-        currentQuestionIndex = parseInt(savedProgress, 10);
-        updateQuestionDisplay();  
-    }
 
     resultSection.style.display = "none";
     submitButton.style.display = "none";
@@ -56,8 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedOption = this.value;
 
             userResponses[questionName] = selectedOption;
-            localStorage.setItem("userResponses", JSON.stringify(userResponses));
-            localStorage.setItem("currentQuestionIndex", currentQuestionIndex);
 
             handleNextQuestion();
             checkIfChecklistCompleted();
@@ -77,8 +84,37 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentQuestionIndex === questions.length - 1) {
             const userType = calculateUserType(userResponses);
             resultText.textContent = `당신의 유형은: ${userType}입니다.`; 
+
+            // 서버로 AJAX 요청 보내기
+            sendChecklistDataToServer(userResponses);
         }
     });
+
+    function sendChecklistDataToServer(userResponses) {
+        const url = '/submit-user-responses';  // 서버 URL로 변경하세요
+        const data = {
+            userResponses: userResponses,
+            userType: calculateUserType(userResponses)  // 유저 유형도 전송할 수 있습니다
+        };
+
+        // AJAX 요청 생성 (fetch 사용)
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            resultText.textContent = '체크리스트가 서버에 저장되었습니다.';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            resultText.textContent = '서버에 저장하는데 문제가 발생했습니다.';
+        });
+    }
 
     function calculateUserType(responses) {
         let familyPoints = 0;
@@ -108,28 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return "자유 유형"; 
     }
 
-    checklistViewButton.addEventListener("click", function() {
-        if (Object.keys(userResponses).length > 0) {
-            let checklistContent = '<h3>저장된 체크리스트</h3>';
-            for (let question in userResponses) {
-                const questionText = getQuestionText(question);
-                checklistContent += `<p><strong>${questionText}</strong>: ${userResponses[question]}</p>`;
-            }
-            resultText.innerHTML = checklistContent;
-        } else {
-            resultText.textContent = "저장된 체크리스트가 없습니다.";
-        }
-    });
-
-    checklistRewriteButton.addEventListener("click", function() {
-        localStorage.removeItem("userResponses");
-        localStorage.removeItem("currentQuestionIndex");
-        userResponses = {};
-        currentQuestionIndex = 0;
-        updateQuestionDisplay();
-        resultText.textContent = "체크리스트가 초기화되었습니다. 다시 작성해주세요.";
-    });
-
     function checkIfChecklistCompleted() {
         const allAnswered = Object.keys(userResponses).length === questions.length; 
         const isLastQuestion = currentQuestionIndex === questions.length - 1; 
@@ -145,30 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function getQuestionText(questionName) {
-        switch (questionName) {
-            case 'q1':
-                return "보라카이에 가는 주된 목적은 무엇인가요?";
-            case 'q2':
-                return "보라카이에서 선호하는 숙소 유형은 무엇인가요?";
-            case 'q3':
-                return "보라카이 여행을 계획하면서 어떤 스타일을 선호하시나요?";
-            case 'q4':
-                return "여행에 누구와 함께 가나요?";
-            case 'q5':
-                return "여행 일정은 얼마나 유동적이어야 하나요?";
-            case 'q6':
-                return "보라카이에서 해양 스포츠 활동을 얼마나 선호하시나요?";
-            case 'q7':
-                return "보라카이에서 어떤 스타일의 식사를 선호하시나요?";
-            case 'q8':
-                return "여행 중 쇼핑을 얼마나 중요하게 생각하시나요?";
-            case 'q9':
-                return "자연을 가까이에서 경험하는 것이 중요하신가요?";
-            case 'q10':
-                return "보라카이 여행의 예산은 어느 정도인가요?";
-            default:
-                return "알 수 없는 질문";
-        }
-    }
+    // 페이지 로딩 시 서버에서 데이터를 불러옴
+    loadUserDataFromServer();
 });

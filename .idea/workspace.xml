@@ -5,7 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdef9fe8-ef95-4af0-bdd6-6bb95be5dcab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/q1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/q1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/QAController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/QAController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/QAService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/QAService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/a.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/a.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_familly_food.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_familly_lodging.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_family_aboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_family_aboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_family_activity.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_family_activity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_family_attraction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_family_attraction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_family_food.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_family_food.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_family_lodging.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_family_lodging.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_free_aboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_free_aboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_free_activity.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_free_activity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_free_attraction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_free_attraction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_free_food.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_free_food.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_free_travel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_package_aboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_package_aboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_package_activity.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_package_activity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_package_attraction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_package_attraction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_package_food.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_package_food.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_package_lodging.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_package_lodging.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/mypage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/mypage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/mypage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/mypage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

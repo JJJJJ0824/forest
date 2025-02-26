@@ -22,6 +22,7 @@ buttons.forEach(button => {
         }
     });
 });
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ mypage.js 로드됨!");
 
@@ -33,27 +34,38 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    let userData = JSON.parse(localStorage.getItem(loggedInUser));
-
-    if (!userData) {
-        alert("로그인 정보가 올바르지 않습니다. 다시 로그인해주세요.");
-        localStorage.removeItem("loggedInUser");
-        window.location.href = "login.html";
-        return;
-    }
-
-    document.getElementById("userName").textContent = userData.realName || "이름 없음";
-    document.getElementById("userPhone").textContent = userData.contact || "연락처 없음";
-    document.getElementById("userEmail").textContent = userData.email || "이메일 없음";
-    
-
-    
-
-    let logoutButton = document.getElementById("logoutButton");
-    if (logoutButton) {
-        logoutButton.addEventListener("click", logout);
-    }
+    // Ajax 요청을 통해 사용자 데이터 가져오기
+    fetchUserData(loggedInUser);
 });
+
+// Ajax 요청을 통해 사용자 정보를 서버에서 가져오는 함수
+function fetchUserData(userId) {
+    // 예시로 GET 방식으로 서버에서 데이터를 가져오는 방식입니다.
+    fetch(`/api/traveler/${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
+            }
+            return response.json();
+        })
+        .then(userData => {
+            // 성공적으로 데이터를 받으면 사용자 정보를 페이지에 표시
+            document.getElementById("userName").textContent = userData.realName || "이름 없음";
+            document.getElementById("userPhone").textContent = userData.contact || "연락처 없음";
+            document.getElementById("userEmail").textContent = userData.email || "이메일 없음";
+        })
+        .catch(error => {
+            console.error(error);
+            alert("사용자 정보를 불러오는 중 오류가 발생했습니다.");
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "login.html";
+        });
+}
+
+let logoutButton = document.getElementById("logoutButton");
+if (logoutButton) {
+    logoutButton.addEventListener("click", logout);
+}
 
 function logout() {
     console.log("로그아웃 실행됨!");

@@ -59,12 +59,12 @@ public class QAService {
         return q.toDTO();
     }
 
-    public QaDTO createAnswer(HttpServletRequest request, QaDTO qaDTO) {
+    public QaDTO createAnswer(HttpServletRequest request, QaDTO qaDTO, Long qa_id) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {throw new InvalidRequestException("세션이 없습니다.");}
 
         String travelerName = (String) session.getAttribute("travelerName");
-        Q q = qRepository.findById(qaDTO.getQaReadDTO().getId()).orElseThrow(()->new ResourceNotFoundException("작성된 질문에만 답할 수 있습니다."));
+        Q q = qRepository.findById(qa_id).orElseThrow(()->new ResourceNotFoundException("작성된 질문에만 답할 수 있습니다."));
 
         A a = new A(null, travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."))
                 , qaDTO.getTitle(), qaDTO.getContent(), LocalDate.now(), q);

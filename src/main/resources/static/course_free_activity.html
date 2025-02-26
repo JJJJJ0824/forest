@@ -28,32 +28,54 @@
             </nav>
         </header>
         <div class="container">
-            <h1>자유여행 액티비티 강의</h1>
-            
-            <div class="lecture-section box">
-                <h2>강의 소개</h2>
-                <div class="lecture-box">                
-                <h1>자유여행으로 보라카이를 방문할 때 즐길 수 있는 다양한 액티비티를 소개합니다.</h1>
-                <img src="/img/액티비티.jpg" alt="자유여행 액티비티 강의 이미지" class="lecture-image">
-            </div>
-            
-            <div class="lecture-content box">
-                <h2>강의 내용</h2>
-                <div class="lecture-box">
-                    <ul><h1>예산과 취향에 따라 선택할 수 있는 활동들을 안내합니다.</h1></ul>
-                    <h3>1. 인기 있는 액티비티</h3>
-                        <p>자유여행자들에게 추천하는 인기 액티비티로 스노클링, 스쿠버 다이빙, 패러세일링, 선셋 세일링 등을 소개합니다.</p>
-                        
-                        <h3>2. 가격대별 액티비티 선택</h3>
-                        <p>예산에 맞게 저렴한 액티비티(해변가 카약, 현지 스노클링)부터 고급 체험(스카이다이빙, 요트 투어)까지 다양한 선택지를 안내합니다.</p>
-                        
-                        <h3>3. 예약 및 할인 팁</h3>
-                        <p>온라인 사전 예약, 현지 여행사 할인, 묶음 패키지 이용 등의 팁을 제공합니다.</p>
-                        
-                        <h3>4. 안전 수칙 및 유의사항</h3>
-                        <p>각 액티비티 이용 시 주의해야 할 사항, 장비 대여 방법, 날씨에 따른 준비물 등을 설명합니다.</p>
-                    </div>
+            <h1>자유여행 강의 - 액티비티</h1>
+            <div class="section">
+                <div class="image-container">
+                    <img src="/img/액티비티.jpg" alt="자유여행 액티비티 강의 이미지">
                 </div>
+                <body>
+                    <div class="tip-box">
+                        <h1>자유여행으로 보라카이를 방문할 때 즐길 수 있는 다양한 액티비티</h1>
+                        
+                        <div class="tip-box">
+                            <h3>인기 있는 액티비티</h3>
+                            <ul>
+                                <li>자유여행자들에게 추천하는 인기 액티비티로 스노클링, 스쿠버 다이빙, 패러세일링, 선셋 세일링 등을 소개합니다.</li>
+                            </ul>
+                        </div>
+    
+                        <div class="tip-box">
+                            <h3>가격대별 액티비티 선택</h3>
+                            <ul>
+                                <li>예산에 맞게 저렴한 액티비티(해변가 카약, 현지 스노클링)부터 고급 체험(스카이다이빙, 요트 투어)까지 다양한 선택지를 안내합니다.</li>
+                            </ul>
+                        </div>
+    
+                        <div class="tip-box">
+                            <h3>예약 및 할인 팁</h3>
+                            <ul>
+                                <li>온라인 사전 예약, 현지 여행사 할인, 묶음 패키지 이용 등의 팁을 제공합니다.</li>
+                            </ul>
+                        </div>
+                        <div class="tip-box">
+                            <h3>안전 수칙 및 유의사항</h3>
+                            <ul>
+                                <li>각 액티비티 이용 시 주의해야 할 사항, 장비 대여 방법, 날씨에 따른 준비물 등을 설명합니다.</li>
+                            </ul>
+                        </div>
+                    </div>   
+                </div>
+
+                <div class="buttons">
+                    <a href="course.html"><button>강의 목록</button></a>
+                    <a href="index.html"><button>홈 가기</button></a>
+                    <a href="mypage.html">
+                        <button onclick="alert(document.querySelector('.container h1').innerText + '가 장바구니에 담겼습니다.');">
+                            장바구니에 담기
+                        </button>
+                    </a>
+                    <a href="mypage.html"><button onclick="alert('수강 신청이 접수되었습니다.');">수강 신청</button></a>
+                </div> 
             </div>
         </div>
     </div>

@@ -67,6 +67,16 @@
                     </div>
                 </div>  
             </div>
+            <div class="buttons">
+                <a href="course.html"><button>강의 목록</button></a>
+                <a href="index.html"><button>홈 가기</button></a>
+                <a href="mypage.html">
+                    <button onclick="alert(document.querySelector('.container h1').innerText + '가 장바구니에 담겼습니다.');">
+                        장바구니에 담기
+                    </button>
+                </a>
+                <a href="mypage.html"><button onclick="alert('수강 신청이 접수되었습니다.')">수강 신청</button></a>
+            </div>
         </div>
     </div>
     <button id="topBtn" onclick="scrollToTop()">⮝</button>

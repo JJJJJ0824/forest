@@ -27,9 +27,9 @@ public class QAController {
         return new ResponseEntity<>(qaService.createQuestion(request, qaDTO), HttpStatus.CREATED);
     }
 
-    @PostMapping("/reply")
-    public ResponseEntity<QaDTO> createAnswer(HttpServletRequest request, @RequestBody QaDTO qaDTO) {
-        return new ResponseEntity<>(qaService.createAnswer(request, qaDTO), HttpStatus.CREATED);
+    @PostMapping("/{qa_id}/reply")
+    public ResponseEntity<QaDTO> createAnswer(HttpServletRequest request, @RequestBody QaDTO qaDTO, @PathVariable Long qa_id) {
+        return new ResponseEntity<>(qaService.createAnswer(request, qaDTO, qa_id), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{qa_id}")
