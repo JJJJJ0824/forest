@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const questionId = urlParams.get('id');  
+    const questionId = urlParams.get('id');  // URL에서 questionId 파라미터를 가져옵니다.
 
     if (!questionId) {
         alert("잘못된 접근입니다.");
@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             document.getElementById("question-title").textContent = question.title;
             document.getElementById("question-content").textContent = question.content;
-
-            // document.title = document.getElementById("question-title").textContent;
         } else {
             console.error("질문 세부 정보를 불러오는데 실패했습니다.");
         }
