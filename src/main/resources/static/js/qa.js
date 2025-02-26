@@ -1,5 +1,5 @@
 // qa.js
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function() {
     const qaList = document.getElementById("qaList");
 
     qaList.innerHTML = "";
@@ -32,4 +32,4 @@ window.onload = function() {
     };
 
     xhr.send();
-};
+});

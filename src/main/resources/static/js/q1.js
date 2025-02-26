@@ -1,6 +1,6 @@
 // q1.js
 
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const questionId = urlParams.get('id');  
 
@@ -29,4 +29,4 @@ window.onload = function() {
     };
 
     xhr.send();
-};
+});
