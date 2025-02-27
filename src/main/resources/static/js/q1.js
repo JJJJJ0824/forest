@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const replyButton = document.querySelector(".button_reply");
     if (replyButton) {
         replyButton.addEventListener("click", function () {
-            window.location.href = "q.html?id=" + questionId; // 질문 페이지로 이동하여 답변 작성
+            window.location.href = "a.html?id=" + questionId; // 질문 페이지로 이동하여 답변 작성
         });
     } else {
         console.error("답변하기 버튼을 찾을 수 없습니다.");

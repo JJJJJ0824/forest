@@ -1006,3 +1006,45 @@ footer {
     padding: 15px;
     font-size: 16px;
 }
+
+/* 공통 입력 폼 스타일 */
+.reply-section input,
+.reply-section textarea {
+    width: 100%;  /* 전체 너비를 사용 */
+    padding: 12px;  /* 내부 여백 */
+    margin: 12px 0;  /* 위아래 여백 */
+    border: 2px solid #ddd;  /* 기본 테두리 색 */
+    border-radius: 8px;  /* 테두리 둥글게 */
+    font-size: 16px;  /* 글씨 크기 */
+    transition: all 0.3s ease; /* 부드러운 테두리 색 변화와 배경 변화 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* 부드러운 그림자 */
+}
+
+/* 답변 제목을 입력하는 input 스타일 */
+.reply-section input {
+    height: 45px;  /* 높이 조정 */
+}
+
+/* 답변 내용을 입력하는 textarea 스타일 */
+.reply-section textarea {
+    height: 150px;  /* 더 많은 공간 제공 */
+    resize: vertical;  /* 세로로 크기 조정 가능 */
+}
+
+/* 제목인 h3 스타일 */
+.reply-section h3 {
+    font-size: 22px;  /* 글씨 크기 */
+    color: #333;  /* 글씨 색 */
+    margin-bottom: 12px;  /* 아래 여백 */
+    font-weight: bold;  /* 글씨 두껍게 */
+}
+
+/* 포커스 스타일 */
+.reply-section input:focus,
+.reply-section textarea:focus {
+    border-color: #4CAF50;  /* 포커스 시 초록색 테두리 */
+    background-color: #f0f8ff;  /* 배경색을 약간 밝은 파랑으로 변경 */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);  /* 파란색 그림자 추가 */
+    outline: none;  /* 기본 아웃라인 제거 */
+}
+
