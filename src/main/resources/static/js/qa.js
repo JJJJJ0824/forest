@@ -1,4 +1,3 @@
-// qa.js
 document.addEventListener('DOMContentLoaded', function() {
     const qaList = document.getElementById("qaList");
 
@@ -6,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("qaList 요소를 찾을 수 없습니다.");
         return; 
     }
-  
+
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/q_a/all", true); 
 
@@ -14,20 +13,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (xhr.status === 200) {
             let questions = JSON.parse(xhr.responseText);
             console.log(questions);
-            questions.forEach((question) => {
-                console.log(question); // 각 질문 객체를 출력하여 title 필드가 있는지 확인
-            });
+            
             questions.forEach((question) => {
                 const listItem = document.createElement("li");
                 listItem.classList.add("qna-item");
-                
+
                 listItem.innerHTML = `
-                    <a href="q1.html?id=${question.id}">${question.title}</a>
+                    <p class="title">${question.title}</p>
                     <span class="date">${new Date(question.createdAt).toLocaleDateString()}</span>
                 `;
                 
-                // 생성된 li 요소를 qaList에 추가
-                qaList.appendChild(listItem);
+                const link = document.createElement("a");
+                link.href = `q1.html?id=${question.id}`;
+                
+                link.appendChild(listItem);
+
+                qaList.appendChild(link);
             });
         } else if(xhr.status === 400) {
             alert("Q&A 게시판은 로그인 이후에 사용 가능합니다.");
