@@ -1,7 +1,6 @@
 package com.dw.forest.service;
 
 import com.dw.forest.dto.QaDTO;
-import com.dw.forest.dto.QaReadDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.model.A;
@@ -30,12 +29,29 @@ public class QAService {
     @Autowired
     TravelerRepository travelerRepository;
 
-    public List<QaDTO> getAllQas() {
+    public List<QaDTO> getAllQs(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+
         List<QaDTO> q = qRepository.findAll().stream().map(Q::toDTO).toList();
         if (q.isEmpty()) {
-            throw new ResourceNotFoundException("Q&A가 없습니다.");
+            throw new ResourceNotFoundException("등록된 질문이 없습니다.");
         }
         return q;
+    }
+
+    public List<QaDTO> getAllAs(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        List<QaDTO> a = aRepository.findAll().stream().map(A::toDTO).toList();
+        if (a.isEmpty()) {
+            throw new ResourceNotFoundException("Q&A가 없습니다.");
+        }
+        return a;
     }
 
     public QaDTO createQuestion(HttpServletRequest request, QaDTO qaDTO) {
@@ -71,10 +87,10 @@ public class QAService {
 
         aRepository.save(a);
 
-        return a.toDTO();
+        return new QaDTO(q.getId(), q.getTraveler().getTravelerName() ,q.getTitle(), q.getContent(), q.getCreatedAt(), a.toRead());
     }
 
-    public QaDTO getQA(Long q_id) {
+    public QaDTO getQA(HttpServletRequest request, Long q_id) {
         Q q = qRepository.findById(q_id).orElseThrow(()->new ResourceNotFoundException("해당 Q&A를 찾을 수 없습니다."));
         A a = aRepository.findByQ_Id(q_id);
 
@@ -143,7 +159,11 @@ public class QAService {
         return q.toDTO();
     }
 
-    public List<QaDTO> searchByQuestionTitle(String title) {
+    public List<QaDTO> searchByQuestionTitle(HttpServletRequest request, String title) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
         if (title == null || title.isEmpty()) {
             throw new ResourceNotFoundException("검색어는 빈 값일 수 없습니다.");
         }
@@ -164,7 +184,12 @@ public class QAService {
         }
     }
 
-    public List<QaDTO> searchByAnswerTitle(String title) {
+    public List<QaDTO> searchByAnswerTitle(HttpServletRequest request, String title) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+
         if (title == null || title.isEmpty()) {
             throw new ResourceNotFoundException("검색어는 빈 값일 수 없습니다.");
         }
@@ -184,7 +209,11 @@ public class QAService {
         }
     }
 
-    public List<QaDTO> searchByQuestionContent(String content) {
+    public List<QaDTO> searchByQuestionContent(HttpServletRequest request, String content) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
         if (content == null || content.isEmpty()) {
             throw new ResourceNotFoundException("해당 내용을 찾을 수 없습니다.");
         }
@@ -204,7 +233,11 @@ public class QAService {
         }
     }
 
-    public List<QaDTO> searchByAnswerContent(String content) {
+    public List<QaDTO> searchByAnswerContent(HttpServletRequest request, String content) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
         if (content == null || content.isEmpty()) {
             throw new ResourceNotFoundException("해당 내용을 찾을 수 없습니다.");
         }
@@ -224,8 +257,12 @@ public class QAService {
         }
     }
 
-    public List<QaDTO> searchByQuestionTitleAndContent(String title, String content) {
+    public List<QaDTO> searchByQuestionTitleAndContent(HttpServletRequest request, String title, String content) {
         try {
+            HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+            if (session == null) {
+                throw new InvalidRequestException("세션이 없습니다.");
+            }
             if (title.isEmpty() && content.isEmpty()) {
                 throw new ResourceNotFoundException("검색어가 모두 빈 값일 수 없습니다.");
             }
@@ -253,8 +290,13 @@ public class QAService {
         }
     }
 
-    public List<QaDTO> searchByAnswerTitleAndContent(String title, String content) {
+    public List<QaDTO> searchByAnswerTitleAndContent(HttpServletRequest request, String title, String content) {
         try {
+            HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+            if (session == null) {
+                throw new InvalidRequestException("세션이 없습니다.");
+            }
+
             if (title.isEmpty() && content.isEmpty()) {
                 throw new ResourceNotFoundException("검색어가 모두 빈 값일 수 없습니다.");
             }

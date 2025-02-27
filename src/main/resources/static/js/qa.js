@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 생성된 li 요소를 qaList에 추가
                 qaList.appendChild(listItem);
             });
+        } else if(xhr.status === 400) {
+            alert("Q&A 게시판은 로그인 이후에 사용 가능합니다.");
+            window.location.href = "login.html"
         } else {
             console.error("질문 목록을 불러오는 데 실패했습니다.");
         }

@@ -33,6 +33,15 @@
   padding-top: 15px;
 }
 
+.answer-section h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.answer-section ul p {
+  margin-bottom: 20px;
+}
+
 .answer-item {
   background: #f9f9f9;
   padding: 10px;
@@ -53,6 +62,7 @@
 }
 
 .button-container {
+  margin: 40px;
   text-align: center;
   margin-top: 20px;
 }

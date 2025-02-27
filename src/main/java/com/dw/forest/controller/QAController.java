@@ -1,7 +1,6 @@
 package com.dw.forest.controller;
 
 import com.dw.forest.dto.QaDTO;
-import com.dw.forest.dto.QaReadDTO;
 import com.dw.forest.service.QAService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,13 @@ public class QAController {
     QAService qaService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<QaDTO>> getAllQas() {
-        return new ResponseEntity<>(qaService.getAllQas(), HttpStatus.OK);
+    public ResponseEntity<List<QaDTO>> getAllQs(HttpServletRequest request) {
+        return new ResponseEntity<>(qaService.getAllQs(request), HttpStatus.OK);
+    }
+
+    @GetMapping("/a")
+    public ResponseEntity<List<QaDTO>> getAllQas(HttpServletRequest request) {
+        return new ResponseEntity<>(qaService.getAllAs(request), HttpStatus.OK);
     }
 
     @PostMapping("/ask")
@@ -43,37 +47,37 @@ public class QAController {
     }
 
     @GetMapping("/{q_id}")
-    public ResponseEntity<QaDTO> getQA(@PathVariable Long q_id) {
-        return new ResponseEntity<>(qaService.getQA(q_id), HttpStatus.OK);
+    public ResponseEntity<QaDTO> getQA(HttpServletRequest request, @PathVariable Long q_id) {
+        return new ResponseEntity<>(qaService.getQA(request, q_id), HttpStatus.OK);
     }
 
     @GetMapping("/q/title")
-    public ResponseEntity<List<QaDTO>> searchByQuestionTitle(@RequestParam String title) {
-        return new ResponseEntity<>(qaService.searchByQuestionTitle(title), HttpStatus.OK);
+    public ResponseEntity<List<QaDTO>> searchByQuestionTitle(HttpServletRequest request,@RequestParam String title) {
+        return new ResponseEntity<>(qaService.searchByQuestionTitle(request, title), HttpStatus.OK);
     }
 
     @GetMapping("/a/title")
-    public ResponseEntity<List<QaDTO>> searchByAnswerTitle(@RequestParam String content) {
-        return new ResponseEntity<>(qaService.searchByAnswerTitle(content), HttpStatus.OK);
+    public ResponseEntity<List<QaDTO>> searchByAnswerTitle(HttpServletRequest request,@RequestParam String content) {
+        return new ResponseEntity<>(qaService.searchByAnswerTitle(request, content), HttpStatus.OK);
     }
 
     @GetMapping("/q/content")
-    public ResponseEntity<List<QaDTO>> searchByQuestionContent(@RequestParam String content) {
-        return new ResponseEntity<>(qaService.searchByQuestionContent(content), HttpStatus.OK);
+    public ResponseEntity<List<QaDTO>> searchByQuestionContent(HttpServletRequest request,@RequestParam String content) {
+        return new ResponseEntity<>(qaService.searchByQuestionContent(request, content), HttpStatus.OK);
     }
 
     @GetMapping("/a/content")
-    public ResponseEntity<List<QaDTO>> searchByAnswerContent(@RequestParam String content) {
-        return new ResponseEntity<>(qaService.searchByAnswerContent(content), HttpStatus.OK);
+    public ResponseEntity<List<QaDTO>> searchByAnswerContent(HttpServletRequest request,@RequestParam String content) {
+        return new ResponseEntity<>(qaService.searchByAnswerContent(request,content), HttpStatus.OK);
     }
 
     @GetMapping("/q/title-content")
-    public ResponseEntity<List<QaDTO>> searchByQuestionTitleAndContent(@RequestParam String title, @RequestParam String content) {
-        return new ResponseEntity<>(qaService.searchByQuestionTitleAndContent(title, content), HttpStatus.OK);
+    public ResponseEntity<List<QaDTO>> searchByQuestionTitleAndContent(HttpServletRequest request,@RequestParam String title, @RequestParam String content) {
+        return new ResponseEntity<>(qaService.searchByQuestionTitleAndContent(request, title, content), HttpStatus.OK);
     }
 
     @GetMapping("/a/title-content")
-    public ResponseEntity<List<QaDTO>> searchByAnswerTitleAndContent(@RequestParam String title, @RequestParam String content) {
-        return new ResponseEntity<>(qaService.searchByAnswerTitleAndContent(title, content), HttpStatus.OK);
+    public ResponseEntity<List<QaDTO>> searchByAnswerTitleAndContent(HttpServletRequest request, @RequestParam String title, @RequestParam String content) {
+        return new ResponseEntity<>(qaService.searchByAnswerTitleAndContent(request, title, content), HttpStatus.OK);
     }
 }

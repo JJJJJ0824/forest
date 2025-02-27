@@ -43,10 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 answerContent.textContent = "답변이 없습니다.";  // 답변이 없을 경우
             }
 
-            answerElement.appendChild(answerContent);
-
-            // 답변 제목과 내용을 화면에 추가
-            answerElement.appendChild(answerTitle);  // "답변" 제목 추가
+            answerElement.appendChild(answerTitleElement);  // "답변" 제목 추가
             answerElement.appendChild(answerContent);  // 답변 내용 추가
 
         } else {
