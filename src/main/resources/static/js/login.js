@@ -28,10 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (xhr.status === 200) {
           let response = xhr.responseText;
 
-          // 로그인 성공 시 localStorage에 사용자 정보 저장
           localStorage.setItem("loggedInUser", username);
 
-          // 로그인 후 홈 페이지로 리다이렉트
           window.location.href = "index.html";
         } else {
           errorMsg.textContent = "아이디 또는 비밀번호가 올바르지 않습니다.";

@@ -34,11 +34,23 @@ public class PointService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        if (!travelerName.equals("admin")) {
-            throw new UnauthorizedTravelerException("권한이 없습니다");
+        if (travelerName != null && travelerName.equals("admin")) {
+            return pointRepository.findAll().stream()
+                    .map(Point::toEvent)
+                    .toList();
         }
-        return pointRepository.findAll().stream().map(Point::toEvent).toList();
+        if (travelerName != null) {
+            List<PointEventDTO> pointDTOList = pointRepository.findByTravelerTravelerName(travelerName).stream()
+                    .map(Point::toEvent)
+                    .toList();
+            if (pointDTOList.isEmpty()) {
+                throw new ResourceNotFoundException("포인트 충전, 사용 내역이 없습니다.");
+            }
+            return pointDTOList;
+        }
+        throw new UnauthorizedTravelerException("로그인된 사용자가 아닙니다.");
     }
+
 
     public PointEventDTO addPointsToTraveler(HttpServletRequest request, double points, String actionType) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리

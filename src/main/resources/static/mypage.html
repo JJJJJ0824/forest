@@ -25,6 +25,15 @@
                     <li><a href="login.html" id="nav-login">로그인</a></li>
                 </ul>
             </nav>
+            <div id="editForm" class="hidden-form">
+                <input type="text" id="editNameInput" placeholder="새 이름" readonly />
+                <input type="text" id="editPhoneInput" placeholder="새 연락처" />
+                <input type="email" id="editEmailInput" placeholder="새 이메일" />
+                <div id="profile-edit">
+                    <button id="saveChanges">저장</button>
+                    <button id="cancelEdit">취소</button>
+                </div>
+            </div>
         </header>
 
         <div class="mypage-container">
@@ -58,21 +67,14 @@
                         <button class="charge-btn">충전</button>
                     </div>
                     <div class="point-buttons">
+                        <button class="all-points-btn">전체 보기</button>
                         <button class="add-points-btn">적립포인트</button>
                         <button class="subtract-points-btn">차감포인트</button>
                     </div>
                     <div class="user-point-history">
                         <h3>유저 포인트 내역</h3>
-                        <ul>
-                            <li>2025-02-18 : +500 포인트 충전</li>
-                            <li>2025-02-15 : -100 포인트 사용</li>
-                            <li>2025-02-12 : +300 포인트 충전</li>
-                            <li>2025-01-18 : +500 포인트 충전</li>
-                            <li>2025-01-15 : -100 포인트 사용</li>
-                            <li>2025-01-12 : +300 포인트 충전</li>
-                            <li>2025-12-18 : +500 포인트 충전</li>
-                            <li>2025-12-15 : -100 포인트 사용</li>
-                            <li>2025-12-12 : +300 포인트 충전</li>
+                        <ul id="pointHistoryList">
+                          
                         </ul>
                     </div>
                 </div>
@@ -81,7 +83,6 @@
                     <div class="checklist">
                         <h3>체크리스트</h3>
                         <form>
-                            <!-- 여행의 주요 목적 -->
                             <div id="question" class="active">
                                 <p>보라카이에 가는 주된 목적은 무엇인가요?</p>
                                 <label><input type="radio" name="q1"> 휴식과 여유 </label>
@@ -90,7 +91,6 @@
                                 <label><input type="radio" name="q1"> 해양 스포츠 및 다이빙 </label>
                             </div>
                     
-                            <!-- 숙소 유형 선호 -->
                             <div id="question">
                                 <p>보라카이에서 선호하는 숙소 유형은 무엇인가요?</p>
                                 <label><input type="radio" name="q2"> 럭셔리 리조트 </label>
@@ -99,7 +99,6 @@
                                 <label><input type="radio" name="q2"> 에어비앤비와 같은 독립형 숙소 </label>
                             </div>
                     
-                            <!-- 여행 스타일 -->
                             <div id="question">
                                 <p>보라카이 여행을 계획하면서 어떤 스타일을 선호하시나요?</p>
                                 <label><input type="radio" name="q3"> 완전 자유 여행 (자유롭게 일정 조정) </label>
@@ -107,7 +106,6 @@
                                 <label><input type="radio" name="q3"> 반자유 여행 (일정 일부 자유롭게 변경 가능) </label>
                             </div>
                     
-                            <!-- 동행자 유형 -->
                             <div id="question">
                                 <p>여행에 누구와 함께 가나요?</p>
                                 <label><input type="radio" name="q4"> 가족 (아이들과 함께) </label>
@@ -116,7 +114,6 @@
                                 <label><input type="radio" name="q4"> 연인 </label>
                             </div>
 
-                            <!-- 여행 일정 계획 정도가 유연한지 -->
                             <div id="question">
                                 <p>여행 일정은 얼마나 유동적이어야 하나요?</p>
                                 <label><input type="radio" name="q5"> 완전 고정 일정 (정해진 시간에 맞추어 모든 것을 계획) </label>
@@ -124,7 +121,6 @@
                                 <label><input type="radio" name="q5"> 자유 일정 (대부분 자율적으로 계획하고 실행) </label>
                             </div>
 
-                            <!-- 해양 스포츠 -->
                             <div id="question">
                                 <p>보라카이에서 해양 스포츠 활동을 얼마나 선호하시나요?</p>
                                 <label><input type="radio" name="q6"> 서핑, 스노클링 등 다양한 해양 스포츠를 즐기고 싶다 </label>
@@ -132,7 +128,6 @@
                                 <label><input type="radio" name="q6"> 해양 스포츠에는 관심이 없다 </label>
                             </div>
 
-                            <!-- 식사 스타일 -->
                             <div id="question">
                                 <p>보라카이에서 어떤 스타일의 식사를 선호하시나요?</p>
                                 <label><input type="radio" name="q7"> 현지 음식 (해산물, 필리핀 전통 음식) </label>
@@ -141,7 +136,6 @@
                                 <label><input type="radio" name="q7"> 다양한 국제적 요리를 즐기고 싶다 </label>
                             </div>
 
-                            <!-- 쇼핑과 기념품 -->
                             <div id="question">
                                 <p>여행 중 쇼핑을 얼마나 중요하게 생각하시나요?</p>
                                 <label><input type="radio" name="q8"> 현지에서 쇼핑하고 기념품을 구입하는 것을 중요시함 </label>
@@ -149,7 +143,6 @@
                                 <label><input type="radio" name="q8"> 쇼핑에 관심 없음 </label>
                             </div>
 
-                            <!-- 자연과의 연결 -->
                             <div id="question">
                                 <p>자연을 가까이에서 경험하는 것이 중요하신가요?</p>
                                 <label><input type="radio" name="q9"> 산책, 트레킹 등 자연을 즐기고 싶다 </label>
@@ -157,7 +150,6 @@
                                 <label><input type="radio" name="q9"> 자연과의 연결은 중요하지 않다 </label>
                             </div>
 
-                            <!-- 여행 예산 -->
                             <div id="question">
                                 <p>보라카이 여행의 예산은 어느 정도인가요?</p>
                                 <label><input type="radio" name="q10"> 고급스러운 여행을 원한다 (럭셔리 예산) </label>
@@ -250,7 +242,8 @@
         <p>&copy; 2025 Boracay. All Rights Reserved.</p>
     </footer>
     <script src="/js/mypage.js"></script>
-    <!-- <script src="/js/checklist.js"></script> -->
+    <script src="/js/point.js"></script>
+    <script src="/js/checklist.js"></script>
     <script src="/js/top_button.js"></script>
     <script src="/js/logout.js"></script>
 </body>

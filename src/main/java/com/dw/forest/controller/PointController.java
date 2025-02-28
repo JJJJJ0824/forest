@@ -4,7 +4,6 @@ import com.dw.forest.dto.PointConvertRequestDTO;
 import com.dw.forest.dto.PointConvertResponseDTO;
 import com.dw.forest.dto.PointDTO;
 import com.dw.forest.dto.PointEventDTO;
-import com.dw.forest.model.Point;
 import com.dw.forest.service.PointService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -82,12 +82,71 @@ div#left-side h3 {
     color: #333;
 }
 
+#editForm {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    z-index: 999;
+}
+
+#editForm.active {
+    display: block;
+}
+
 div#left-side .user-info,
 div#left-side .point-charge {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#editForm button {
+    background-color: #16cf1f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#editForm button:hover {
+    background-color: #128d0c;
+}
+
+#editForm input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+#editForm input:focus {
+    border-color: #16cf1f;
+    outline: none;
+}
+
+#editForm .cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+#editForm .cancel-btn:hover {
+    background-color: #ddd;
+    color: #333;
 }
 
 div#left-side .edit-btn, div#left-side .charge-btn {
@@ -105,14 +164,21 @@ div#left-side .edit-btn:hover, div#left-side .charge-btn:hover {
     background-color: #128d0c;
 }
 
-div#left-side .profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #ddd;
-    margin-bottom: 15px;
-    object-fit: cover;
+div#left-side .edit-btn, div#left-side .charge-btn {
+    background-color: #16cf1f;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
 }
+
+div#left-side .edit-btn:hover, div#left-side .charge-btn:hover {
+    background-color: #128d0c;
+}
+
 
 div#center {
     display: flex;
