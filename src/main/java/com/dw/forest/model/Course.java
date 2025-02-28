@@ -50,7 +50,7 @@ public class Course {
     private List<Cart> cartItems;
 
     @ManyToOne
-    @JoinColumn(name = "category_name")
+    @JoinColumn(name = "category_name", nullable = false)
     private Category category;
 
     public CourseReadDTO toRead() {

@@ -19,4 +19,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private List<Checklist> checklists;
+
+    @OneToMany(mappedBy = "category")
+    private List<Course> courses;
 }

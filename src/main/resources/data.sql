@@ -61,5 +61,3 @@ VALUES (1, 'traveler', false), (2, 'traveler', false), (3, 'traveler', false);
 
 INSERT INTO completion (traveler_name, course_id, completion_date)
 VALUES ('traveler', 1, '2024-12-11'), ('traveler', 2, null), ('traveler', 3, null);
-
-INSERT INTO checklist (id, traveler)
