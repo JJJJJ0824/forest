@@ -9,6 +9,7 @@ import com.dw.forest.model.Category;
 import com.dw.forest.model.Checklist;
 import com.dw.forest.model.Course;
 import com.dw.forest.model.Traveler;
+import com.dw.forest.repository.CategoryRepository;
 import com.dw.forest.repository.ChecklistRepository;
 import com.dw.forest.repository.CourseRepository;
 import com.dw.forest.repository.TravelerRepository;
@@ -31,6 +32,9 @@ public class ChecklistService {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     public List<CheckListDTO> getIncompleteChecklists(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
@@ -48,6 +52,30 @@ public class ChecklistService {
                 .toList();
     }
 
+    public CheckListDTO submitMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        Checklist checklist = new Checklist(null, travelerRepository.findById(travelerName)
+                .orElseThrow(()->new ResourceNotFoundException("해당 사용자가 존재하지 않습니다.")), checkListDTO.getDirection(),
+                checkListDTO.getResponse(),checkListDTO.isChecked(), categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(()->new ResourceNotFoundException("카테고리를 찾지 못했습니다.")));
+        checklistRepository.save(checklist);
+        return checklist.toDTO();
+    }
+
+    public CheckListDTO updateMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
+//        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+//        if (session == null) {
+//            throw new InvalidRequestException("세션이 없습니다.");
+//        }
+//        String travelerName = (String) session.getAttribute("travelerName");
+//        Checklist checklist = checkListDTO;
+//        checklistRepository.save(checklist);
+        return null;
+    }
+
     public List<CheckListDTO> getChecklistsByTraveler(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
@@ -55,7 +83,7 @@ public class ChecklistService {
         }
         String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findById(travelerName)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 사용자가 존재하지 않습니다."));
+                .orElseThrow(() -> null);
 
         List<Checklist> checklists = checklistRepository.findByTraveler(traveler);
 
@@ -71,7 +99,6 @@ public class ChecklistService {
 
         Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("사용자를 찾을 수 없습니다."));
 
-        // 체크리스트 완료했는지 확인
         List<Checklist> completedChecklists = checklistRepository.findByTravelerAndIsCheckedTrue(traveler);
         if (completedChecklists.isEmpty()) {
             throw new ResourceNotFoundException("체크리스트를 완료해야 강의를 추천할 수 있습니다.");
@@ -88,7 +115,6 @@ public class ChecklistService {
             throw new ResourceNotFoundException("유형을 찾을 수 없습니다.");
         }
 
-        // 해당 유형의 강의 가져오기
         List<Course> recommendedCourses = courseRepository.findByCategoryCategoryName(travelerCategory);
         if (recommendedCourses.isEmpty()) {
             throw new RuntimeException("강의를 추천할 수 없습니다.");
@@ -134,6 +160,16 @@ public class ChecklistService {
             updateChecklists.add(checklist.toDTO());
         }
         return updateChecklists;
+    }
+
+    public String deleteChecklist(List<CheckListDTO> checkListDTOS, HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        checklistRepository.deleteAll(checklistRepository.findByTraveler_TravelerName(travelerName));
+        return "성공하였습니다.";
     }
 
     public String saveFeedback(HttpServletRequest request, Long checklistId, String feedbackText) {

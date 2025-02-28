@@ -21,8 +21,12 @@ public class ChecklistController {
 
     @GetMapping("/all")
     public ResponseEntity<List<CheckListDTO>> getAllIncompleteChecklists(HttpServletRequest request) {
-        List<CheckListDTO> incompleteChecklists = checklistService.getIncompleteChecklists(request);
-        return ResponseEntity.ok(incompleteChecklists);
+        return new ResponseEntity<>(checklistService.getIncompleteChecklists(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/mycheck")
+    public ResponseEntity<CheckListDTO> submitMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
+        return new ResponseEntity<>(checklistService.submitMyChecklist(checkListDTO, request), HttpStatus.CREATED);
     }
 
     @GetMapping("/me/check")
@@ -33,6 +37,11 @@ public class ChecklistController {
     @GetMapping("/recommend")
     public ResponseEntity<List<CourseReadDTO>> recommendCourses(HttpServletRequest request) {
         return new ResponseEntity<>(checklistService.recommendCourses(request), HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<CheckListDTO> updateMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
+        return new ResponseEntity<>(checklistService.updateMyChecklist(checkListDTO, request), HttpStatus.OK);
     }
 
     @GetMapping("/completion")
@@ -48,6 +57,11 @@ public class ChecklistController {
     @PutMapping("/reset")
     public ResponseEntity<List<CheckListDTO>> resetChecklist(HttpServletRequest request) {
         return new ResponseEntity<>(checklistService.resetChecklist(request), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteChecklist(List<CheckListDTO> checkListDTOS, HttpServletRequest request) {
+        return new ResponseEntity<>(checklistService.deleteChecklist(checkListDTOS, request), HttpStatus.OK);
     }
 
     @PostMapping("/feedback")

@@ -12,6 +12,7 @@ import lombok.ToString;
 public class CheckListDTO {
     private Long id;
     private String direction;
+    private String response;
     private boolean isChecked;
     private String traveler;
     private String category;

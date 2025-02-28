@@ -6,9 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="cdef9fe8-ef95-4af0-bdd6-6bb95be5dcab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/ChecklistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/ChecklistController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/dto/CheckListDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/dto/CheckListDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Checklist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/model/Checklist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/ChecklistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/ChecklistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/mypage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/mypage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/mypage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/mypage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/mypage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/mypage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
