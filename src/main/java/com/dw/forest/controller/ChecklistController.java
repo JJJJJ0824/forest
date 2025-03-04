@@ -55,7 +55,7 @@ public class ChecklistController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteChecklist(List<CheckListDTO> checkListDTOS, HttpServletRequest request) {
+    public ResponseEntity<String> deleteChecklist(@RequestBody List<CheckListDTO> checkListDTOS, HttpServletRequest request) {
         return new ResponseEntity<>(checklistService.deleteChecklist(checkListDTOS, request), HttpStatus.OK);
     }
 
