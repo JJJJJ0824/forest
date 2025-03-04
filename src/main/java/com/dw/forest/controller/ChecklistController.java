@@ -25,7 +25,7 @@ public class ChecklistController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<CheckListDTO> submitMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
+    public ResponseEntity<CheckListDTO> submitMyChecklist(@RequestBody CheckListDTO checkListDTO, HttpServletRequest request) {
         return new ResponseEntity<>(checklistService.submitMyChecklist(checkListDTO, request), HttpStatus.CREATED);
     }
 
@@ -40,7 +40,7 @@ public class ChecklistController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<CheckListDTO> updateMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
+    public ResponseEntity<CheckListDTO> updateMyChecklist(@RequestBody CheckListDTO checkListDTO, HttpServletRequest request) {
         return new ResponseEntity<>(checklistService.updateMyChecklist(checkListDTO, request), HttpStatus.OK);
     }
 

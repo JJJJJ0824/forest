@@ -58,7 +58,6 @@ public class ChecklistService {
         String travelerName = (String) session.getAttribute("travelerName");
 
         Checklist checklist = new Checklist();
-
         checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
         checklist.setDirection(checkListDTO.getDirection());
         checklist.setResponse(checkListDTO.getResponse());

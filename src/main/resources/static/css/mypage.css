@@ -205,11 +205,11 @@ div#center {
     border-style: 1;
 }
 
-#question1, #question2, #question3, #question4, #question5, #question6, #question7, #question8, #question9, #question10 {
+#q1, #q2, #q3, #q4, #q5, #q6, #q7, #q8, #q9, #q10 {
     display: none;
 }
 
-#question1.active, #question2.active, #question3.active, #question4.active, #question5.active, #question6.active, #question7.active, #question8.active, #question9.active, #question10.active {
+#q1.active, #q2.active, #q3.active, #q4.active, #q5.active, #q6.active, #q7.active, #q8.active, #q9.active, #q10.active {
     display: block;
     border: 2px solid #333; 
     padding:15px;           
@@ -218,25 +218,25 @@ div#center {
     background-color: #f9f9f9; 
 }
 
-#question1 p, #question2 p, #question3 p, #question4 p, #question5 p, #question6 p, #question7 p, #question8 p, #question9 p, #question10 p {
+#q1 p, #q2 p, #q3 p, #q4 p, #q5 p, #q6 p, #q7 p, #q8 p, #q9 p, #q10 p {
     height: 0;
     font-size: 0;
     margin-bottom: 0;
 }
 
-#question1.active p, #question2.active p, #question3.active p, #question4.active p, #question5.active p, #question6.active p, #question7.active p, #question8.active p, #question9.active p, #question10.active p {
+#q1.active p, #q2.active p, #q3.active p, #q4.active p, #q5.active p, #q6.active p, #q7.active p, #q8.active p, #q9.active p, #q10.active p {
     height: auto;
     display: block;
     font-size: 16px;
     margin-bottom: 10px;
 }
 
-#question1 label, #question2 label, #question3 label, #question4 label, #question5 label, #question6 label, #question7 label, #question8 label, #question9 label, #question10 label {
+#q1 label, #q2 label, #q3 label, #q4 label, #q5 label, #q6 label, #q7 label, #q8 label, #q9 label, #q10 label {
     display: none;
     margin: 0 0;
 }
 
-#question1.active label, #question2.active label, #question3.active label, #question4.active label, #question5.active label, #question6.active label, #question7.active label, #question8.active label, #question9.active label, #question10.active label {
+#q1.active label, #q2.active label, #q3.active label, #q4.active label, #q5.active label, #q6.active label, #q7.active label, #q8.active label, #q9.active label, #q10.active label {
     display: block;
     margin: 5px 0;
 }
