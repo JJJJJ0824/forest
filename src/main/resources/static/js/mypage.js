@@ -1,13 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("mypage.js 로드됨!");
 
-    // 마이페이지 버튼들
     const buttons = document.querySelectorAll('button#btn-info, button#btn-checklist, button#btn-courses');
     const leftSide = document.getElementById('left-side');
     const center = document.getElementById('center');
     const rightSide = document.getElementById('right-side');
 
-    // 체크리스트 관련 변수
     const questions = document.querySelectorAll("#question1", "#question2", "#question3", "#question4"
         ,"#question5", "#question6", "#question7", "#question8", "#question9", "#question10");
     const submitButton = document.querySelector('button[type="submit"]');
@@ -17,14 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const checklistRewriteButton = document.getElementById("btn-checklist-rewrite");
     const resultSection = document.getElementById("resultSection");
 
-    let userResponses = {};  // 사용자의 응답
-    let currentQuestionIndex = 0;  // 현재 질문 인덱스
-    let currentUserData = {};  // 사용자 데이터
+    let userResponses = {};  
+    let currentQuestionIndex = 0;  
+    let currentUserData = {};  
 
-    // 마이페이지에서 사용자 데이터 불러오기
     getLoggedInUser();
 
-    // 마이페이지 버튼 클릭 시 화면 전환
     buttons.forEach(button => {
         button.addEventListener('click', function() {
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -39,14 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 leftSide.classList.add('active');
             } else if (this.id === 'btn-checklist') {
                 center.classList.add('active');
-                loadUserChecklistData();  // 체크리스트 로딩
+                loadUserChecklistData(); 
             } else if (this.id === 'btn-courses') {
                 rightSide.classList.add('active');
             }
         });
     });
 
-    // 사용자 정보 불러오기
     function getLoggedInUser() {
         fetch('/api/traveler/mypage', {
             method: 'GET',
@@ -69,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 사용자 정보 화면에 표시
     function displayUserInfo(userData) {
         currentUserData = userData;
 
@@ -78,9 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("userEmail").textContent = userData.email || "이메일 없음";
     }
 
-    // 체크리스트 데이터 로딩
     function loadUserChecklistData() {
-        fetch('/api/checklist/me/check')  // 유저 ID에 맞는 체크리스트 데이터를 가져옴
+        fetch('/api/checklist/me/check')
             .then(response => response.json())
             .then(data => {
                 data.forEach(item => {
@@ -94,11 +87,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error loading checklist data:', error));
     }
 
-    // 체크리스트 수정하기
     document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function () {
-            // 같은 질문 그룹 내 다른 체크박스를 해제하기
-            const questionId = this.id.split('-')[0];  // 'q1', 'q2', ...
+            const questionId = this.id.split('-')[0];  
             const checkboxes = document.querySelectorAll(`#${questionId} input[type="checkbox"]`);
 
             checkboxes.forEach(checkbox => {
@@ -113,8 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 isChecked: this.checked
             };
 
-            // 서버로 수정된 체크리스트 데이터 전송
-            fetch('/api/checklist/' + checklistData.id, {
+            fetch('/api/checklist/update', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(checklistData)
@@ -125,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // 체크리스트 완료 여부 확인
     function checkIfChecklistCompleted() {
         const allAnswered = Object.keys(userResponses).length === questions.length;
         const isLastQuestion = currentQuestionIndex === questions.length - 1;
@@ -141,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // 체크리스트 질문 이동
     const handleNextQuestion = () => {
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
@@ -149,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // 체크리스트 화면에 표시
     const updateQuestionDisplay = () => {
         questions.forEach((question, index) => {
             if (index === currentQuestionIndex) {

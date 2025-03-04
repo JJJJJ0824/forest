@@ -65,15 +65,24 @@ public class ChecklistService {
         return checklist.toDTO();
     }
 
-    public CheckListDTO updateMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
-//        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
-//        if (session == null) {
-//            throw new InvalidRequestException("세션이 없습니다.");
-//        }
-//        String travelerName = (String) session.getAttribute("travelerName");
-//        Checklist checklist = checkListDTO;
-//        checklistRepository.save(checklist);
-        return null;
+    public List<CheckListDTO> updateMyChecklist(List<CheckListDTO> checkListDTOs, HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+        String travelerName = (String) session.getAttribute("travelerName");
+        List<Checklist> checklists = checkListDTOs.stream().map(dto->{
+            Checklist checklist = new Checklist();
+            checklist.setId(dto.getId());
+            checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
+            checklist.setDirection(dto.getDirection());
+            checklist.setResponse(dto.getResponse());
+            checklist.setChecked(dto.isChecked());
+            checklist.setCategory(categoryRepository.findById(dto.getCategory()).orElseThrow(()->new ResourceNotFoundException("유형명이 없습니다.")));
+            return checklist;
+        }).toList();
+        checklistRepository.saveAll(checklists);
+        return checkListDTOs;
     }
 
     public List<CheckListDTO> getChecklistsByTraveler(HttpServletRequest request) {
