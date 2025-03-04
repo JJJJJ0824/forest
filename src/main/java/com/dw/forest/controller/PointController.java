@@ -4,6 +4,7 @@ import com.dw.forest.dto.PointConvertRequestDTO;
 import com.dw.forest.dto.PointConvertResponseDTO;
 import com.dw.forest.dto.PointDTO;
 import com.dw.forest.dto.PointEventDTO;
+import com.dw.forest.model.Point;
 import com.dw.forest.service.PointService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,12 @@ public class PointController {
 
     @PostMapping("/use")
     public PointEventDTO usePoints(HttpServletRequest request, @RequestBody PointDTO pointDTO) {
-        return pointService.usePointsFromTraveler(request, pointDTO.getPoints(), pointDTO.getActionType());
+        return pointService.usePointsFromTraveler(
+                request,
+                pointDTO.getPoints(),
+                pointDTO.getActionType(),
+                pointDTO.getCourseId() // 강의 ID 추가
+        );
     }
 
     @PostMapping("/event")

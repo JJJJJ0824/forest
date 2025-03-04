@@ -14,11 +14,15 @@ import com.dw.forest.repository.TravelerRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompletionService {
@@ -50,19 +54,26 @@ public class CompletionService {
     }
 
     public List<CourseReadDTO> getCompletedCoursesByTraveler(HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        HttpSession session = request.getSession(false);
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
+
         String travelerName = (String) session.getAttribute("travelerName");
-        List<Completion> completions = completionRepository.findByTravelerTravelerName(travelerName);
+        Traveler traveler = travelerRepository.findById(travelerName)
+                .orElseThrow(() -> new InvalidRequestException("해당 유저를 찾을 수 없습니다"));
+
+        List<Completion> completions = completionRepository.findByTraveler(traveler);
 
         if (completions.isEmpty()) {
-            throw new ResourceNotFoundException("해당 유저를 찾을수 없습니다");
+            return List.of();
         }
 
-        return completions.stream().map(Completion::toRead).toList();
+        return completions.stream()
+                .map(Completion::toRead)
+                .collect(Collectors.toList());
     }
+
 
     public String completeCourse(HttpServletRequest request, Long courseId) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리

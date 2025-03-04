@@ -31,9 +31,18 @@ public class Point {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart_fk;
+    public String getTravelerName() {
+        return traveler != null ? traveler.getTravelerName() : null;
+    }
 
     public PointDTO toDTO() {
-        return new PointDTO(this.traveler.getTravelerName(), this.points, this.actionType);
+        return new PointDTO(
+                this.getTravelerName(),
+                this.points,
+                this.actionType,
+                this.cart_fk != null ? this.cart_fk.getCourse().getCourseId() : null, // 강의 ID
+                this.cart_fk != null ? this.cart_fk.isPurchaseStatus() : false       // 결제 상태
+        );
     }
 
     public PointEventDTO toEvent() {

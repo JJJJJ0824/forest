@@ -6,10 +6,8 @@ import com.dw.forest.dto.PointEventDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
 import com.dw.forest.exception.UnauthorizedTravelerException;
-import com.dw.forest.model.Point;
-import com.dw.forest.model.Traveler;
-import com.dw.forest.repository.PointRepository;
-import com.dw.forest.repository.TravelerRepository;
+import com.dw.forest.model.*;
+import com.dw.forest.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,15 @@ public class PointService {
 
     @Autowired
     TravelerRepository travelerRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
+
+    @Autowired
+    CartRepository cartRepository;
+
+    @Autowired
+    CompletionRepository completionRepository;
 
     public List<PointEventDTO> getAllPoints(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
@@ -71,21 +78,21 @@ public class PointService {
         return pointRepository.save(point).toEvent();
     }
 
-    public PointEventDTO usePointsFromTraveler(HttpServletRequest request, double points, String actionType){
-        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+    public PointEventDTO usePointsFromTraveler(HttpServletRequest request, double points, String actionType, Long courseId) {
+        HttpSession session = request.getSession(false);
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
 
         String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findById(travelerName)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다"));
+                .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다"));
 
         double currentPoints = pointRepository.findByTraveler(traveler).stream()
                 .mapToDouble(Point::getPoints)
                 .sum();
 
-        if (currentPoints - points < 0 ) {
+        if (currentPoints - points < 0) {
             throw new InvalidRequestException("포인트가 부족합니다");
         }
 
@@ -94,10 +101,26 @@ public class PointService {
         point.setPoints(-points);
         point.setActionType(actionType);
         point.setEventDate(LocalDate.now());
+        pointRepository.save(point);
 
-        return pointRepository.save(point).toEvent();
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("강의를 찾을 수 없습니다"));
+
+        Cart cart = new Cart();
+        cart.setTraveler(traveler);
+        cart.setCourse(course);
+        cart.setPurchaseStatus(true);
+        cartRepository.save(cart);
+
+        Completion completion = new Completion();
+        completion.setTraveler(traveler);
+        completion.setCourse(course);
+        completion.setCompletionDate(null);
+        completion.setPointUsed(point);
+        completionRepository.save(completion);
+
+        return point.toEvent();
     }
-
     public String giveDoublePointsOnEvent(PointEventDTO pointEventDTO) {
         try {
             LocalDate today = LocalDate.now();

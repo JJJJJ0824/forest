@@ -121,7 +121,9 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr.onload = function() {
       if (xhr.status === 201) {
           alert("회원가입이 완료되었습니다!");
-          window.location.href = "login.html"
+  
+          // 회원가입 후 자동 로그인 요청
+          login(username, password); // 로그인 함수 호출
   
       } else {
           errorMsg.textContent = "회원가입에 실패했습니다. 다시 시도해주세요.";
@@ -133,5 +135,36 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   
     xhr.send(JSON.stringify(userData));
+  }
+  
+  // 로그인 처리 함수
+  function login(username, password) {
+      let loginData = {
+          travelerName: username,
+          password: password
+      };
+  
+      let xhrLogin = new XMLHttpRequest();
+      xhrLogin.open("POST", "/api/traveler/login", true);
+      xhrLogin.setRequestHeader("Content-Type", "application/json");
+  
+      xhrLogin.onload = function () {
+          if (xhrLogin.status === 200) {
+              alert("로그인 성공!");
+              window.location.href = "index.html"; // 로그인 후 메인 페이지로 이동
+          } else {
+              let errorMsg = document.getElementById("signupError");
+              errorMsg.textContent = "로그인에 실패했습니다.";
+              errorMsg.style.color = "red";
+          }
+      };
+  
+      xhrLogin.onerror = function () {
+          let errorMsg = document.getElementById("signupError");
+          errorMsg.textContent = "로그인 요청 오류.";
+          errorMsg.style.color = "red";
+      };
+  
+      xhrLogin.send(JSON.stringify(loginData)); // 로그인 요청 전송
   }
   

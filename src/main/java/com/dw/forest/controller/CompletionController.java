@@ -3,6 +3,7 @@ package com.dw.forest.controller;
 import com.dw.forest.dto.CompletionDTO;
 import com.dw.forest.dto.CourseReadDTO;
 import com.dw.forest.dto.CourseWithStudentsDTO;
+import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.model.Completion;
 import com.dw.forest.service.CompletionService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,8 +22,15 @@ public class CompletionController {
 
     @GetMapping("/complete/traveler")
     public ResponseEntity<List<CourseReadDTO>> getCompletedCoursesByTraveler(HttpServletRequest request) {
-        List<CourseReadDTO> completedCourses = completionService.getCompletedCoursesByTraveler(request);
-        return new ResponseEntity<>(completedCourses, HttpStatus.OK);
+        try {
+            List<CourseReadDTO> completedCourses = completionService.getCompletedCoursesByTraveler(request);
+
+            return new ResponseEntity<>(completedCourses, HttpStatus.OK);
+        } catch (InvalidRequestException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/complete/{course_id}")

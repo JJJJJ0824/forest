@@ -16,4 +16,6 @@ public class PointDTO {
     private String travelerName;
     private double points;
     private String actionType;
+    private Long courseId;
+    private boolean purchaseStatus;
 }

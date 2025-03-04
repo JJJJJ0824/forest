@@ -39,8 +39,7 @@ public class Course {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @ManyToMany
-    @JoinTable(name = "traveler_course", joinColumns = @JoinColumn(name = "course_id"))
+    @ManyToMany(mappedBy = "courses")
     private List<Traveler> traveler;
 
     @OneToMany(mappedBy = "course")

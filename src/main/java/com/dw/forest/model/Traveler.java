@@ -58,7 +58,11 @@ public class Traveler {
     private List<Cart> cartItems;
 
     @ManyToMany
-    @JoinTable(name = "traveler_course", joinColumns = @JoinColumn(name = "traveler_name"))
+    @JoinTable(
+            name = "traveler_course",
+            joinColumns = @JoinColumn(name = "traveler_name"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
     private List<Course> courses;
 
     public TravelerDTO toDTO() {
