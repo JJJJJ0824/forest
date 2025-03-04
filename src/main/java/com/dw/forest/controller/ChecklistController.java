@@ -40,8 +40,8 @@ public class ChecklistController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<List<CheckListDTO>> updateMyChecklist(List<CheckListDTO> checkListDTOs, HttpServletRequest request) {
-        return new ResponseEntity<>(checklistService.updateMyChecklist(checkListDTOs, request), HttpStatus.OK);
+    public ResponseEntity<CheckListDTO> updateMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
+        return new ResponseEntity<>(checklistService.updateMyChecklist(checkListDTO, request), HttpStatus.OK);
     }
 
     @GetMapping("/completion")
@@ -52,11 +52,6 @@ public class ChecklistController {
         response.put("completed", isCompleted);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @PutMapping("/reset")
-    public ResponseEntity<List<CheckListDTO>> resetChecklist(HttpServletRequest request) {
-        return new ResponseEntity<>(checklistService.resetChecklist(request), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")

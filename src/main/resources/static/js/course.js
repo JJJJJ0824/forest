@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("course.js 로드됨!");
 
-    if (window.location.pathname.includes("course-detail.html")) {
+    const courseId = getCourseIdFromUrl();
+    if (courseId) {
         handleCourseDetailPage();
     } else {
-        handleCourseListPage();
+        handleCourseListPage(); 
     }
 });
 
@@ -98,31 +99,55 @@ function renderCourses(courses) {
 }
 
 function fetchCourseDetail(id) {
+    const loadingMessage = document.getElementById("loading-message");
+
     fetch(`/api/course/${id}`)
         .then(response => {
-            if (!response.ok) throw new Error("강의 정보를 가져올 수 없습니다.");
+            if (!response.ok) {
+                console.error("API 응답 상태 코드:", response.status);
+                throw new Error("강의 정보를 가져올 수 없습니다.");
+            }
             return response.json();
         })
-        .then(course => renderCourseDetail(course))
-        .catch(error => console.error("강의 상세 불러오기 실패:", error));
+        .then(course => {
+            console.log("가져온 강의 상세 데이터:", course);
+            
+            if (loadingMessage) loadingMessage.style.display = "none";
+            
+            renderCourseDetail(course);
+        })
+        .catch(error => {
+            console.error("강의 상세 불러오기 실패:", error);
+            if (loadingMessage) loadingMessage.innerText = "강의 정보를 불러오는 데 실패했습니다.";
+        });
 }
 
 function renderCourseDetail(course) {
-    const courseContainer = document.getElementById("course-detail");
+    const courseContainer = document.getElementById("course-container");
+    
+    if (!course) {
+        courseContainer.innerHTML = "<p>강의 정보를 찾을 수 없습니다.</p>";
+        return;
+    }
 
     courseContainer.innerHTML = `
         <h2>${course.title}</h2>
         <img src="/img/${getImageName(course.categoryName)}.png" alt="${course.title}">
         <p>${course.description}</p>
+
+        <div id="course-content" contenteditable="true">
+            <p>${course.content.replace(/\n/g, "<br>")}</p>
+        </div>
+
         <p><strong>가격:</strong> ${course.price} 포인트</p>
-        <a href="/course.html">목록으로 돌아가기</a>
     `;
 }
-
 function getCourseIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return params.get("id");
 }
+
+
 
 function getCategoryClass(categoryName) {
     switch (categoryName) {

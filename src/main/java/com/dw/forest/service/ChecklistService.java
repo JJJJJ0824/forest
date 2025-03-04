@@ -58,31 +58,32 @@ public class ChecklistService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        Checklist checklist = new Checklist(null, travelerRepository.findById(travelerName)
-                .orElseThrow(()->new ResourceNotFoundException("해당 사용자가 존재하지 않습니다.")), checkListDTO.getDirection(),
-                checkListDTO.getResponse(),checkListDTO.isChecked(), categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(()->new ResourceNotFoundException("카테고리를 찾지 못했습니다.")));
+        Checklist checklist = new Checklist();
+        checklist.setId(checkListDTO.getId());
+        checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
+        checklist.setDirection(checkListDTO.getDirection());
+        checklist.setResponse(checkListDTO.getResponse());
+        checklist.setChecked(checkListDTO.isChecked());
+        checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(()->new ResourceNotFoundException("유형명이 없습니다.")));
         checklistRepository.save(checklist);
-        return checklist.toDTO();
+
+        return checkListDTO;
     }
 
-    public List<CheckListDTO> updateMyChecklist(List<CheckListDTO> checkListDTOs, HttpServletRequest request) {
+    public CheckListDTO updateMyChecklist(CheckListDTO checkListDTO, HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        List<Checklist> checklists = checkListDTOs.stream().map(dto->{
-            Checklist checklist = new Checklist();
-            checklist.setId(dto.getId());
-            checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
-            checklist.setDirection(dto.getDirection());
-            checklist.setResponse(dto.getResponse());
-            checklist.setChecked(dto.isChecked());
-            checklist.setCategory(categoryRepository.findById(dto.getCategory()).orElseThrow(()->new ResourceNotFoundException("유형명이 없습니다.")));
-            return checklist;
-        }).toList();
-        checklistRepository.saveAll(checklists);
-        return checkListDTOs;
+        Checklist checklist = checklistRepository.findById(checkListDTO.getId()).orElseThrow(()->new ResourceNotFoundException("작성된 체크리스트가 없습니다."));
+        checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
+        checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(()->new ResourceNotFoundException("올바른 유형이 아닙니다.")));
+        checklist.setDirection(checkListDTO.getDirection());
+        checklist.setResponse(checkListDTO.getResponse());
+        checklist.setChecked(checkListDTO.isChecked());
+        checklistRepository.save(checklist);
+        return checkListDTO;
     }
 
     public List<CheckListDTO> getChecklistsByTraveler(HttpServletRequest request) {
@@ -149,26 +150,6 @@ public class ChecklistService {
             }
         }
         return false;
-    }
-
-    public List<CheckListDTO> resetChecklist(HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
-        if (session == null) {
-            throw new InvalidRequestException("세션이 없습니다.");
-        }
-        String travelerName = (String) session.getAttribute("travelerName");
-        Traveler traveler = travelerRepository.findByTravelerName(travelerName)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을수 없습니다."));
-
-        List<Checklist> checklists = checklistRepository.findByTraveler(traveler);
-
-        List<CheckListDTO> updateChecklists = new ArrayList<>();
-        for (Checklist checklist : checklists){
-            checklist.setChecked(false);
-            checklistRepository.save(checklist);
-            updateChecklists.add(checklist.toDTO());
-        }
-        return updateChecklists;
     }
 
     public String deleteChecklist(List<CheckListDTO> checkListDTOS, HttpServletRequest request) {

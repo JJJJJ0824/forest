@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 leftSide.classList.add('active');
             } else if (this.id === 'btn-checklist') {
                 center.classList.add('active');
-                loadUserChecklistData(); 
+                // loadUserChecklistData(); 
             } else if (this.id === 'btn-courses') {
                 rightSide.classList.add('active');
             }
@@ -72,138 +72,140 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("userEmail").textContent = userData.email || "이메일 없음";
     }
 
-    function loadUserChecklistData() {
-        fetch('/api/checklist/me/check')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(item => {
-                    const checkbox = document.querySelector(`input[type="checkbox"][name="${item.direction}"]`);
-                    if (checkbox) {
-                        checkbox.checked = item.isChecked;
-                        userResponses[item.direction] = item.isChecked;
-                    }
-                });
-            })
-            .catch(error => console.error('Error loading checklist data:', error));
-    }
+    // function loadUserChecklistData() {
+    //     fetch('/api/checklist/me/check')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             data.forEach(item => {
+    //                 const checkbox = document.querySelector(`input[type="checkbox"][name="${item.direction}"]`);
+    //                 if (checkbox) {
+    //                     checkbox.checked = item.isChecked;
+    //                     userResponses[item.direction] = item.isChecked;
+    //                 }
+    //                 console.log(checkbox);
+    //             });
+    //         })
+    //         .catch(error => console.error('Error loading checklist data:', error));
+    // }
 
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            const questionId = this.id.split('-')[0];  
-            const checkboxes = document.querySelectorAll(`#${questionId} input[type="checkbox"]`);
+    // document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    //     checkbox.addEventListener('change', function () {
+    //         const questionId = this.id.split('-')[0];  
+    //         const checkboxes = document.querySelectorAll(`#${questionId} input[type="checkbox"]`);
 
-            checkboxes.forEach(checkbox => {
-                if (checkbox !== this) {
-                    checkbox.checked = false;
-                }
-            });
+    //         checkboxes.forEach(checkbox => {
+    //             if (checkbox !== this) {
+    //                 checkbox.checked = false;
+    //             }
+    //         });
 
-            const checklistData = {
-                travelerName: currentUserData.realName,
-                direction: this.name,
-                isChecked: this.checked
-            };
+    //         const checklistData = {
+    //             id: this.id,
+    //             travelerName: currentUserData.travelerName,
+    //             direction: this.name,
+    //             isChecked: this.checked
+    //         };
 
-            fetch('/api/checklist/update', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(checklistData)
-            })
-            .then(response => response.json())
-            .then(data => console.log('Checklist updated:', data))
-            .catch(error => console.error('Error updating checklist:', error));
-        });
-    });
+    //         fetch('/api/checklist/update', {
+    //             method: 'PUT',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify(checklistData)
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => console.log('Checklist updated:', data))
+    //         .catch(error => console.error('Error updating checklist:', error));
+    //     });
+    // });
 
-    function checkIfChecklistCompleted() {
-        const allAnswered = Object.keys(userResponses).length === questions.length;
-        const isLastQuestion = currentQuestionIndex === questions.length - 1;
+    // function checkIfChecklistCompleted() {
+    //     const allAnswered = Object.keys(userResponses).length === questions.length;
+    //     const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
-        if (allAnswered && isLastQuestion) {
-            submitButton.disabled = false;
-            checklistViewButton.disabled = false;
-            checklistRewriteButton.disabled = false;
-        } else {
-            submitButton.disabled = true;
-            checklistViewButton.disabled = true;
-            checklistRewriteButton.disabled = true;
-        }
-    }
+    //     if (allAnswered && isLastQuestion) {
+    //         submitButton.disabled = false;
+    //         checklistViewButton.disabled = false;
+    //         checklistRewriteButton.disabled = false;
+    //     } else {
+    //         submitButton.disabled = true;
+    //         checklistViewButton.disabled = true;
+    //         checklistRewriteButton.disabled = true;
+    //     }
+    // }
 
-    const handleNextQuestion = () => {
-        if (currentQuestionIndex < questions.length - 1) {
-            currentQuestionIndex++;
-            updateQuestionDisplay();
-        }
-    };
+    // const handleNextQuestion = () => {
+    //     if (currentQuestionIndex < questions.length - 1) {
+    //         currentQuestionIndex++;
+    //         updateQuestionDisplay();
+    //     }
+    // };
 
-    const updateQuestionDisplay = () => {
-        questions.forEach((question, index) => {
-            if (index === currentQuestionIndex) {
-                question.classList.add("active");
-            }
-        });
+    // const updateQuestionDisplay = () => {
+    //     questions.forEach((question, index) => {
+    //         if (index === currentQuestionIndex) {
+    //             question.classList.add("active");
+    //         }
+    //     });
 
-        const progress = ((currentQuestionIndex) / questions.length) * 100;
-        progressBar.value = isNaN(progress) || progress < 0 || progress > 100 ? 0 : progress;
-    };
+    //     const progress = ((currentQuestionIndex) / questions.length) * 100;
+    //     progressBar.value = isNaN(progress) || progress < 0 || progress > 100 ? 0 : progress;
+    // };
 
-    submitButton.addEventListener("click", function (e) {
-        e.preventDefault();
+    // submitButton.addEventListener("click", function (e) {
+    //     e.preventDefault();
 
-        if (currentQuestionIndex === questions.length - 1) {
-            const userType = calculateUserType(userResponses);
-            resultText.textContent = `당신의 유형은: ${userType}입니다.`;
+    //     if (currentQuestionIndex === questions.length - 1) {
+    //         const userType = calculateUserType(userResponses);
+    //         resultText.textContent = `당신의 유형은: ${userType}입니다.`;
 
-            sendChecklistDataToServer(userResponses);
-        }
-    });
+    //         sendChecklistDataToServer(userResponses);
+    //     }
+    // });
 
-    function calculateUserType(responses) {
-        let familyPoints = 0;
-        let freePoints = 0;
-        let packagePoints = 0;
+    // function calculateUserType(responses) {
+    //     let familyPoints = 0;
+    //     let freePoints = 0;
+    //     let packagePoints = 0;
 
-        if (responses['q4'] === '가족 (아이들과 함께)' || responses['q1'] === '휴식과 여유') {
-            familyPoints++;
-        }
+    //     if (responses['q4'] === '가족 (아이들과 함께)' || responses['q1'] === '휴식과 여유') {
+    //         familyPoints++;
+    //     }
 
-        if (responses['q3'] === '완전 자유 여행 (자유롭게 일정 조정)') {
-            freePoints++;
-        }
+    //     if (responses['q3'] === '완전 자유 여행 (자유롭게 일정 조정)') {
+    //         freePoints++;
+    //     }
 
-        if (responses['q3'] === '패키지 여행 (사전 계획된 일정)') {
-            packagePoints++;
-        }
+    //     if (responses['q3'] === '패키지 여행 (사전 계획된 일정)') {
+    //         packagePoints++;
+    //     }
 
-        if (familyPoints > freePoints && familyPoints > packagePoints) {
-            return "가족 유형";
-        } else if (freePoints > familyPoints && freePoints > packagePoints) {
-            return "자유 유형";
-        } else if (packagePoints > familyPoints && packagePoints > freePoints) {
-            return "패키지 유형";
-        }
+    //     if (familyPoints > freePoints && familyPoints > packagePoints) {
+    //         return "가족 유형";
+    //     } else if (freePoints > familyPoints && freePoints > packagePoints) {
+    //         return "자유 유형";
+    //     } else if (packagePoints > familyPoints && packagePoints > freePoints) {
+    //         return "패키지 유형";
+    //     }
 
-        return "자유 유형";
-    }
+    //     return "자유 유형";
+    // }
 
-    function sendChecklistDataToServer(userResponses) {
-        const url = '/api/checklist/submit';
-        const data = {
-            userResponses: userResponses,
-            userType: calculateUserType(userResponses)
-        };
+    // function sendChecklistDataToServer(userResponses) {
+    //     const url = '/api/checklist/submit';
+    //     const data = {
+    //         userResponses: userResponses,
+    //         userType: calculateUserType(userResponses)
+    //     };
 
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
+    //     fetch(url, {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(data)
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => console.log('Success:', data))
+    //     .catch((error) => {
+    //         console.error('Error:', error);
+    //     });
+    // }
 
 });

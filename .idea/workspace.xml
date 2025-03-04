@@ -8,8 +8,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/ChecklistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/ChecklistController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/ChecklistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/ChecklistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/course_family_aboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/course_family_aboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/course_attraction.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/course_attraction.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/mypage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/mypage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/course.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/mypage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/mypage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/mypage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/mypage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
