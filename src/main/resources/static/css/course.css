@@ -67,10 +67,6 @@ header nav ul li a:hover {
   gap: 20px;
   padding-top: 180px; /* 헤더로 인한 오버랩 방지 */
   margin-bottom: 40px;
-  background-image: url('./img/배경이미지.jpg'); /* 이미지 파일 경로 */
-  background-size: cover; /* 배경 이미지가 화면에 맞게 늘어남 */
-  background-position: center; /* 배경 이미지 중앙 정렬 */
-  background-attachment: fixed; /* 스크롤 시 배경이 고정되게 */
 }
 
 /* 콘텐츠 박스 카드 디자인 */
@@ -155,6 +151,30 @@ header nav ul li a:hover {
 .pagination .active {
   background-color: #13a917;
   color: white;
+}
+
+/* 강의 등록 버튼 스타일 */
+.course-management {
+  position: absolute;             /* 절대 위치 */
+  top: 120px;                     /* 헤더 아래 위치 (조정 가능) */
+  right: 20px;                    /* 오른쪽 끝에서 20px 떨어진 위치 */
+  z-index: 10;                    /* 다른 요소 위로 올리기 */
+}
+
+.register-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;      /* 버튼 배경색 (파란색) */
+  color: #fff;                    /* 버튼 글씨색 (흰색) */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #0056b3;      /* 호버 시 어두운 파란색 */
 }
 
 /* 카테고리 네비게이션 스타일 */
