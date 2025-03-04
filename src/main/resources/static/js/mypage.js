@@ -6,17 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const center = document.getElementById('center');
     const rightSide = document.getElementById('right-side');
 
-    const questions = document.querySelectorAll("#question1", "#question2", "#question3", "#question4"
-        ,"#question5", "#question6", "#question7", "#question8", "#question9", "#question10");
-    const submitButton = document.querySelector('button[type="submit"]');
-    const progressBar = document.querySelector("progress");
-    const resultText = document.getElementById("resultText");
-    const checklistViewButton = document.getElementById("btn-checklist-view");
-    const checklistRewriteButton = document.getElementById("btn-checklist-rewrite");
-    const resultSection = document.getElementById("resultSection");
-
-    let userResponses = {};  
-    let currentQuestionIndex = 0;  
     let currentUserData = {};  
 
     getLoggedInUser();
@@ -35,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 leftSide.classList.add('active');
             } else if (this.id === 'btn-checklist') {
                 center.classList.add('active');
-                // loadUserChecklistData(); 
             } else if (this.id === 'btn-courses') {
                 rightSide.classList.add('active');
             }

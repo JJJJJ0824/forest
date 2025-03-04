@@ -35,7 +35,7 @@ public class Checklist {
     private Category category;
 
     public CheckListDTO toDTO() {
-        return new CheckListDTO(this.id, this.direction, this.response, this.isChecked,
+        return new CheckListDTO(this.direction, this.response, this.isChecked,
                 this.traveler.getTravelerName(),this.category.getCategoryName());
     }
 
