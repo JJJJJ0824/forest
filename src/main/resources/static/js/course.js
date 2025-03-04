@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+function getCourseIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id");
+}
+
 function handleCourseListPage() {
     fetchCourses(); 
 
@@ -124,7 +129,8 @@ function fetchCourseDetail(id) {
 
 function renderCourseDetail(course) {
     const courseContainer = document.getElementById("course-container");
-    
+    const priceElement = document.getElementById("priceValue");
+
     if (!course) {
         courseContainer.innerHTML = "<p>강의 정보를 찾을 수 없습니다.</p>";
         return;
@@ -139,12 +145,11 @@ function renderCourseDetail(course) {
             <p>${course.content.replace(/\n/g, "<br>")}</p>
         </div>
 
-        <p><strong>가격:</strong> ${course.price} 포인트</p>
+        <!-- 🔥 가격 요소는 API로 받아서 채움 -->
+        <p id="coursePrice"><strong>가격:</strong> <span id="priceValue">${course.price}</span> 포인트</p>
     `;
-}
-function getCourseIdFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id");
+
+    console.log("강의 가격 렌더링 완료:", course.price);
 }
 
 

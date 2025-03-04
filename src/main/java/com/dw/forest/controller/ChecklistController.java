@@ -30,8 +30,8 @@ public class ChecklistController {
     }
 
     @GetMapping("/me/check")
-    public ResponseEntity<List<CheckListDTO>> getChecklistsByTraveler(HttpServletRequest request) {
-        return new ResponseEntity<>(checklistService.getChecklistsByTraveler(request), HttpStatus.OK);
+    public ResponseEntity<List<CheckListDTO>> getChecklistByTraveler(HttpServletRequest request) {
+        return new ResponseEntity<>(checklistService.getChecklistByTraveler(request), HttpStatus.OK);
     }
 
     @GetMapping("/recommend")

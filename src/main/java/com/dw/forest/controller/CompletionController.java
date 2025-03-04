@@ -19,7 +19,7 @@ public class CompletionController {
     @Autowired
     CompletionService completionService;
 
-    @GetMapping("/complete/travel")
+    @GetMapping("/complete/traveler")
     public ResponseEntity<List<CourseReadDTO>> getCompletedCoursesByTraveler(HttpServletRequest request) {
         List<CourseReadDTO> completedCourses = completionService.getCompletedCoursesByTraveler(request);
         return new ResponseEntity<>(completedCourses, HttpStatus.OK);

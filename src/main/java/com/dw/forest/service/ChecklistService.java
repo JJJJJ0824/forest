@@ -1,7 +1,6 @@
 package com.dw.forest.service;
 
 import com.dw.forest.dto.CheckListDTO;
-import com.dw.forest.dto.CourseDTO;
 import com.dw.forest.dto.CourseReadDTO;
 import com.dw.forest.exception.InvalidRequestException;
 import com.dw.forest.exception.ResourceNotFoundException;
@@ -18,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,7 +57,7 @@ public class ChecklistService {
         }
         String travelerName = (String) session.getAttribute("travelerName");
         Checklist checklist = new Checklist();
-        checklist.setId(checkListDTO.getId());
+        checklist.setId(null);
         checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
         checklist.setDirection(checkListDTO.getDirection());
         checklist.setResponse(checkListDTO.getResponse());
@@ -76,17 +74,18 @@ public class ChecklistService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        Checklist checklist = checklistRepository.findById(checkListDTO.getId()).orElseThrow(()->new ResourceNotFoundException("작성된 체크리스트가 없습니다."));
-        checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
-        checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(()->new ResourceNotFoundException("올바른 유형이 아닙니다.")));
-        checklist.setDirection(checkListDTO.getDirection());
-        checklist.setResponse(checkListDTO.getResponse());
-        checklist.setChecked(checkListDTO.isChecked());
-        checklistRepository.save(checklist);
+        List<Checklist> checklists = checklistRepository.findByTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
+        for (Checklist checklist : checklists) {
+            checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(() -> new ResourceNotFoundException("올바른 유형이 아닙니다.")));
+            checklist.setDirection(checkListDTO.getDirection());
+            checklist.setResponse(checkListDTO.getResponse());
+            checklist.setChecked(checkListDTO.isChecked());
+            checklistRepository.save(checklist);
+        }
         return checkListDTO;
     }
 
-    public List<CheckListDTO> getChecklistsByTraveler(HttpServletRequest request) {
+    public List<CheckListDTO> getChecklistByTraveler(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");

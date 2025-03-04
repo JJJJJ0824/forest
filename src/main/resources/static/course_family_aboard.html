@@ -45,17 +45,12 @@
                     </div>
                 </div>
 
-                <p id="course-price" class="price"></p>
-
                 <div class="buttons">
                     <a href="course.html"><button>강의 목록</button></a>
                     <a href="index.html"><button>홈 가기</button></a>
                     <a href="mypage.html">
-                        <button onclick="addToCart()">장바구니에 담기</button>
-                    </a>
-                    <a href="mypage.html">
-                        <button onclick="applyForCourse()">수강 신청</button>
-                    </a>
+                        <button onclick="addToCart()">장바구니에 담기</button></a>
+                        <button onclick="applyForCourse(event)">수강 신청</button>
                 </div>
             </div>
         </div>
@@ -69,6 +64,7 @@
         <script src="/js/top_button.js"></script>
         <script src="/js/logout.js"></script>
         <script src="/js/course.js"></script>
+        <script src="/js/payment.js"></script>
     </div>
 </body>
 </html>
