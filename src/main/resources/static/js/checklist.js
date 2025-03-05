@@ -11,25 +11,31 @@ document.addEventListener('DOMContentLoaded', function () {
   // 첫 질문 active 처리
   questions[currentQuestionIndex].classList.add('active');
 
+  // 1. 서버에서 제출된 답변을 불러와서 표시
+  loadCheckedChecklist();
+
   // radio 버튼 변경 이벤트 (각 질문에서 발생)
   document.querySelectorAll('input[type="radio"]').forEach(radio => {
       radio.addEventListener('change', function () {
-          const questionId = radio.name; // 예: "q1", "q2" 등
+          const questionId = radio.name;  // 예: "q1", "q2" 등
           const answerText = radio.value;
           const questionText = getQuestionText(questionId);
           const questionContainer = document.getElementById(questionId);
+
           if (!questionContainer) {
               console.error("해당 질문 컨테이너를 찾을 수 없음:", questionId);
               return;
           }
 
-          // 이미 제출된 질문이면 또는 보기 모드이면 수정(PUT) 처리
-          if (questionContainer.dataset.submitted === "true" || viewMode) {
+          if (viewMode) {
+              // 보기 모드에서 수정 시 PUT 요청으로 전송
               updateAnswerInDatabase({ questionText, answerText });
           } else {
               // 처음 제출이면 POST 요청
-              questionContainer.dataset.submitted = "true";
-              sendAnswerToServer({ questionText, answerText });
+              if (questionContainer.dataset.submitted !== "true") {
+                  questionContainer.dataset.submitted = "true";
+                  sendAnswerToServer({ questionText, answerText });
+              }
 
               // 새 작성 모드일 경우, 다음 질문으로 이동
               if (currentQuestionIndex < questions.length - 1) {
@@ -76,23 +82,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 보기 / 재작성 버튼 이벤트 등록
   function addViewAndRewriteListeners() {
+      // 보기 버튼: 모든 질문을 active로 만들고(즉, 전체 답변 표시), 수정은 PUT 요청으로 처리
       document.getElementById('btn-checklist-view').addEventListener('click', function () {
           viewMode = true;
           questions.forEach(q => q.classList.add('active'));
       });
 
+      // 재작성 버튼: DELETE 요청으로 DB 체크리스트 삭제 후 UI 리셋
       document.getElementById('btn-checklist-rewrite').addEventListener('click', function () {
           fetch('/api/checklist/delete', {
               method: 'DELETE'
           })
           .then(response => response.json())
           .then(data => {
-              console.log('체크리스트 삭제 성공:', data.JSON);
+              console.log('✅ 체크리스트 삭제 성공:', data);
               viewMode = false;
               resetChecklist();
           })
           .catch(error => console.error('🚨 체크리스트 삭제 중 에러 발생:', error));
       });
+  }
+
+  // 서버에서 제출된 답변을 불러오기 (API 변경)
+  function loadCheckedChecklist() {
+      fetch('/api/checklist/me/check')  // 사용자가 체크한 체크리스트 불러오기
+          .then(response => response.json())
+          .then(data => {
+              data.forEach(answer => {
+                  const questionElement = Array.from(questions).find(q => {
+                      return q.querySelector('p').textContent.trim() === answer.direction;
+                  });
+                  if (questionElement) {
+                      questionElement.dataset.submitted = "true"; // 제출된 상태로 표시
+                      const radio = questionElement.querySelector(`input[type="radio"][value="${answer.response}"]`);
+                      if (radio) {
+                          radio.checked = true; // 이미 선택된 답변 표시
+                      }
+                  }
+              });
+          })
+          .catch(error => {
+              console.error('🚨 제출된 답변 로드 실패:', error);
+          });
   }
 
   function getQuestionText(questionId) {
@@ -117,15 +148,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function sendAnswerToServer({ questionText, answerText }) {
-      const result = getResultType(getAllAnswers());
       fetch('/api/checklist/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-              direction: questionText,
+              direction: questionText,   
               response: answerText,
               isChecked: true,
-              category: result.type
           })
       })
       .then(response => {
@@ -140,9 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // PUT 요청으로 수정된 답변 업데이트
   function updateAnswerInDatabase({ questionText, answerText }) {
-      const result = getResultType(getAllAnswers());
       fetch('/api/checklist/update', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -150,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
               direction: questionText,
               response: answerText,
               isChecked: true,
-              category: result.type
           })
       })
       .then(response => {
@@ -184,14 +210,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 예시로 작성한 결과 유형 결정 함수 (필요에 따라 수정)
   function getResultType(answers) {
-      // 예시: 첫 번째 질문의 답변에 따라 유형 결정
       let type = "자유여행";
       if (answers.some(a => a.questionText.includes("보라카이에 가는 주된 목적") && a.answerText === "휴식과 여유")) {
           type = "가족여행";
       } else if (answers.some(a => a.questionText.includes("보라카이에서 선호하는 숙소") && a.answerText === "럭셔리 리조트")) {
           type = "패키지여행";
       }
-      // 추가 로직 필요 시 여기서 확장
       return { type };
   }
 });
