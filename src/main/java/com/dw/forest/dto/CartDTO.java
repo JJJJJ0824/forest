@@ -14,4 +14,10 @@ public class CartDTO {
     private Long courseId;
     private String travelerName;
     private boolean purchaseStatus;
+    private String title;
+    private String description;
+    private String content;
+    private long price;
+    private String categoryName;
+
 }

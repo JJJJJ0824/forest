@@ -36,7 +36,19 @@ public class Cart {
     private boolean purchaseStatus; //  "true" - 구매완료, true 상태가 되면 삭제하도록 설정 필요, "false" - 구매 진행 안됨
 
     public CartDTO toDTO() {
-        return new CartDTO(this.id, this.course.getCourseId(), this.traveler.getTravelerName(), this.purchaseStatus);
+        Course course = this.course;  // Cart 객체에서 course 정보를 가져옴
+
+        return new CartDTO(
+                this.id,  // Cart id
+                course.getCourseId(),  // Course의 ID
+                this.traveler.getTravelerName(),  // Traveler 이름
+                this.purchaseStatus,  // 구매 상태
+                course.getTitle(),  // Course의 제목
+                course.getDescription(),  // Course의 설명
+                course.getContent(),  // Course의 내용
+                course.getPrice(),  // Course의 가격
+                course.getCategory().getCategoryName()  // Course의 카테고리 이름
+        );
     }
 
     public void addPoint(String actionType, double pointsValue) {

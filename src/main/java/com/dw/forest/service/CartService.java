@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CartService {
@@ -31,12 +32,14 @@ public class CartService {
         return cartRepository.findAll().stream().map(Cart::toDTO).toList();
     }
 
-    public CartDTO addCourseToCart(HttpServletRequest request,CartDTO cartDTO) {
+    public CartDTO addCourseToCart(HttpServletRequest request, CartDTO cartDTO) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
         }
+
         String travelerName = (String) session.getAttribute("travelerName");
+
         if (cartDTO.getCourseId() == null) {
             throw new ResourceNotFoundException("카트를 추가할 수 없습니다. 올바른 강의 ID를 입력하세요.");
         }
@@ -47,29 +50,43 @@ public class CartService {
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다."));
 
+        // Cart 객체를 생성하고 데이터 설정
         Cart cart = new Cart();
         cart.setTraveler(traveler);
         cart.setCourse(course);
         cart.setPurchaseStatus(cartDTO.isPurchaseStatus());
-        cartRepository.save(cart);
 
-        return cart.toDTO();
+        try {
+            cartRepository.save(cart); // Cart DB에 저장
+        } catch (Exception e) {
+            // 예외 로그 추가
+            throw new RuntimeException("장바구니 추가 중 오류가 발생했습니다.", e);
+        }
+
+        return cart.toDTO(); // CartDTO로 반환
     }
 
+
     public List<CartDTO> getCartByTravelerName(HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
+        HttpSession session = request.getSession(false); // 세션이 없으면 예외 처리
         if (session == null) {
-            throw new InvalidRequestException("세션이 없습니다.");
+            throw new InvalidRequestException("세션이 없습니다. 로그인 후 다시 시도해주세요.");
         }
+
         String travelerName = (String) session.getAttribute("travelerName");
+
+        if (travelerName == null) {
+            throw new InvalidRequestException("세션에 travelerName이 없습니다. 로그인 상태를 확인해주세요.");
+        }
 
         List<Cart> cartItems = cartRepository.findByTraveler_TravelerName(travelerName);
 
         if (cartItems.isEmpty()) {
-            throw new ResourceNotFoundException("장바구니를 찾을 수 없습니다. 올바른 여행자명을 입력하세요.");
+            throw new ResourceNotFoundException("해당 여행자의 장바구니 항목이 없습니다.");
         }
 
-        return cartItems.stream().map(Cart::toDTO).toList();
+        // DTO로 변환해서 반환
+        return cartItems.stream().map(Cart::toDTO).collect(Collectors.toList());
     }
 
     public String checkoutCart(HttpServletRequest request) {
@@ -287,4 +304,6 @@ public class CartService {
 
         pointRepository.usePoint(totalAmount, traveler.getTravelerName());
     }
+
+
 }

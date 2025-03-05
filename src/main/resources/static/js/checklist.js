@@ -103,9 +103,8 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // 서버에서 제출된 답변을 불러오기 (API 변경)
   function loadCheckedChecklist() {
-      fetch('/api/checklist/me/check')  // 사용자가 체크한 체크리스트 불러오기
+      fetch('/api/checklist/me/check')  
           .then(response => response.json())
           .then(data => {
               data.forEach(answer => {
@@ -191,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // 재작성 시 UI 및 DOM 상태 초기화
   function resetChecklist() {
       questions.forEach(q => {
           q.classList.remove('active');

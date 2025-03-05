@@ -23,9 +23,9 @@ public class CartController {
         return new ResponseEntity<>(cartService.getAllCarts(), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add")  // 여기서 /add 경로가 처리되도록 설정되어 있어야 합니다
     public ResponseEntity<CartDTO> addCourseToCart(HttpServletRequest request,@RequestBody CartDTO cartDTO) {
-        return new ResponseEntity<>(cartService.addCourseToCart(request, cartDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(cartService.addCourseToCart(request,cartDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/mycart")

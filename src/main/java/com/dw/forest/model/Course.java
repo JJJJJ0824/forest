@@ -53,6 +53,15 @@ public class Course {
     private Category category;
 
     public CourseReadDTO toRead() {
-        return new CourseReadDTO(this.courseId, this.title, this.description, this.content, this.price, this.createdAt, this.updatedAt, this.category.getCategoryName());
+        return new CourseReadDTO(
+                this.courseId,
+                this.title,
+                this.description,
+                this.content,
+                this.price,
+                this.createdAt,
+                this.updatedAt,
+                this.category != null ? this.category.getCategoryName() : "미분류"
+        );
     }
 }
