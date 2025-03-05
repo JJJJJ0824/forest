@@ -1,7 +1,7 @@
-let currentPage = 1; // 현재 페이지
-let filteredCourses = []; // 필터링된 강의 배열 (카테고리별 강의)
-const itemsPerPage = 6; // 한 페이지에 표시할 강의 개수
-let currentCategory = 'all'; // 현재 선택된 카테고리 (기본값은 전체)
+let currentPage = 1; 
+let filteredCourses = []; 
+const itemsPerPage = 6; 
+let currentCategory = 'all';
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("course.js 로드됨!");
@@ -29,12 +29,12 @@ function handleCourseListPage() {
             const category = button.getAttribute("data-category");
             console.log("클릭한 카테고리:", category);
 
-            currentCategory = category; // 현재 카테고리 변경
-            currentPage = 1; // 카테고리 변경 시 첫 페이지로 초기화
+            currentCategory = category; 
+            currentPage = 1; 
             if (category === "all") {
-                fetchCourses(); // 전체 강의 리스트
+                fetchCourses(); 
             } else {
-                fetchCoursesByCategory(category); // 카테고리별 강의
+                fetchCoursesByCategory(category); 
             }
         });
     });
@@ -60,8 +60,8 @@ function fetchCourses() {
         })
         .then(data => {
             console.log("서버에서 받은 전체 강의 데이터:", data);
-            filteredCourses = data;  // 전체 강의 리스트
-            renderCourses(); // 강의 렌더링
+            filteredCourses = data; 
+            renderCourses(); 
         })
         .catch(error => console.error("강의 목록 불러오기 실패:", error));
 }
@@ -74,8 +74,8 @@ function fetchCoursesByCategory(categoryName) {
         })
         .then(data => {
             console.log(`${categoryName} 카테고리 강의 데이터:`, data);
-            filteredCourses = data;  // 카테고리별 강의 리스트
-            renderCourses(); // 강의 렌더링
+            filteredCourses = data; 
+            renderCourses(); 
         })
         .catch(error => console.error("카테고리 강의 불러오기 실패:", error));
 }
@@ -89,7 +89,6 @@ function renderCourses() {
         return;
     }
 
-    // 페이지에 맞는 강의만 추출 (pagination)
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const paginatedCourses = filteredCourses.slice(startIndex, endIndex);
@@ -103,7 +102,7 @@ function renderCourses() {
 
         courseCard.innerHTML = `
             <div class="image-wrapper">
-                <img src="/img/${getImageName(course.categoryName)}.png" alt="${course.title}">
+                <img src="/img/${getImageName(course.courseId)}.jpg" alt="${course.title}">
             </div>
             <div class="text-wrapper">
                 <h3>${course.title}</h3>
@@ -116,7 +115,6 @@ function renderCourses() {
         courseContainer.appendChild(courseCard);
     });
 
-    // 페이지네이션 버튼 렌더링
     renderPagination();
 }
 
@@ -126,38 +124,35 @@ function renderPagination() {
     const paginationContainer = document.getElementById("pagination-container");
     paginationContainer.innerHTML = "";
 
-    // 이전 버튼
     const prevBtn = document.createElement("button");
     prevBtn.innerText = "‹";
     prevBtn.disabled = currentPage === 1;
     prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
             currentPage--;
-            renderCourses(); // 강의 목록 갱신
+            renderCourses(); 
         }
     });
     paginationContainer.appendChild(prevBtn);
 
-    // 페이지 버튼들
     for (let i = 1; i <= totalPages; i++) {
         const pageBtn = document.createElement("button");
         pageBtn.innerText = i;
         pageBtn.classList.toggle("active", i === currentPage);
         pageBtn.addEventListener('click', () => {
             currentPage = i;
-            renderCourses(); // 강의 목록 갱신
+            renderCourses();
         });
         paginationContainer.appendChild(pageBtn);
     }
 
-    // 다음 버튼
     const nextBtn = document.createElement("button");
     nextBtn.innerText = "›";
     nextBtn.disabled = currentPage === totalPages;
     nextBtn.addEventListener("click", () => {
         if (currentPage < totalPages) {
             currentPage++;
-            renderCourses(); // 강의 목록 갱신
+            renderCourses();
         }
     });
     paginationContainer.appendChild(nextBtn);
@@ -221,12 +216,26 @@ function getCategoryClass(categoryName) {
     }
 }
 
-function getImageName(categoryName) {
-    switch (categoryName) {
-        case "자유여행": return "activity";
-        case "패키지여행": return "package";
-        case "가족여행": return "hotel";
-        case "공통": return "moneyChange";
-        default: return "logo";
+function getImageName(courseId) {
+    switch (courseId) { 
+        case 1: return "1";
+        case 2: return "2";   // 2.jpg
+        case 3: return "3";   // 3.jpg
+        case 4: return "4";   // 4.jpg
+        case 5: return "5";   // 5.jpg
+        case 6: return "6";   // 6.jpg
+        case 7: return "7";   // 7.jpg
+        case 8: return "8";   // 8.jpg
+        case 9: return "9";   // 9.jpg
+        case 10: return "10"; // 10.jpg
+        case 11: return "11"; // 11.jpg
+        case 12: return "12"; // 12.jpg
+        case 13: return "13"; // 13.jpg
+        case 14: return "14"; // 14.jpg
+        case 15: return "15"; // 15.jpg
+        case 16: return "16"; // 16.jpg
+        case 17: return "17"; // 17.jpg
+        case 18: return "18"; // course18.jpg
+        default: return "logo"; // 기본 이미지
     }
 }

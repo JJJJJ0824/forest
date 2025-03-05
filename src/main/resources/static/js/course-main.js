@@ -16,7 +16,7 @@ fetch('/api/course/all')
       const courseElement = document.createElement('div');
       courseElement.classList.add('course'); // 스타일 적용을 위한 클래스
 
-      const imageUrl = `/img/course${course.courseId}.jpg`; // id에 맞는 이미지 URL 생성
+      const imageUrl = `/img/${course.courseId}.jpg`; // id에 맞는 이미지 URL 생성
 
       courseElement.innerHTML = `
         <a href="course_family_aboard.html?id=${course.courseId}" class="course-link">
@@ -35,7 +35,7 @@ fetch('/api/course/all')
       const cardElement = document.createElement('div');
       cardElement.classList.add('card'); // 스타일 적용을 위한 클래스
 
-      const imageUrl = `/img/course${course.courseId}.jpg`; // id에 맞는 이미지 URL 생성
+      const imageUrl = `/img/${course.courseId}.jpg`; // id에 맞는 이미지 URL 생성
 
       // 제목과 짧은 내용 추가
       cardElement.innerHTML = `
