@@ -8,6 +8,8 @@ import com.dw.forest.model.Notice;
 import com.dw.forest.model.Traveler;
 import com.dw.forest.repository.NoticeRepository;
 import com.dw.forest.repository.TravelerRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,18 +38,25 @@ public class NoticeService {
     }
 
     // 공지사항 생성
-    public NoticeDTO createNotice(NoticeDTO noticeDTO) {
-        if (!noticeDTO.getTravelerName().equals("admin")) {
+    public NoticeDTO createNotice(String title, String content, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            throw new InvalidRequestException("세션이 없습니다.");
+        }
+
+        String travelerName = (String) session.getAttribute("travelerName");
+
+        if (!travelerName.equals("admin")) {
             throw new InvalidRequestException("공지사항은 관리자만 작성 가능합니다.");
         }
 
-        Traveler traveler = travelerRepository.findById(noticeDTO.getTravelerName()).
+        Traveler traveler = travelerRepository.findById(travelerName).
                 orElseThrow(()->new UnauthorizedTravelerException("관리자명을 찾을 수 없습니다"));
 
         Notice notice = new Notice();
         notice.setTraveler(traveler);
-        notice.setTitle(noticeDTO.getTitle());
-        notice.setContent(noticeDTO.getContent());
+        notice.setTitle(title);
+        notice.setContent(content);
         notice.setCreatedAt(LocalDate.now());
 
         noticeRepository.save(notice);

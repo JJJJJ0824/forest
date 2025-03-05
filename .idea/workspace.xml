@@ -6,8 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="cdef9fe8-ef95-4af0-bdd6-6bb95be5dcab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/ChecklistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/ChecklistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/checklist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/controller/NoticeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dw/forest/service/NoticeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/notice.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/notice.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/notice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/notice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/notice1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/notice1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/notice.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/notice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/notice1.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/notice1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/notice_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/notice_admin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

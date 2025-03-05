@@ -3,10 +3,12 @@ package com.dw.forest.controller;
 import com.dw.forest.dto.NoticeDTO;
 import com.dw.forest.model.Notice;
 import com.dw.forest.service.NoticeService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,14 +26,16 @@ public class NoticeController {
 
     // 공지사항 생성
     @PostMapping("/create")
-    public ResponseEntity<NoticeDTO> createNotice(@RequestBody NoticeDTO noticeDTO) {
-        NoticeDTO createdNotice = noticeService.createNotice(noticeDTO);
+    public ResponseEntity<NoticeDTO> createNotice(
+            @RequestBody NoticeDTO noticeDTO, HttpServletRequest request) {
+
+        NoticeDTO createdNotice = noticeService.createNotice(noticeDTO.getTitle(), noticeDTO.getContent(), request);
         return new ResponseEntity<>(createdNotice, HttpStatus.CREATED);
     }
 
     // 특정 공지사항 조회
     @GetMapping("/{notice_id}")
-    public ResponseEntity<NoticeDTO> getNoticeById(@PathVariable Long notice_id) {
+    public ResponseEntity<NoticeDTO> getNoticeById(@PathVariable("notice_id") Long notice_id) {
         NoticeDTO notice = noticeService.getNoticeById(notice_id);
         return new ResponseEntity<>(notice, HttpStatus.OK);
     }
