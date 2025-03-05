@@ -57,8 +57,10 @@ public class ChecklistService {
         }
         String travelerName = (String) session.getAttribute("travelerName");
 
+        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
+
         Checklist checklist = new Checklist();
-        checklist.setTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
+        checklist.setTraveler(traveler);
         checklist.setDirection(checkListDTO.getDirection());
         checklist.setResponse(checkListDTO.getResponse());
         checklist.setChecked(true);
@@ -75,7 +77,8 @@ public class ChecklistService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        List<Checklist> checklists = checklistRepository.findByTraveler(travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다.")));
+        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
+        List<Checklist> checklists = checklistRepository.findByTraveler(traveler);
         for (Checklist checklist : checklists) {
             checklist.setCategory(null);
             checklist.setDirection(checkListDTO.getDirection());

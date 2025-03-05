@@ -394,12 +394,12 @@ div#right-side .liked-courses{
     box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
 }
 
-#btn-checklist-view {
+#btn-checklist {
     background-color: #2196F3; 
     color: white;
 }
 
-#btn-checklist-view:hover {
+#btn-checklist:hover {
     background-color: #1976D2;
     box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 }
@@ -422,6 +422,10 @@ div#right-side .liked-courses{
     margin-top: 20px;
     text-align: center;
     display: none;
+}
+
+#resultSection.active {
+    display: block;
 }
 
 #resultText {

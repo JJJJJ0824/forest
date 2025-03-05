@@ -14,6 +14,6 @@ public class CheckListDTO {
     private String direction;
     private String response;
     private boolean isChecked;
-    private String traveler;
+    private String travelerName;
     private String category;
 }

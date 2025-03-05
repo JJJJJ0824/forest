@@ -43,36 +43,47 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    submitButton.addEventListener('click', function () {
-      console.log("selectedAnswers.length:", selectedAnswers.length);
-      console.log("questions.length:", questions.length);
-        
+    document.getElementById('submit').addEventListener('click', function () {
       const allAnswered = selectedAnswers.length === questions.length &&
-        selectedAnswers.every(answer => answer.answerText !== undefined && answer.answerText !== '');
-    
+          selectedAnswers.every(answer => answer.answerText !== undefined && answer.answerText !== '');
+  
+      const resultSection = document.getElementById('resultSection');
+      
+      resultSection.innerHTML = ''; 
+      
       if (allAnswered) {
-        const result = getResultType(selectedAnswers);
-        resultText.textContent = `당신의 유형: ${result.type}`;
-    
-        const answersList = selectedAnswers.map(item => {
-          return `<li>${item.questionText} : ${item.answerText}</li>`;
-        }).join('');
-    
-        resultSection.innerHTML = `
-          <p>${result.type}</p>
-          <ul>${answersList}</ul>
-        `;
-    
-        const checklistButton = document.getElementById('btn-checklist');
-        const rewriteButton = document.getElementById('btn-checklist-rewrite');
-        checklistButton.classList.add('active');
-        rewriteButton.classList.add('active');
+          const result = getResultType(selectedAnswers); 
+          resultText.textContent = `당신의 유형: ${result.type}`;
+  
+          const answersList = selectedAnswers.map(item => {
+              return `<li>${item.questionText} : ${item.answerText}</li>`;
+          }).join('');
+          
+          resultSection.classList.add('active');
+  
+          resultSection.innerHTML = `
+              <h3>결과</h3>
+              <p>${result.type}</p>
+              <ul>${answersList}</ul>
+          `;
+  
+          const checklistButton = document.createElement('button');
+          checklistButton.textContent = '체크리스트 보기';
+          checklistButton.id = 'btn-checklist';
+          checklistButton.type = 'button';
+  
+          const rewriteButton = document.createElement('button');
+          rewriteButton.textContent = '체크리스트 재작성';
+          rewriteButton.id = 'btn-checklist-rewrite';
+          rewriteButton.type = 'button';
+  
+          resultSection.appendChild(checklistButton);
+          resultSection.appendChild(rewriteButton);
       } else {
-        console.log("🔴 모든 질문에 답변을 완료하지 않았습니다.");
-        resultText.textContent = "모든 질문에 답변을 완료해 주세요.";  
-        resultSection.innerHTML = '';  
+          resultText.textContent = "모든 질문에 답변을 완료해 주세요.";
       }
-    });
+  });
+  
     
 
     function getQuestionText(questionId) {
@@ -99,8 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
           direction: lastAnswer.questionText, 
           response: lastAnswer.answerText,
           isChecked: true,
-          category: getResultType(selectedAnswers).type,
-          travelerName: "a"
+          category: getResultType(selectedAnswers).type
         })
       })
       .then(response => {
