@@ -1,55 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("mypage.js 로드됨!");
 
-    // 사용자 정보를 먼저 가져옵니다.
-    getLoggedInUser();
-    setupUIInteractions();
-
-    // 사용자 정보를 가져온 후 checklist.js를 동적으로 로드합니다.
-    function getLoggedInUser() {
-        fetch('/api/traveler/mypage', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include' 
-        })
-        .then(response => {
-            if (response.status === 401) { 
-                alert("세션이 만료되었습니다. 다시 로그인해 주세요!");
-                window.location.href = "login.html";
-                return;
-            }
-            if (!response.ok) throw new Error("로그인 정보 확인 실패");
-            return response.json();
-        })
-        .then(data => {
-            if (data && data !== "") {
-                // 전역 변수에 사용자 정보를 저장합니다.
-                window.currentUser = data;
-                displayUserInfo(data);
-                getCompletedCourses();
-                // 사용자 정보가 로드되면 checklist.js를 동적으로 로드
-                loadChecklistScript();
-            } else {
-                alert("로그인이 필요합니다!");
-                window.location.href = "login.html";
-            }
-        })
-        .catch(error => {
-            console.error("로그인 상태 확인 실패:", error);
-            alert("마이페이지를 로딩하는 중 오류가 발생했습니다.");
-            window.location.href = "login.html";
-        });
-    }
-
-    // checklist.js를 동적으로 로드하는 함수
-    function loadChecklistScript() {
-        const script = document.createElement("script");
-        script.src = "/js/checklist.js";
-        script.onload = function () {
-            console.log("checklist.js 동적 로드 완료!");
-        };
-        document.body.appendChild(script);
-    }
+    getLoggedInUser(); // 로그인된 유저 정보 먼저 가져오기
+    setupUIInteractions(); // 버튼 클릭 등 UI 관련 이벤트 설정
 
     function setupUIInteractions() {
         const buttons = document.querySelectorAll('button#btn-info, button#btn-checklist, button#btn-courses');
@@ -70,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
         buttons.forEach(button => {
             button.addEventListener('click', function() {
                 buttons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
 
+                this.classList.add('active');
                 leftSide.classList.remove('active');
                 center.classList.remove('active');
                 rightSide.classList.remove('active');
@@ -127,15 +80,51 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function getLoggedInUser() {
+        fetch('/api/traveler/mypage', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include' 
+        })
+        .then(response => {
+            if (response.status === 401) { 
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요!");
+                window.location.href = "login.html";
+                return;
+            }
+            if (!response.ok) throw new Error("로그인 정보 확인 실패");
+            return response.json();
+        })
+        .then(data => {
+            if (data && data !== "") {
+                displayUserInfo(data);
+                getCompletedCourses();
+            } else {
+                alert("로그인이 필요합니다!");
+                window.location.href = "login.html";
+            }
+        })
+        .catch(error => {
+            console.error("로그인 상태 확인 실패:", error);
+            alert("마이페이지를 로딩하는 중 오류가 발생했습니다.");
+            window.location.href = "login.html";
+        });
+    }
+
     function displayUserInfo(userData) {
-        // 전역 변수 대신 내부 변수에도 업데이트(필요시)
+        currentUserData = userData;
+
         document.getElementById("userName").textContent = userData.realName || "이름 없음";
         document.getElementById("userPhone").textContent = userData.contact || "연락처 없음";
         document.getElementById("userEmail").textContent = userData.email || "이메일 없음";
 
-        document.getElementById('editNameInput').value = userData.realName || '';
-        document.getElementById('editPhoneInput').value = userData.contact || '';
-        document.getElementById('editEmailInput').value = userData.email || '';
+        const editNameInput = document.getElementById('editNameInput');
+        const editPhoneInput = document.getElementById('editPhoneInput');
+        const editEmailInput = document.getElementById('editEmailInput');
+        
+        editNameInput.value = userData.realName || '';
+        editPhoneInput.value = userData.contact || '';
+        editEmailInput.value = userData.email || '';
     }
 
     function getCompletedCourses() {

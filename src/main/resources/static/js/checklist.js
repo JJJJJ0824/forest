@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // 사용자 정보가 없으면 백엔드에서 불러온 후 콜백 실행
-  loadUserInfoIfNeeded(function () {
     console.log("checklist.js 로드됨! 사용자 정보 로드 완료");
 
     let currentQuestionIndex = 0;
-    const questions = document.querySelectorAll('.checklist form div');
+    const questions = document.querySelectorAll('.checklist form div[id^="q"]');
     const submitButton = document.getElementById('submit');
     const resultSection = document.getElementById('resultSection');
     const resultText = document.getElementById('resultText');
@@ -45,9 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    submitButton.addEventListener('click', function (event) {
-      event.preventDefault();
-    
+    submitButton.addEventListener('click', function () {
+      console.log("selectedAnswers.length:", selectedAnswers.length);
+      console.log("questions.length:", questions.length);
+        
       const allAnswered = selectedAnswers.length === questions.length &&
         selectedAnswers.every(answer => answer.answerText !== undefined && answer.answerText !== '');
     
@@ -58,9 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const answersList = selectedAnswers.map(item => {
           return `<li>${item.questionText} : ${item.answerText}</li>`;
         }).join('');
-        
+    
         resultSection.innerHTML = `
-          <h3>결과</h3>
           <p>${result.type}</p>
           <ul>${answersList}</ul>
         `;
@@ -70,7 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
         checklistButton.classList.add('active');
         rewriteButton.classList.add('active');
       } else {
-        alert('모든 질문에 답변을 완료해 주세요.');
+        console.log("🔴 모든 질문에 답변을 완료하지 않았습니다.");
+        resultText.textContent = "모든 질문에 답변을 완료해 주세요.";  
+        resultSection.innerHTML = '';  
       }
     });
     
@@ -85,8 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function sendSelectedAnswerToServer() {
-      const travelerName = window.currentUser.travelerName;
-      const categoryName = getResultType(selectedAnswers).type;
     
       const lastAnswer = selectedAnswers[selectedAnswers.length - 1]; 
       if (!lastAnswer) {
@@ -100,9 +98,9 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify({
           direction: lastAnswer.questionText, 
           response: lastAnswer.answerText,
-          checked: true,
-          traveler: travelerName,
-          category: categoryName
+          isChecked: true,
+          category: getResultType(selectedAnswers).type,
+          travelerName: "a"
         })
       })
       .then(response => {
@@ -175,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
     
-          updateQuestionView(lastAnsweredIndex);
+          updateQuestionView(lastAnsweredIndex+1);
         })
         .catch(error => {
           console.error('🚨 이전 답변 로딩 중 에러 발생:', error);
@@ -183,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function updateQuestionView(index) {
-      const questions = document.querySelectorAll('.checklist form div');
+      const questions = document.querySelectorAll('.checklist form div[id^="q"]');
       questions.forEach((q, i) => {
         q.classList.toggle('active', i === index);
       });
@@ -192,13 +190,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     
-  });
 });
-
-function loadUserInfoIfNeeded(callback) {
-  if (window.currentUser) {
-    callback();
-  } else {
-    window.location.href = "login.html";
-  }
-}
