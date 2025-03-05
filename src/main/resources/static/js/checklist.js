@@ -1,203 +1,197 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("checklist.js 로드됨! 사용자 정보 로드 완료");
+  console.log("checklist.js 로드됨! 사용자 정보 로드 완료");
 
-    let currentQuestionIndex = 0;
-    const questions = document.querySelectorAll('.checklist form div[id^="q"]');
-    const submitButton = document.getElementById('submit');
-    const resultSection = document.getElementById('resultSection');
-    const resultText = document.getElementById('resultText');
-    const selectedAnswers = [];
+  let currentQuestionIndex = 0;
+  let viewMode = false; // false: 새 작성 모드, true: 보기/수정 모드
+  const questions = document.querySelectorAll('.checklist form div[id^="q"]');
+  const submitButton = document.getElementById('submit');
+  const resultSection = document.getElementById('resultSection');
+  const resultText = document.getElementById('resultText');
 
-    fetchPreviousAnswers();
+  // 첫 질문 active 처리
+  questions[currentQuestionIndex].classList.add('active');
 
-    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+  // radio 버튼 변경 이벤트 (각 질문에서 발생)
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
       radio.addEventListener('change', function () {
-        const questionId = radio.name;         
-        const answerText = radio.value;          
-        const questionText = getQuestionText(questionId);
-
-        console.log("Answer selected:", answerText);
-
-        const existingIndex = selectedAnswers.findIndex(item => item.questionId === questionId);
-        if (existingIndex !== -1) {
-          selectedAnswers[existingIndex].answerText = answerText;
-        } else {
-          selectedAnswers.push({ 
-            questionId: questionId, 
-            questionText: questionText, 
-            answerText: answerText 
-          });
-        }
-
-        if (currentQuestionIndex < questions.length - 1) {
-          questions[currentQuestionIndex].classList.remove('active');
-          currentQuestionIndex++;
-          questions[currentQuestionIndex].classList.add('active');
-
-          if (currentQuestionIndex === questions.length - 1) {
-            submitButton.style.display = 'block';
+          const questionId = radio.name; // 예: "q1", "q2" 등
+          const answerText = radio.value;
+          const questionText = getQuestionText(questionId);
+          const questionContainer = document.getElementById(questionId);
+          if (!questionContainer) {
+              console.error("해당 질문 컨테이너를 찾을 수 없음:", questionId);
+              return;
           }
-        }
 
-        sendSelectedAnswerToServer();
+          // 이미 제출된 질문이면 또는 보기 모드이면 수정(PUT) 처리
+          if (questionContainer.dataset.submitted === "true" || viewMode) {
+              updateAnswerInDatabase({ questionText, answerText });
+          } else {
+              // 처음 제출이면 POST 요청
+              questionContainer.dataset.submitted = "true";
+              sendAnswerToServer({ questionText, answerText });
+
+              // 새 작성 모드일 경우, 다음 질문으로 이동
+              if (currentQuestionIndex < questions.length - 1) {
+                  questions[currentQuestionIndex].classList.remove('active');
+                  currentQuestionIndex++;
+                  questions[currentQuestionIndex].classList.add('active');
+                  if (currentQuestionIndex === questions.length - 1) {
+                      submitButton.style.display = 'block';
+                  }
+              }
+          }
       });
-    });
-
-    document.getElementById('submit').addEventListener('click', function () {
-      const allAnswered = selectedAnswers.length === questions.length &&
-          selectedAnswers.every(answer => answer.answerText !== undefined && answer.answerText !== '');
-  
-      const resultSection = document.getElementById('resultSection');
-      
-      resultSection.innerHTML = ''; 
-      
-      if (allAnswered) {
-          const result = getResultType(selectedAnswers); 
-          resultText.textContent = `당신의 유형: ${result.type}`;
-  
-          const answersList = selectedAnswers.map(item => {
-              return `<li>${item.questionText} : ${item.answerText}</li>`;
-          }).join('');
-          
-          resultSection.classList.add('active');
-  
-          resultSection.innerHTML = `
-              <h3>결과</h3>
-              <p>${result.type}</p>
-              <ul>${answersList}</ul>
-          `;
-  
-          const checklistButton = document.createElement('button');
-          checklistButton.textContent = '체크리스트 보기';
-          checklistButton.id = 'btn-checklist';
-          checklistButton.type = 'button';
-  
-          const rewriteButton = document.createElement('button');
-          rewriteButton.textContent = '체크리스트 재작성';
-          rewriteButton.id = 'btn-checklist-rewrite';
-          rewriteButton.type = 'button';
-  
-          resultSection.appendChild(checklistButton);
-          resultSection.appendChild(rewriteButton);
-      } else {
-          resultText.textContent = "모든 질문에 답변을 완료해 주세요.";
-      }
   });
-  
-    
 
-    function getQuestionText(questionId) {
+  // 최종 결과 보기 (제출) 버튼 클릭 이벤트
+  submitButton.addEventListener('click', function () {
+      const allAnswers = getAllAnswers();
+      if (allAnswers.length !== questions.length) {
+          resultText.textContent = "모든 질문에 답변을 완료해 주세요.";
+          return;
+      }
+      const result = getResultType(allAnswers);
+      resultText.textContent = `당신의 유형: ${result.type}`;
+      const answersList = allAnswers.map(item => `<li>${item.questionText} : ${item.answerText}</li>`).join('');
+      resultSection.classList.add('active');
+      resultSection.innerHTML = `
+          <h3>결과</h3>
+          <p>${result.type}</p>
+          <ul>${answersList}</ul>
+      `;
+      // 보기 및 재작성 버튼 추가
+      const viewButton = document.createElement('button');
+      viewButton.textContent = '체크리스트 보기';
+      viewButton.id = 'btn-checklist-view';
+      viewButton.type = 'button';
+      const rewriteButton = document.createElement('button');
+      rewriteButton.textContent = '체크리스트 재작성';
+      rewriteButton.id = 'btn-checklist-rewrite';
+      rewriteButton.type = 'button';
+      resultSection.appendChild(viewButton);
+      resultSection.appendChild(rewriteButton);
+      addViewAndRewriteListeners();
+  });
+
+  // 보기 / 재작성 버튼 이벤트 등록
+  function addViewAndRewriteListeners() {
+      document.getElementById('btn-checklist-view').addEventListener('click', function () {
+          viewMode = true;
+          questions.forEach(q => q.classList.add('active'));
+      });
+
+      document.getElementById('btn-checklist-rewrite').addEventListener('click', function () {
+          fetch('/api/checklist/delete', {
+              method: 'DELETE'
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log('체크리스트 삭제 성공:', data.JSON);
+              viewMode = false;
+              resetChecklist();
+          })
+          .catch(error => console.error('🚨 체크리스트 삭제 중 에러 발생:', error));
+      });
+  }
+
+  function getQuestionText(questionId) {
       const questionElement = document.querySelector(`#${questionId} p`);
       if (!questionElement) {
-        console.error(`해당 questionElement를 찾을 수 없습니다: ${questionId}`);
-        return null;
+          console.error(`해당 questionElement를 찾을 수 없습니다: ${questionId}`);
+          return "";
       }
       return questionElement.textContent.trim();
-    }
+  }
 
-    function sendSelectedAnswerToServer() {
-    
-      const lastAnswer = selectedAnswers[selectedAnswers.length - 1]; 
-      if (!lastAnswer) {
-        console.error("🚨 선택된 답변이 없습니다!");
-        return;
-      }
-    
+  function getAllAnswers() {
+      let answers = [];
+      questions.forEach(q => {
+          const questionText = q.querySelector('p').textContent.trim();
+          const checkedInput = q.querySelector('input[type="radio"]:checked');
+          if (checkedInput) {
+              answers.push({ questionText, answerText: checkedInput.value });
+          }
+      });
+      return answers;
+  }
+
+  function sendAnswerToServer({ questionText, answerText }) {
+      const result = getResultType(getAllAnswers());
       fetch('/api/checklist/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          direction: lastAnswer.questionText, 
-          response: lastAnswer.answerText,
-          isChecked: true,
-          category: getResultType(selectedAnswers).type
-        })
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              direction: questionText,
+              response: answerText,
+              isChecked: true,
+              category: result.type
+          })
       })
       .then(response => {
-        if (!response.ok) {
-          throw new Error(`서버 오류: ${response.statusText}`);
-        }
-        return response.json();
+          if (!response.ok) throw new Error(response.statusText);
+          return response.json();
       })
       .then(data => {
-        console.log('✅ 서버 응답:', data);
+          console.log('✅ 체크리스트 저장 성공:', data);
       })
       .catch(error => {
-        console.error('🚨 에러 발생:', error);
+          console.error('🚨 체크리스트 저장 중 에러 발생:', error);
       });
-    }
+  }
 
-    function getResultType(selectedAnswers) {
-      let type = "자유여행";
+  // PUT 요청으로 수정된 답변 업데이트
+  function updateAnswerInDatabase({ questionText, answerText }) {
+      const result = getResultType(getAllAnswers());
+      fetch('/api/checklist/update', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              direction: questionText,
+              response: answerText,
+              isChecked: true,
+              category: result.type
+          })
+      })
+      .then(response => {
+          if (!response.ok) throw new Error(response.statusText);
+          return response.json();
+      })
+      .then(data => {
+          console.log('✅ 체크리스트 업데이트 성공:', data);
+      })
+      .catch(error => {
+          console.error('🚨 체크리스트 업데이트 에러:', error);
+      });
+  }
 
-      if (
-        selectedAnswers.some(answer => answer.questionId === 'q1' && answer.answerText === '휴식과 여유') &&
-        selectedAnswers.some(answer => answer.questionId === 'q3' && answer.answerText === '패키지 여행')
-      ) {
-        type = "자유여행";
-      } else if (
-        selectedAnswers.some(answer => answer.questionId === 'q2' && answer.answerText === '럭셔리 리조트') &&
-        selectedAnswers.some(answer => answer.questionId === 'q4' && answer.answerText === '가족 (아이들과 함께)')
-      ) {
-        type = "패키지여행";
-      } else if (
-        selectedAnswers.some(answer => answer.questionId === 'q2' && answer.answerText === '가족 친화적인 호텔') &&
-        selectedAnswers.some(answer => answer.questionId === 'q5' && answer.answerText === '완전 고정 일정')
-      ) {
-        type = "가족여행";
-      }
-
-      return { type };
-    }
-
-    function fetchPreviousAnswers() {
-      fetch('/api/checklist/me/check')
-        .then(response => response.json())
-        .then(data => {
-          console.log("📌 서버에서 받은 데이터:", data);
-          
-          if (!Array.isArray(data)) {
-            console.error("❌ 서버 응답이 배열이 아님:", data);
-            return;
-          }
-    
-          let lastAnsweredIndex = 0; 
-    
-          data.forEach((item, index) => {
-            const questionText = item.direction;
-            const answerText = item.response;
-    
-            console.log(`🔍 questionText: ${questionText}, answerText: ${answerText}`);
-    
-            if (questionText) {
-              selectedAnswers.push({ questionText, answerText });
-    
-              const radio = document.querySelector(`input[value="${answerText}"]`);
-              if (radio) {
-                radio.checked = true;
-    
-                lastAnsweredIndex = index;
-              }
-            } else {
-              console.warn(`⚠️ 질문을 찾을 수 없음: ${questionText}`);
-            }
+  // 재작성 시 UI 및 DOM 상태 초기화
+  function resetChecklist() {
+      questions.forEach(q => {
+          q.classList.remove('active');
+          q.removeAttribute('data-submitted');
+          q.querySelectorAll('input[type="radio"]').forEach(radio => {
+              radio.checked = false;
+              radio.disabled = false;
           });
-    
-          updateQuestionView(lastAnsweredIndex+1);
-        })
-        .catch(error => {
-          console.error('🚨 이전 답변 로딩 중 에러 발생:', error);
-        });
-    }
-    
-    function updateQuestionView(index) {
-      const questions = document.querySelectorAll('.checklist form div[id^="q"]');
-      questions.forEach((q, i) => {
-        q.classList.toggle('active', i === index);
       });
-    
-      currentQuestionIndex = index; 
-    }
-    
-    
+      currentQuestionIndex = 0;
+      questions[currentQuestionIndex].classList.add('active');
+      submitButton.style.display = 'none';
+      resultSection.innerHTML = '';
+      resultText.textContent = '';
+  }
+
+  // 예시로 작성한 결과 유형 결정 함수 (필요에 따라 수정)
+  function getResultType(answers) {
+      // 예시: 첫 번째 질문의 답변에 따라 유형 결정
+      let type = "자유여행";
+      if (answers.some(a => a.questionText.includes("보라카이에 가는 주된 목적") && a.answerText === "휴식과 여유")) {
+          type = "가족여행";
+      } else if (answers.some(a => a.questionText.includes("보라카이에서 선호하는 숙소") && a.answerText === "럭셔리 리조트")) {
+          type = "패키지여행";
+      }
+      // 추가 로직 필요 시 여기서 확장
+      return { type };
+  }
 });

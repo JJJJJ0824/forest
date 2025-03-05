@@ -77,17 +77,31 @@ public class ChecklistService {
             throw new InvalidRequestException("세션이 없습니다.");
         }
         String travelerName = (String) session.getAttribute("travelerName");
-        Traveler traveler = travelerRepository.findById(travelerName).orElseThrow(()->new ResourceNotFoundException("계정명이 잘못되었습니다."));
-        List<Checklist> checklists = checklistRepository.findByTraveler(traveler);
-        for (Checklist checklist : checklists) {
-            checklist.setCategory(null);
-            checklist.setDirection(checkListDTO.getDirection());
-            checklist.setResponse(checkListDTO.getResponse());
-            checklist.setChecked(checkListDTO.isChecked());
-            checklistRepository.save(checklist);
+
+        Traveler traveler = travelerRepository.findById(travelerName)
+                .orElseThrow(() -> new ResourceNotFoundException("계정명이 잘못되었습니다."));
+
+        Checklist checklist = checklistRepository.findByTraveler_TravelerNameAndDirection(travelerName, checkListDTO.getDirection())
+                .orElseThrow(() -> new ResourceNotFoundException("해당 체크리스트 항목을 찾을 수 없습니다."));
+
+        if (!checklist.getTraveler().getTravelerName().equals(travelerName)) {
+            throw new InvalidRequestException("해당 체크리스트 항목을 수정할 권한이 없습니다.");
         }
+
+        checklist.setResponse(checkListDTO.getResponse());  // 답변 업데이트
+        checklist.setChecked(true);  // 체크된 항목으로 설정
+
+        if (checkListDTO.getCategory() != null) {
+            Category category = categoryRepository.findById(checkListDTO.getCategory())
+                    .orElseThrow(() -> new ResourceNotFoundException("잘못된 카테고리입니다."));
+            checklist.setCategory(category);
+        }
+
+        checklistRepository.save(checklist);
+
         return checkListDTO;
     }
+
 
     public List<CheckListDTO> getChecklistByTraveler(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
@@ -98,7 +112,7 @@ public class ChecklistService {
         Traveler traveler = travelerRepository.findById(travelerName)
                 .orElseThrow(() -> new ResourceNotFoundException("잘못된 계정명입니다."));
 
-        List<Checklist> checklists = checklistRepository.findByTraveler(traveler);
+        List<Checklist> checklists = checklistRepository.findByTraveler_TravelerName(travelerName);
 
         return checklists.stream().map(Checklist::toDTO).toList();
     }
