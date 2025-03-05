@@ -283,16 +283,6 @@ div#right-side .liked-courses{
     }
 }
 
-.paid-courses {
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'monospace', sans-serif;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
 .liked-courses {
     margin: 0;
     box-sizing: border-box;
@@ -476,44 +466,7 @@ div#right-side .liked-courses{
     color: #333;
 }
 
-div#right-side .liked-courses{
-    margin-top: 50px;
-}
-
-.course-list {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.course-item {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 150px;
-}
-
-.course-item img {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
-.course-item p {
-    font-size: 14px;
-    color: #333;
-}
-
-@media (max-width: 768px) {
-    .mypage-container {
-        grid-template-columns: 1fr;
-    }
-
-    .course-item {
-        width: 100%;
-    }
+.question label {
+    display: block;
+    margin: 5px 0;
 }

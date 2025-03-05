@@ -36,6 +36,7 @@ public class Cart {
     private boolean purchaseStatus; //  "true" - 구매완료, true 상태가 되면 삭제하도록 설정 필요, "false" - 구매 진행 안됨
 
     public CartDTO toDTO() {
+        // course 객체에서 강의 정보 가져오기
         Course course = this.course;  // Cart 객체에서 course 정보를 가져옴
 
         return new CartDTO(
