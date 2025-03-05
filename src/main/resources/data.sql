@@ -34,11 +34,11 @@ VALUES
 ('traveler2', '아무튼이름2', 'abName2@naver.com', '010-2222-2222', '$2a$10$AbLNyFNNFBekwJMX.833/ugdQLaB4Tv3DHGsGyQip1bJJrAFm9ufC', '2022-10-11', 'USER'),
 ('traveler3', '아무튼이름3', 'abName3@naver.com', '010-3333-3333', '$2a$10$AbLNyFNNFBekwJMX.833/ugdQLaB4Tv3DHGsGyQip1bJJrAFm9ufC', '2023-11-12', 'USER');
 
-INSERT INTO checklist (traveler_name, direction, is_checked, category_name)
+INSERT INTO checklist (traveler_name, direction, response, is_checked, category_name)
 VALUES
-('traveler', '가족여행 유형 입니다', true, '가족여행'),
-('traveler2', '자유여행 유형 입니다', true, '자유여행'),
-('traveler3', '패키지여행 유형 입니다', true, '패키지여행');
+('traveler', '보라카이에 가는 주된 목적은 무엇인가요?', '휴식과 여유', true, null),
+('traveler', '보라카이에서 선호하는 숙소 유형은 무엇인가요?', '럭셔리 리조트', true, null),
+('traveler', '보라카이 여행을 계획하면서 어떤 스타일을 선호하시나요?', '완전 자유 여행', true, null);
 
 INSERT INTO point (traveler_name, action_type, points, event_date)
 VALUES

@@ -93,7 +93,7 @@ public class ChecklistService {
         }
         String travelerName = (String) session.getAttribute("travelerName");
         Traveler traveler = travelerRepository.findById(travelerName)
-                .orElseThrow(() -> null);
+                .orElseThrow(() -> new ResourceNotFoundException("잘못된 계정명입니다."));
 
         List<Checklist> checklists = checklistRepository.findByTraveler(traveler);
 
@@ -152,7 +152,7 @@ public class ChecklistService {
         return false;
     }
 
-    public String deleteChecklist(List<CheckListDTO> checkListDTOS, HttpServletRequest request) {
+    public String deleteChecklist(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // 세션이 없으면 예외처리
         if (session == null) {
             throw new InvalidRequestException("세션이 없습니다.");
