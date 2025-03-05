@@ -21,6 +21,7 @@ document.querySelector(".submit-button").addEventListener('click', function () {
             // 공지사항 목록 페이지로 이동
             window.location.href = "/notice.html";  // 목록 페이지로 리디렉션
         } else {
+            alert('공지사항은 관리자만 추가할 수 있습니다.');
             console.error('공지사항 추가 실패');
         }
     };
