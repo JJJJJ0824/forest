@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/course.css">
     <link rel="stylesheet" href="/css/top.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <header>
@@ -36,27 +35,23 @@
     </nav>
 
     <section class="content-wrapper" id="course-container">
-
+        <!-- 동적으로 강의 목록이 여기에 렌더링됨 -->
     </section>
 
     <section class="pagination-container">
-        <div class="pagination">
-            <button class="prev-button">‹</button>
-            <button class="page-number">1</button>
-            <button class="page-number">2</button>
-            <button class="page-number">3</button>
-            <button class="page-number">4</button>
-            <button class="page-number">5</button>
-            <button class="next-button">›</button>
+        <div class="pagination" id="pagination-container">
+            <!-- 페이지네이션 버튼들이 여기에 동적으로 생성됨 -->
         </div>
     </section>
+
     <button id="topBtn" onclick="scrollToTop()">⮝</button>
+
     <footer>
         <p>&copy; 2025 Boracay. All Rights Reserved.</p>
     </footer>
+
     <script src="/js/top_button.js"></script>
     <script src="/js/logout.js"></script>
     <script src="/js/course.js"></script>
-    <!-- <script src="/js/course2.js"></script> -->
 </body>
 </html>

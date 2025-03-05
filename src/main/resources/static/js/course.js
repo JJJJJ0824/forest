@@ -1,3 +1,8 @@
+let currentPage = 1; // 현재 페이지
+let filteredCourses = []; // 필터링된 강의 배열 (카테고리별 강의)
+const itemsPerPage = 6; // 한 페이지에 표시할 강의 개수
+let currentCategory = 'all'; // 현재 선택된 카테고리 (기본값은 전체)
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("course.js 로드됨!");
 
@@ -24,10 +29,12 @@ function handleCourseListPage() {
             const category = button.getAttribute("data-category");
             console.log("클릭한 카테고리:", category);
 
+            currentCategory = category; // 현재 카테고리 변경
+            currentPage = 1; // 카테고리 변경 시 첫 페이지로 초기화
             if (category === "all") {
-                fetchCourses();
+                fetchCourses(); // 전체 강의 리스트
             } else {
-                fetchCoursesByCategory(category);
+                fetchCoursesByCategory(category); // 카테고리별 강의
             }
         });
     });
@@ -53,7 +60,8 @@ function fetchCourses() {
         })
         .then(data => {
             console.log("서버에서 받은 전체 강의 데이터:", data);
-            renderCourses(data);
+            filteredCourses = data;  // 전체 강의 리스트
+            renderCourses(); // 강의 렌더링
         })
         .catch(error => console.error("강의 목록 불러오기 실패:", error));
 }
@@ -66,21 +74,27 @@ function fetchCoursesByCategory(categoryName) {
         })
         .then(data => {
             console.log(`${categoryName} 카테고리 강의 데이터:`, data);
-            renderCourses(data);
+            filteredCourses = data;  // 카테고리별 강의 리스트
+            renderCourses(); // 강의 렌더링
         })
         .catch(error => console.error("카테고리 강의 불러오기 실패:", error));
 }
 
-function renderCourses(courses) {
+function renderCourses() {
     const courseContainer = document.getElementById("course-container");
     courseContainer.innerHTML = "";
 
-    if (courses.length === 0) {
+    if (filteredCourses.length === 0) {
         courseContainer.innerHTML = "<p>해당 강의가 없습니다.</p>";
         return;
     }
 
-    courses.forEach(course => {
+    // 페이지에 맞는 강의만 추출 (pagination)
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedCourses = filteredCourses.slice(startIndex, endIndex);
+
+    paginatedCourses.forEach(course => {
         console.log("강의 ID 확인:", course.courseId);
         const categoryName = course.categoryName || "공통";
 
@@ -101,6 +115,52 @@ function renderCourses(courses) {
         
         courseContainer.appendChild(courseCard);
     });
+
+    // 페이지네이션 버튼 렌더링
+    renderPagination();
+}
+
+function renderPagination() {
+    const totalItems = filteredCourses.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const paginationContainer = document.getElementById("pagination-container");
+    paginationContainer.innerHTML = "";
+
+    // 이전 버튼
+    const prevBtn = document.createElement("button");
+    prevBtn.innerText = "‹";
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderCourses(); // 강의 목록 갱신
+        }
+    });
+    paginationContainer.appendChild(prevBtn);
+
+    // 페이지 버튼들
+    for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.innerText = i;
+        pageBtn.classList.toggle("active", i === currentPage);
+        pageBtn.addEventListener('click', () => {
+            currentPage = i;
+            renderCourses(); // 강의 목록 갱신
+        });
+        paginationContainer.appendChild(pageBtn);
+    }
+
+    // 다음 버튼
+    const nextBtn = document.createElement("button");
+    nextBtn.innerText = "›";
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderCourses(); // 강의 목록 갱신
+        }
+    });
+    paginationContainer.appendChild(nextBtn);
 }
 
 function fetchCourseDetail(id) {
@@ -145,14 +205,11 @@ function renderCourseDetail(course) {
             <p>${course.content.replace(/\n/g, "<br>")}</p>
         </div>
 
-        <!-- 🔥 가격 요소는 API로 받아서 채움 -->
         <p id="coursePrice"><strong>가격:</strong> <span id="priceValue">${course.price}</span> 포인트</p>
     `;
 
     console.log("강의 가격 렌더링 완료:", course.price);
 }
-
-
 
 function getCategoryClass(categoryName) {
     switch (categoryName) {

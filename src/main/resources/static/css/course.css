@@ -153,6 +153,30 @@ header nav ul li a:hover {
   color: white;
 }
 
+.course-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* 강의들 간의 간격 조정 */
+}
+
+.course-item {
+  width: calc(16.66% - 10px); /* 6개가 한 줄에 들어가도록 */
+  margin-bottom: 20px; /* 강의 간 간격 */
+  box-sizing: border-box; /* padding, margin 포함 계산 */
+}
+
+@media (max-width: 768px) {
+  .course-item {
+      width: calc(33.33% - 10px); /* 작은 화면에서는 3개씩 표시 */
+  }
+}
+
+@media (max-width: 480px) {
+  .course-item {
+      width: 100%; /* 모바일에서는 한 줄에 1개씩 */
+  }
+}
+
 /* 강의 등록 버튼 스타일 */
 .course-management {
   position: absolute;             /* 절대 위치 */
