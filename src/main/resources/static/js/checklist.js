@@ -47,20 +47,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     submitButton.addEventListener('click', function (event) {
       event.preventDefault();
-
-      if (selectedAnswers.length === questions.length) {
+    
+      const allAnswered = selectedAnswers.length === questions.length &&
+        selectedAnswers.every(answer => answer.answerText !== undefined && answer.answerText !== '');
+    
+      if (allAnswered) {
         const result = getResultType(selectedAnswers);
         resultText.textContent = `당신의 유형: ${result.type}`;
-
+    
         const answersList = selectedAnswers.map(item => {
           return `<li>${item.questionText} : ${item.answerText}</li>`;
         }).join('');
+        
         resultSection.innerHTML = `
           <h3>결과</h3>
           <p>${result.type}</p>
           <ul>${answersList}</ul>
         `;
-
+    
         const checklistButton = document.getElementById('btn-checklist');
         const rewriteButton = document.getElementById('btn-checklist-rewrite');
         checklistButton.classList.add('active');
@@ -69,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('모든 질문에 답변을 완료해 주세요.');
       }
     });
+    
 
     function getQuestionText(questionId) {
       const questionElement = document.querySelector(`#${questionId} p`);
@@ -114,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    // 결과 유형 계산 함수 (조건에 따라 수정하세요)
     function getResultType(selectedAnswers) {
       let type = "자유여행";
 
@@ -138,8 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
       return { type };
     }
 
-    // 이전 답변을 백엔드에서 불러오는 함수  
-    // 백엔드가 각 질문의 키/값 객체로 응답한다고 가정합니다.
     function fetchPreviousAnswers() {
       fetch('/api/checklist/me/check')
         .then(response => response.json())
@@ -151,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
           }
     
-          let lastAnsweredIndex = 0; // 마지막으로 응답한 질문의 인덱스
+          let lastAnsweredIndex = 0; 
     
           data.forEach((item, index) => {
             const questionText = item.direction;
@@ -162,12 +164,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (questionText) {
               selectedAnswers.push({ questionText, answerText });
     
-              // 라디오 버튼 체크
               const radio = document.querySelector(`input[value="${answerText}"]`);
               if (radio) {
                 radio.checked = true;
     
-                // 마지막으로 체크된 질문의 인덱스 저장
                 lastAnsweredIndex = index;
               }
             } else {
@@ -175,7 +175,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
     
-          // 📌 마지막으로 체크된 질문으로 화면 이동
           updateQuestionView(lastAnsweredIndex);
         })
         .catch(error => {
@@ -183,14 +182,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
     
-    // 📌 화면 업데이트 함수 추가
     function updateQuestionView(index) {
       const questions = document.querySelectorAll('.checklist form div');
       questions.forEach((q, i) => {
         q.classList.toggle('active', i === index);
       });
     
-      currentQuestionIndex = index; // 현재 질문 인덱스 업데이트
+      currentQuestionIndex = index; 
     }
     
     
@@ -201,26 +199,6 @@ function loadUserInfoIfNeeded(callback) {
   if (window.currentUser) {
     callback();
   } else {
-    fetch('/api/traveler/mypage', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include'
-    })
-    .then(response => {
-      if (response.status === 401) {
-        alert("세션이 만료되었습니다. 다시 로그인해 주세요!");
-        window.location.href = "login.html";
-        throw new Error("로그인 필요");
-      }
-      if (!response.ok) throw new Error("사용자 정보 로드 실패");
-      return response.json();
-    })
-    .then(data => {
-      window.currentUser = data;
-      callback();
-    })
-    .catch(error => {
-      console.error("사용자 정보 로드 실패:", error);
-    });
+    window.location.href = "login.html";
   }
 }

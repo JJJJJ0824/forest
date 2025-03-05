@@ -58,7 +58,7 @@ public class TravelerController {
     }
 
     @GetMapping("/mypage")
-    public ResponseEntity<TravelerResponseDTO> getCurrentTraveler(HttpServletRequest request) {
+    public ResponseEntity<TravelerResponseDTO> mypage(HttpServletRequest request) {
         return new ResponseEntity<>(travelerService.getCurrentTraveler(request), HttpStatus.OK);
     }
 
