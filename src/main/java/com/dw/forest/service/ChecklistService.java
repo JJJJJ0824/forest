@@ -62,7 +62,7 @@ public class ChecklistService {
         checklist.setDirection(checkListDTO.getDirection());
         checklist.setResponse(checkListDTO.getResponse());
         checklist.setChecked(true);
-        checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(()->new ResourceNotFoundException("유형명이 없습니다.")));
+        checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(null));
 
         checklistRepository.save(checklist);
 

@@ -10,6 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CheckListDTO {
+    private Long id;
     private String direction;
     private String response;
     private boolean isChecked;

@@ -8,22 +8,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById('submit');
     const resultSection = document.getElementById('resultSection');
     const resultText = document.getElementById('resultText');
-    // 각 질문의 답변 정보를 저장 (questionId, questionText, answerText)
     const selectedAnswers = [];
 
-    // 이전 답변 불러오기 (백엔드가 키/값 객체 형태로 응답하는 경우)
     fetchPreviousAnswers();
 
-    // 라디오 버튼 선택 시 이벤트 등록
     document.querySelectorAll('input[type="radio"]').forEach(radio => {
       radio.addEventListener('change', function () {
-        const questionId = radio.name;          // 예: "q1"
-        const answerText = radio.value;           // 예: "휴식과 여유"
-        const questionText = getQuestionText(questionId); // 해당 질문의 텍스트
+        const questionId = radio.name;         
+        const answerText = radio.value;          
+        const questionText = getQuestionText(questionId);
 
         console.log("Answer selected:", answerText);
 
-        // 이미 해당 질문에 대한 답변이 있으면 업데이트, 없으면 새로 추가
         const existingIndex = selectedAnswers.findIndex(item => item.questionId === questionId);
         if (existingIndex !== -1) {
           selectedAnswers[existingIndex].answerText = answerText;
@@ -35,24 +31,20 @@ document.addEventListener('DOMContentLoaded', function () {
           });
         }
 
-        // 자동으로 다음 질문으로 이동
         if (currentQuestionIndex < questions.length - 1) {
           questions[currentQuestionIndex].classList.remove('active');
           currentQuestionIndex++;
           questions[currentQuestionIndex].classList.add('active');
 
-          // 마지막 질문이면 '결과 보기' 버튼 표시
           if (currentQuestionIndex === questions.length - 1) {
             submitButton.style.display = 'block';
           }
         }
 
-        // 선택한 답변을 서버로 전송
         sendSelectedAnswerToServer();
       });
     });
 
-    // '결과 보기' 버튼 클릭 시
     submitButton.addEventListener('click', function (event) {
       event.preventDefault();
 
@@ -69,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
           <ul>${answersList}</ul>
         `;
 
-        // 결과 후 체크리스트 버튼 활성화
         const checklistButton = document.getElementById('btn-checklist');
         const rewriteButton = document.getElementById('btn-checklist-rewrite');
         checklistButton.classList.add('active');
@@ -79,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // 각 질문의 텍스트를 가져오는 함수 (각 div 내의 p 태그 사용)
     function getQuestionText(questionId) {
       const questionElement = document.querySelector(`#${questionId} p`);
       if (!questionElement) {
@@ -89,13 +79,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return questionElement.textContent.trim();
     }
 
-    // 선택한 답변들을 서버로 전송하는 함수
     function sendSelectedAnswerToServer() {
-      const travelerName = window.currentUser.travelerName || window.currentUser.realName;
+      const travelerName = window.currentUser.travelerName;
       const categoryName = getResultType(selectedAnswers).type;
     
-      // 🔹 단일 객체에서 direction, response 추출
-      const lastAnswer = selectedAnswers[selectedAnswers.length - 1]; // 마지막으로 선택한 답변
+      const lastAnswer = selectedAnswers[selectedAnswers.length - 1]; 
       if (!lastAnswer) {
         console.error("🚨 선택된 답변이 없습니다!");
         return;
@@ -105,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          direction: lastAnswer.questionText, // 질문 내용
-          response: lastAnswer.answerText, // 사용자가 선택한 답변
+          direction: lastAnswer.questionText, 
+          response: lastAnswer.answerText,
           checked: true,
           traveler: travelerName,
           category: categoryName
@@ -156,45 +144,59 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch('/api/checklist/me/check')
         .then(response => response.json())
         .then(data => {
-          if (data) {
-            // data가 객체 형태라면 각 키(q1, q2, …)를 순회합니다.
-            Object.keys(data).forEach(key => {
-              if (key === 'lastQuestionIndex') return;
-              const questionId = key;
-              const answerText = data[key];
-              const questionText = getQuestionText(questionId);
-              if (questionText) {
-                selectedAnswers.push({
-                  questionId: questionId,
-                  questionText: questionText,
-                  answerText: answerText
-                });
-                // 라디오 버튼 상태 업데이트
-                const radio = document.querySelector(`input[name="${questionId}"][value="${answerText}"]`);
-                if (radio) {
-                  radio.checked = true;
-                }
-              }
-            });
-
-            currentQuestionIndex = data.lastQuestionIndex || 0;
-            questions.forEach((question, index) => {
-              if (index <= currentQuestionIndex) {
-                question.classList.add('active');
-              } else {
-                question.classList.remove('active');
-              }
-            });
+          console.log("📌 서버에서 받은 데이터:", data);
+          
+          if (!Array.isArray(data)) {
+            console.error("❌ 서버 응답이 배열이 아님:", data);
+            return;
           }
+    
+          let lastAnsweredIndex = 0; // 마지막으로 응답한 질문의 인덱스
+    
+          data.forEach((item, index) => {
+            const questionText = item.direction;
+            const answerText = item.response;
+    
+            console.log(`🔍 questionText: ${questionText}, answerText: ${answerText}`);
+    
+            if (questionText) {
+              selectedAnswers.push({ questionText, answerText });
+    
+              // 라디오 버튼 체크
+              const radio = document.querySelector(`input[value="${answerText}"]`);
+              if (radio) {
+                radio.checked = true;
+    
+                // 마지막으로 체크된 질문의 인덱스 저장
+                lastAnsweredIndex = index;
+              }
+            } else {
+              console.warn(`⚠️ 질문을 찾을 수 없음: ${questionText}`);
+            }
+          });
+    
+          // 📌 마지막으로 체크된 질문으로 화면 이동
+          updateQuestionView(lastAnsweredIndex);
         })
         .catch(error => {
-          console.error('이전 답변 로딩 중 에러 발생:', error);
+          console.error('🚨 이전 답변 로딩 중 에러 발생:', error);
         });
     }
+    
+    // 📌 화면 업데이트 함수 추가
+    function updateQuestionView(index) {
+      const questions = document.querySelectorAll('.checklist form div');
+      questions.forEach((q, i) => {
+        q.classList.toggle('active', i === index);
+      });
+    
+      currentQuestionIndex = index; // 현재 질문 인덱스 업데이트
+    }
+    
+    
   });
 });
 
-// 사용자 정보가 없는 경우 백엔드에서 직접 가져오는 함수
 function loadUserInfoIfNeeded(callback) {
   if (window.currentUser) {
     callback();
