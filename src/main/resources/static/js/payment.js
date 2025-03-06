@@ -38,7 +38,7 @@ function checkIfPurchased() {
                 }
                 if (addToCartButton) {
                     addToCartButton.style.display = "none"; 
-                    console.log(" 이미 결제된 강의 - 장바구니 버튼 숨김!");
+                    console.log("이미 결제된 강의 - 장바구니 버튼 숨김!");
                 }
             }
         })

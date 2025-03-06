@@ -81,7 +81,7 @@ header nav ul li a:hover {
 	border: 2px solid black; 
 	padding: 10px;
 	border-radius: 5px;
-	left: 31.75%;
+	margin: 0 auto;
 }
 
 .wrap .border-in {

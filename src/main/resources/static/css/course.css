@@ -21,20 +21,6 @@ header {
   padding: 0 50px;
 }
 
-header .logo a {
-  font-size: 36px;
-  font-family: 'monospace', sans-serif;
-  font-weight: normal;
-  color: #ff5733;
-  text-decoration: none;
-  align-items: center;
-}
-
-header .logo a:hover {
-  color: #16cf1f;
-  transition: color 0.3s ease;
-}
-
 header nav ul {
   display: flex;
   list-style: none;

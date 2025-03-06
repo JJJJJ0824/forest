@@ -252,7 +252,7 @@ div#right-side .liked-courses{
 
 .course-list {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     flex-wrap: wrap;
 }
 
@@ -477,6 +477,12 @@ div#right-side .liked-courses{
 .cart h3 {
     text-align: center;
     margin-bottom: 10px;
+}
+
+.cart-items-list {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
 }
 
 .cart-items-list .cart-item {
