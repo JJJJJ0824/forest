@@ -51,39 +51,50 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    submitButton.addEventListener('click', function () {
-        // 모든 질문에 답변이 완료되었는지 확인
-        if (allAnswers.length !== questions.length) {
-            resultText.textContent = "모든 질문에 답변을 완료해 주세요.";
-            return;
+    submitButton.addEventListener("click", function () {
+    // 모든 질문에 답변이 완료되었는지 확인
+    if (allAnswers.length !== questions.length) {
+        resultText.textContent = "모든 질문에 답변을 완료해 주세요.";
+        return;
+    }
+
+    document.querySelectorAll(".checklist form div[id^='q']").forEach((data) => {
+        if (!data.classList.contains("active")) {
+            data.classList.add("active");
         }
-    
-        // 결과를 표시할 때, allAnswers 배열이 올바르게 채워졌는지 확인
-        console.log("모든 답변:", allAnswers);
-    
-        const result = getResultType(allAnswers);
-        resultText.textContent = `당신의 유형: ${result.type}`;
-        
-        // 모든 질문과 그에 대한 답변을 보여줍니다.
-        const answersList = allAnswers.map(item => `
-            <li>질문 : ${item.questionText}</li>
-            <li>답변 : ${item.answerText}</li>
-        `).join('');
-        
-        resultSection.classList.add('active');
-        resultSection.innerHTML = `
+    });
+
+    // 결과를 표시할 때, allAnswers 배열이 올바르게 채워졌는지 확인
+    console.log("모든 답변:", allAnswers);
+
+    const result = getResultType(allAnswers);
+    resultText.textContent = `당신의 유형: ${result.type}`;
+
+    // 모든 질문과 그에 대한 답변을 보여줍니다.
+    const answersList = allAnswers
+        .map(
+            (item) => `
+                <li>질문 : ${item.questionText}</li>
+                <li>답변 : ${item.answerText}</li>
+            `
+        )
+        .join("");
+
+    resultSection.classList.add("active");
+    resultSection.innerHTML = `
             <h3>결과 : ${result.type}</h3>
             <ul>${answersList}</ul>
         `;
-        
-        // 수정 및 재작성 버튼 추가
-        const rewriteButton = document.createElement('button');
-        rewriteButton.textContent = '체크리스트 재작성';
-        rewriteButton.id = 'btn-checklist-rewrite';
-        rewriteButton.type = 'button';
-        resultSection.appendChild(rewriteButton);
-        addRewriteListener();
-    });
+
+    // 수정 및 재작성 버튼 추가
+    const rewriteButton = document.createElement("button");
+    rewriteButton.textContent = "체크리스트 재작성";
+    rewriteButton.id = "btn-checklist-rewrite";
+    rewriteButton.type = "button";
+    resultSection.appendChild(rewriteButton);
+    addRewriteListener();  // 재작성 버튼 클릭 시 초기화 함수 호출
+});
+
     
 
     function addRewriteListener() {
