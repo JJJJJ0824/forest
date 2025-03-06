@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
             courseItem.className = 'course-item';
 
             courseItem.innerHTML = `
-                <img src="/img/${getImageName(course.categoryName)}.png" alt="${course.title}">
+                <img src="/img/${course.courseId}.jpg" alt="${course.title}">
                 <p>${course.title}</p>
                 <p>결제 금액: ${course.price} 포인트</p>
                 <p>수강 완료일: ${course.completionDate || '진행 중'}</p>
@@ -174,15 +174,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
             courseListContainer.appendChild(courseItem);
         });
-    }
-
-    function getImageName(categoryName) {
-        switch (categoryName) {
-            case "자유여행": return "activity";
-            case "패키지여행": return "package";
-            case "가족여행": return "hotel";
-            case "공통": return "moneyChange";
-            default: return "logo";
-        }
     }
 });

@@ -193,7 +193,7 @@ function renderCourseDetail(course) {
 
     courseContainer.innerHTML = `
         <h2>${course.title}</h2>
-        <img src="/img/${getImageName(course.categoryName)}.png" alt="${course.title}">
+        <img src="/img/${course.courseId}.jpg" alt="${course.title}">
         <p>${course.description}</p>
 
         <div id="course-content" contenteditable="true">
