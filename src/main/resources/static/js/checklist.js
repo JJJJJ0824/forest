@@ -79,26 +79,23 @@ document.addEventListener('DOMContentLoaded', function () {
         addViewAndRewriteListeners();
     });
   
-    // 보기 / 재작성 버튼 이벤트 등록
     function addViewAndRewriteListeners() {
-        // 보기 버튼: 모든 질문을 active로 만들고(즉, 전체 답변 표시), 수정은 PUT 요청으로 처리
         document.getElementById('btn-checklist-view').addEventListener('click', function () {
             viewMode = true;
             questions.forEach(q => q.classList.add('active'));
         });
   
-        // 재작성 버튼: DELETE 요청으로 DB 체크리스트 삭제 후 UI 리셋
         document.getElementById('btn-checklist-rewrite').addEventListener('click', function () {
             fetch('/api/checklist/delete', {
                 method: 'DELETE'
             })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
-                console.log('✅ 체크리스트 삭제 성공:', data);
+                console.log('체크리스트 삭제 성공:', data);
                 viewMode = false;
                 resetChecklist();
             })
-            .catch(error => console.error('🚨 체크리스트 삭제 중 에러 발생:', error));
+            .catch(error => console.error('체크리스트 삭제 중 에러 발생:', error));
         });
     }
   
@@ -118,10 +115,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 });
-                moveToNextQuestion(); // 자동으로 다음 질문으로 넘어감
+                moveToNextQuestion();
             })
             .catch(error => {
-                console.error('🚨 제출된 답변 로드 실패:', error);
+                console.error('제출된 답변 로드 실패:', error);
             });
     }
     function moveToNextQuestion() {
@@ -134,13 +131,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     
-        // currentQuestionIndex를 갱신하여 다음 질문을 보여주도록 함
         if (nextQuestionIndex < questions.length) {
             questions[currentQuestionIndex].classList.remove('active');
             currentQuestionIndex = nextQuestionIndex;
             questions[currentQuestionIndex].classList.add('active');
     
-            // 마지막 질문에 도달하면 제출 버튼 표시
             if (currentQuestionIndex === questions.length - 1) {
                 submitButton.style.display = 'block';
             }
@@ -184,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
-            console.log('✅ 체크리스트 저장 성공:', data);
+            console.log('체크리스트 저장 성공:', data);
         })
         .catch(error => {
-            console.error('🚨 체크리스트 저장 중 에러 발생:', error);
+            console.error('체크리스트 저장 중 에러 발생:', error);
         });
     }
   
@@ -207,10 +202,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
-            console.log('✅ 체크리스트 업데이트 성공:', data);
+            console.log('체크리스트 업데이트 성공:', data);
         })
         .catch(error => {
-            console.error('🚨 체크리스트 업데이트 에러:', error);
+            console.error('체크리스트 업데이트 에러:', error);
         });
     }
   
@@ -227,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
         questions[currentQuestionIndex].classList.add('active');
         submitButton.style.display = 'none';
         resultSection.innerHTML = '';
+        resultSection.classList.remove('active');
         resultText.textContent = '';
     }
   
