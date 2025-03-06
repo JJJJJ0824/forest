@@ -6,7 +6,6 @@
   font-family: 'monospace', sans-serif;
 }
 
-/* 헤더 스타일 */
 header {
   background-color: #fff;
   position: fixed;
@@ -24,7 +23,7 @@ header {
 
 header .logo a {
   font-size: 36px;
-  font-family: 'Pacifico', sans-serif;
+  font-family: 'monospace', sans-serif;
   font-weight: normal;
   color: #ff5733;
   text-decoration: none;

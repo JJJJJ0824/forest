@@ -78,9 +78,11 @@ div#left-side .point-buttons {
 }
 
 div#left-side h3 {
+    text-align: center;
     font-size: 20px;
     font-weight: bold;
     color: #333;
+    margin-bottom: 15px;
 }
 
 #editForm {
@@ -196,6 +198,7 @@ div#center {
 }
 
 .checklist h3 {
+    text-align: center;
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: bold;
@@ -456,6 +459,11 @@ div#right-side .liked-courses{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.paid-courses h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 .cart {
     margin: 0;
     box-sizing: border-box;
@@ -464,6 +472,11 @@ div#right-side .liked-courses{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart h3 {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .cart-items-list .cart-item {
