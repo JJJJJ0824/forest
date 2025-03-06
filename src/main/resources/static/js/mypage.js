@@ -166,10 +166,12 @@ document.addEventListener("DOMContentLoaded", function () {
             courseItem.className = 'course-item';
 
             courseItem.innerHTML = `
-                <img src="/img/${course.courseId}.jpg" alt="${course.title}">
-                <p>${course.title}</p>
-                <p>결제 금액: ${course.price} 포인트</p>
-                <p>수강 완료일: ${course.completionDate || '진행 중'}</p>
+                <a href="maincourse${course.courseId}.html">
+                    <img src="/img/${course.courseId}.jpg" alt="${course.title}">
+                    <p>${course.title}</p>
+                </a>
+                    <p>결제 금액: ${course.price} 포인트</p>
+                    <p>수강 완료일: ${course.completionDate || '진행 중'}</p>
             `;
 
             courseListContainer.appendChild(courseItem);

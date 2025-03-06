@@ -117,10 +117,12 @@ function renderCartItems(cartItems) {
         const cartItemElement = document.createElement('div');
         cartItemElement.classList.add('cart-item');
         cartItemElement.innerHTML = `
-            <img src="/img/${item.courseId}.jpg" alt="${item.title}">
-            <p><strong>${item.title}</strong></p>
-            <p>가격: ${item.price} 포인트</p>
-            <p>강의 설명: ${item.description}</p>
+            <a href="course_family_aboard.html?id=${item.courseId}">
+                <img src="/img/${item.courseId}.jpg" alt="${item.title}">
+                <p><strong>${item.title}</strong></p>
+            </a>
+                <p>가격: ${item.price} 포인트</p>
+                <p>강의 설명: ${item.description}</p>
         `;
         cartItemsList.appendChild(cartItemElement);
     });

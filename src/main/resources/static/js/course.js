@@ -239,3 +239,16 @@ function getImageName(courseId) {
         default: return "logo"; // 기본 이미지
     }
 }
+window.getCoursePrice = function(courseId) {
+    const priceElement = document.getElementById("priceValue");
+    if (!priceElement) {
+        console.error("가격 요소를 찾을 수 없습니다.");
+        return null;
+    }
+
+    const priceText = priceElement.innerText;
+    const price = parseInt(priceText.replace(/[^0-9]/g, ''), 10);
+
+    console.log("실시간 강의 가격:", price);
+    return price;
+};

@@ -59,11 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         const result = getResultType(allAnswers);
         resultText.textContent = `당신의 유형: ${result.type}`;
-        const answersList = allAnswers.map(item => `<li>${item.questionText} : ${item.answerText}</li>`).join('');
+        const answersList = allAnswers.map(item => `<li>질문 : ${item.questionText}</li><li>답변 : ${item.answerText}</li>`).join('');
         resultSection.classList.add('active');
         resultSection.innerHTML = `
-            <h3>결과</h3>
-            <p>${result.type}</p>
+            <h3>결과 : ${result.type}</h3>
             <ul>${answersList}</ul>
         `;
         // 보기 및 재작성 버튼 추가
