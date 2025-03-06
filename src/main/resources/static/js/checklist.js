@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify({
                 direction: questionText,   
                 response: answerText,
-                isChecked: true,
+                checked: 0==0,
                 category: getResultType(allAnswers).type
             })
         })
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify({
                 direction: questionText,
                 response: answerText,
-                isChecked: true,
+                checked: 0==0,
                 category: getResultType(allAnswers).type
             })
         })
@@ -218,15 +218,20 @@ document.addEventListener('DOMContentLoaded', function () {
             q.removeAttribute('data-submitted');
             q.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.checked = false;
-                radio.disabled = false; // 라디오 버튼 비활성화 해제
+                radio.disabled = false; 
             });
         });
-        currentQuestionIndex = 0;
-        questions[currentQuestionIndex].classList.add('active');
-        submitButton.style.display = 'none';
-        resultSection.innerHTML = '';
-        resultSection.classList.remove('active');
-        resultText.textContent = '';
+    
+        currentQuestionIndex = 0; 
+        questions[currentQuestionIndex].classList.add('active');  
+        submitButton.style.display = 'none';  
+        resultSection.innerHTML = ''; 
+        resultSection.classList.remove('active'); 
+        resultText.textContent = ''; 
+    
+        allAnswers = [];
+    
+        viewMode = false;
     }
 
     function getResultType(answers) {
