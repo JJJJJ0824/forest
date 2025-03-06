@@ -64,7 +64,7 @@ public class ChecklistService {
         checklist.setDirection(checkListDTO.getDirection());
         checklist.setResponse(checkListDTO.getResponse());
         checklist.setChecked(true);
-        checklist.setCategory(null);
+        checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(null));
 
         checklistRepository.save(checklist);
 
@@ -91,7 +91,7 @@ public class ChecklistService {
         checklist.setResponse(checkListDTO.getResponse());  // 답변 업데이트
         checklist.setChecked(true);  // 체크된 항목으로 설정
 
-        checklist.setCategory(null);
+        checklist.setCategory(categoryRepository.findById(checkListDTO.getCategory()).orElseThrow(null));
 
         checklistRepository.save(checklist);
 

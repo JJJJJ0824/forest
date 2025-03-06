@@ -35,6 +35,10 @@ public class Checklist {
     private Category category;
 
     public CheckListDTO toDTO() {
+        if (this.category.getCategoryName().isEmpty()) {
+            return new CheckListDTO(this.id, this.direction, this.response, this.isChecked,
+                    this.traveler.getTravelerName(), "자유여행");
+        }
         return new CheckListDTO(this.id, this.direction, this.response, this.isChecked,
                 this.traveler.getTravelerName() , this.category.getCategoryName());
     }

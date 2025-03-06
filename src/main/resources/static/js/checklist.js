@@ -103,9 +103,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
   
-    // 서버에서 제출된 답변을 불러오기 (API 변경)
     function loadCheckedChecklist() {
-        fetch('/api/checklist/me/check')  // 사용자가 체크한 체크리스트 불러오기
+        fetch('/api/checklist/me/check')
             .then(response => response.json())
             .then(data => {
                 data.forEach(answer => {
@@ -113,17 +112,40 @@ document.addEventListener('DOMContentLoaded', function () {
                         return q.querySelector('p').textContent.trim() === answer.direction;
                     });
                     if (questionElement) {
-                        questionElement.dataset.submitted = "true"; // 제출된 상태로 표시
+                        questionElement.dataset.submitted = "true"; 
                         const radio = questionElement.querySelector(`input[type="radio"][value="${answer.response}"]`);
                         if (radio) {
-                            radio.checked = true; // 이미 선택된 답변 표시
+                            radio.checked = true;
                         }
                     }
                 });
+                moveToNextQuestion(); // 자동으로 다음 질문으로 넘어감
             })
             .catch(error => {
                 console.error('🚨 제출된 답변 로드 실패:', error);
             });
+    }
+    function moveToNextQuestion() {
+        let nextQuestionIndex = currentQuestionIndex;
+        for (let i = currentQuestionIndex; i < questions.length; i++) {
+            const question = questions[i];
+            if (question.dataset.submitted === "true") {
+                nextQuestionIndex = i + 1; // 다음 질문으로
+                break;
+            }
+        }
+    
+        // currentQuestionIndex를 갱신하여 다음 질문을 보여주도록 함
+        if (nextQuestionIndex < questions.length) {
+            questions[currentQuestionIndex].classList.remove('active');
+            currentQuestionIndex = nextQuestionIndex;
+            questions[currentQuestionIndex].classList.add('active');
+    
+            // 마지막 질문에 도달하면 제출 버튼 표시
+            if (currentQuestionIndex === questions.length - 1) {
+                submitButton.style.display = 'block';
+            }
+        }
     }
   
     function getQuestionText(questionId) {
@@ -155,6 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 direction: questionText,   
                 response: answerText,
                 isChecked: true,
+                category: `자유여행`
             })
         })
         .then(response => {
@@ -162,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
-            console.log('✅ 체크리스트 저장 성공:', data.JSON);
+            console.log('✅ 체크리스트 저장 성공:', data);
         })
         .catch(error => {
             console.error('🚨 체크리스트 저장 중 에러 발생:', error);
@@ -177,6 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 direction: questionText,
                 response: answerText,
                 isChecked: true,
+                category: `자유여행`
             })
         })
         .then(response => {
@@ -191,7 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
   
-    // 재작성 시 UI 및 DOM 상태 초기화
     function resetChecklist() {
         questions.forEach(q => {
             q.classList.remove('active');
@@ -208,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function () {
         resultText.textContent = '';
     }
   
-    // 예시로 작성한 결과 유형 결정 함수 (필요에 따라 수정)
     function getResultType(answers) {
         let type = "자유여행";
         if (answers.some(a => a.questionText.includes("보라카이에 가는 주된 목적") && a.answerText === "휴식과 여유")) {
@@ -218,5 +240,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return { type };
     }
-  });
-  
+});

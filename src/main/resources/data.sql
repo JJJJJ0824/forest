@@ -36,9 +36,9 @@ VALUES
 
 INSERT INTO checklist (traveler_name, direction, response, is_checked, category_name)
 VALUES
-('traveler', '보라카이에 가는 주된 목적은 무엇인가요?', '휴식과 여유', true, null),
-('traveler', '보라카이에서 선호하는 숙소 유형은 무엇인가요?', '럭셔리 리조트', true, null),
-('traveler', '보라카이 여행을 계획하면서 어떤 스타일을 선호하시나요?', '완전 자유 여행', true, null);
+('traveler', '보라카이에 가는 주된 목적은 무엇인가요?', '휴식과 여유', true, '자유여행'),
+('traveler', '보라카이에서 선호하는 숙소 유형은 무엇인가요?', '럭셔리 리조트', true, '자유여행'),
+('traveler', '보라카이 여행을 계획하면서 어떤 스타일을 선호하시나요?', '완전 자유 여행', true, '자유여행');
 
 INSERT INTO point (traveler_name, action_type, points, event_date)
 VALUES
