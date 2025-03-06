@@ -75,8 +75,8 @@ function getCartCourses() {
             }
         })
         .catch(error => {
-            console.error("카트 정보 불러오기 실패:", error);
-            alert("카트 정보를 불러오는 중 오류가 발생했습니다.");
+            console.warn("카트 정보 불러오기 실패:", error);
+            console.warn("카트 정보를 불러오는 중 오류가 발생했습니다.");
         });
     } else {
         fetch('/api/cart/mycart', {
@@ -128,7 +128,7 @@ function renderCartItems(cartItems) {
         cartItemElement.classList.add('cart-item');
         cartItemElement.innerHTML = `
             <a href="/course_family_aboard.html?id=${item.courseId}">
-                <img src="/img/${getImageName(item.categoryName)}.png" alt="${item.title}">
+                <img src="/img/${item.courseId}.jpg" alt="${item.title}">
                 <p><strong>${item.title}</strong></p>
                 <p>가격: ${item.price} 포인트</p>
                 <p>강의 설명: ${item.description}</p>

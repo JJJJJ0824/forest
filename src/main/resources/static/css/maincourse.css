@@ -1,0 +1,132 @@
+/* 전체 페이지 기본 설정 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* 강의 메인 컨테이너 */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* 컨테이너 hover 효과 */
+.container:hover {
+    transform: translateY(-3px);
+}
+
+/* 강의 제목 */
+h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #222;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 섹션 스타일 */
+.section {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+/* 강의 설명 박스 */
+.tip-box {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 박스 hover 효과 */
+.tip-box:hover {
+    transform: translateY(-2px);
+}
+
+/* 강의 소제목 */
+.tip-box h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.tip-box h3 {
+    font-size: 20px;
+    color: #0056b3;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* 이미지 컨테이너 */
+.image-container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.lecture-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 이미지 hover 효과 */
+.lecture-image:hover {
+    transform: scale(1.05);
+}
+
+/* 리스트 스타일 */
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+ul li {
+    background: url('/img/check.svg') no-repeat left center;
+    background-size: 20px;
+    padding-left: 30px;
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+/* 버튼 스타일 */
+.buttons {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.buttons button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* 버튼 hover 효과 */
+.buttons button:hover {
+    background: linear-gradient(135deg, #0056b3, #003c80);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.5);
+}
