@@ -75,8 +75,8 @@ function getCartCourses() {
             }
         })
         .catch(error => {
-            console.error("카트 정보 불러오기 실패:", error);
-            alert("카트 정보를 불러오는 중 오류가 발생했습니다.");
+            console.log("카트 정보 불러오기 실패:", error);
+            console.log("카트 정보를 불러오는 중 오류가 발생했습니다.");
         });
     } else {
         fetch('/api/cart/mycart', {
@@ -95,16 +95,6 @@ function getCartCourses() {
             console.error("카트 정보 불러오기 실패:", error);
             alert("카트 정보를 불러오는 중 오류가 발생했습니다.");
         });
-    }
-}
-
-function getImageName(categoryName) {
-    switch (categoryName) {
-        case "자유여행": return "activity";
-        case "패키지여행": return "package";
-        case "가족여행": return "hotel";
-        case "공통": return "moneyChange";
-        default: return "logo";  
     }
 }
 
@@ -127,7 +117,7 @@ function renderCartItems(cartItems) {
         const cartItemElement = document.createElement('div');
         cartItemElement.classList.add('cart-item');
         cartItemElement.innerHTML = `
-            <img src="/img/${getImageName(item.categoryName)}.png" alt="${item.title}">
+            <img src="/img/${item.courseId}.jpg" alt="${item.title}">
             <p><strong>${item.title}</strong></p>
             <p>가격: ${item.price} 포인트</p>
             <p>강의 설명: ${item.description}</p>
