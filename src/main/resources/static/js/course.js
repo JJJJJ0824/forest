@@ -102,7 +102,7 @@ function renderCourses() {
 
         courseCard.innerHTML = `
             <div class="image-wrapper">
-                <img src="/img/${getImageName(course.courseId)}.jpg" alt="${course.title}">
+                <img src="/img/${course.courseId}.jpg" alt="${course.title}">
             </div>
             <div class="text-wrapper">
                 <h3>${course.title}</h3>
