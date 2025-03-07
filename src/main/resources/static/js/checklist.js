@@ -141,7 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     moveToNextQuestion();  // 답변을 완료하지 않으면 다음 질문으로 이동
                 }
-            })
+            }
+        )
             .catch(error => {
                 console.error('제출된 답변 로드 실패:', error);
             });
@@ -153,7 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const question = questions[i];
             if (question.dataset.submitted === "true") {
                 nextQuestionIndex = i + 1;
-                break;
             }
         }
 
