@@ -42,7 +42,10 @@ VALUES
 
 INSERT INTO point (traveler_name, action_type, points, event_date)
 VALUES
-('admin', 'test', 9999999999999, now());
+('traveler', 'welcome bonus', 100, now()),
+('traveler2', 'welcome bonus', 100, now()),
+('traveler3', 'welcome bonus', 100, now()),
+('admin', 'test', 1000000, now());
 
 INSERT INTO q (traveler_name, title, content, created_at)
 VALUES
