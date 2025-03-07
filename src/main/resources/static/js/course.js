@@ -216,29 +216,6 @@ function getCategoryClass(categoryName) {
     }
 }
 
-function getImageName(courseId) {
-    switch (courseId) { 
-        case 1: return "1";
-        case 2: return "2";   // 2.jpg
-        case 3: return "3";   // 3.jpg
-        case 4: return "4";   // 4.jpg
-        case 5: return "5";   // 5.jpg
-        case 6: return "6";   // 6.jpg
-        case 7: return "7";   // 7.jpg
-        case 8: return "8";   // 8.jpg
-        case 9: return "9";   // 9.jpg
-        case 10: return "10"; // 10.jpg
-        case 11: return "11"; // 11.jpg
-        case 12: return "12"; // 12.jpg
-        case 13: return "13"; // 13.jpg
-        case 14: return "14"; // 14.jpg
-        case 15: return "15"; // 15.jpg
-        case 16: return "16"; // 16.jpg
-        case 17: return "17"; // 17.jpg
-        case 18: return "18"; // course18.jpg
-        default: return "logo"; // 기본 이미지
-    }
-}
 window.getCoursePrice = function(courseId) {
     const priceElement = document.getElementById("priceValue");
     if (!priceElement) {
