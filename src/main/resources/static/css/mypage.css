@@ -380,6 +380,7 @@ div#right-side .liked-courses{
 }
 
 #submit {
+    display: block;
     margin: 0 auto;
     border-radius: 20px;
     width: 90px;
