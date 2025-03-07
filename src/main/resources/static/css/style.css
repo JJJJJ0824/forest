@@ -1090,7 +1090,7 @@ footer {
 }
 
 .back-to-list {
-    text-align: right; /* 오른쪽 정렬 */
+    text-align: center; /* 오른쪽 정렬 */
     margin: 20px 0; /* 버튼과 다른 요소들 간의 여백 추가 */
 }
 
