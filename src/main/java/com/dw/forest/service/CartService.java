@@ -123,6 +123,8 @@ public class CartService {
 
         cartRepository.updateAllPurchaseStatus(travelerName);
 
+        cartRepository.deleteAll(cartList);
+
 //        savePurchase(travelerName, totalAmount, cartList);
 
         return "결제가 완료되었습니다. 총 금액: " + totalAmount + ", 남은 포인트: " + remainingPoints;
